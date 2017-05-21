@@ -26,3 +26,5 @@ Turns out macOS doesn't like me installing and running things in my ```/usr/``` 
 Spent the entire day trying to figure out how to stop Anaconda installing a 'AnacondaProjects' folder in my home directory. That is my home directory! Who does it think it is? Steve Jobs?!
 
 [Anaconda team were very nice about it though](https://groups.google.com/a/continuum.io/forum/#!msg/anaconda/75Ps_8vNyWM/-Joh5VnxAAAJ)
+
+## Day 2
