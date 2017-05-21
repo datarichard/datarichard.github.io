@@ -4,7 +4,7 @@ these are the notes of an ex-neuroscientist trying to pivot to datascience
 
 > "datascience is statistics on a mac"
 
-   (Kanye, probably)
+ * * * * * * * * * *   (Kanye, probably)
 
 ## Day 0
 Step 1: figure out what is datascience
