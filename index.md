@@ -5,7 +5,7 @@
 # heading 1
 this is my (surely ill-fated) journey into data science
 
-'''markdown
+```markdown
 Syntax highlighted code block
 
 - bulleted 
