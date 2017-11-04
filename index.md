@@ -39,12 +39,26 @@ Anaconda check. RStudio check. Data hmmm, let's see what we've got? First up is 
 No compiler found. FAAAARK
 
 ### end of Day 3
-So I can't get Anaconda R to compile source packages. I give up.
+So I can't get Anaconda R to compile source packages. I give up. Uninstalling anaconda.
 
-`conda install anaconda-clean`
+```
+conda install anaconda-clean
+anaconda-clean --yes
+rm -rf .anaconda_backup
+rm -rf ~/anaconda3
+```
 
-`anaconda-clean --yes`
+### end of end of Day 3
+...but if I can't let it go, then check this answer on [stackoverflow](https://stackoverflow.com/questions/36652015/how-to-install-r-packages-not-in-the-conda-repositories)
 
-`rm -rf .anaconda_backup`
+```
+conda skeleton cran <package_name>`
+conda build <package_name>
+```
 
-`rm -rf ~/anaconda3`
+If the package has dependencies that are also not in Anaconda
+```
+conda skeleton cran <dependency1>
+conda skeleton cran <dependency2>
+conda build <package_name>
+```
