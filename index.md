@@ -27,12 +27,24 @@ Spent the entire day trying to figure out how to stop Anaconda installing a 'Ana
 
 [Anaconda team were very nice about it though](https://groups.google.com/a/continuum.io/forum/#!msg/anaconda/75Ps_8vNyWM/-Joh5VnxAAAJ)
 
-## Day 2
+## Day 2 Installing r-essentials
 Installed r-essentials package via Anaconda. How nice of them to put together everything the budding datascientist needs in a single package! Fire up RStudio - wheee! data science here I come :-) ...wait a second, why does RStudio look like shite on my new shiny retina macbook pro?
 
 ### end of Day 2
 Spent the afternoon trying to figure out how to display RStudio in high resolution. [Anaconda team came to the rescue again](https://github.com/ContinuumIO/anaconda-issues/issues/7089#issuecomment-341713687)
 
+## Day 3 Installing packages from source
+Anaconda check. RStudio check. Data hmmm, let's see what we've got? First up is [HILDA](http://melbourneinstitute.unimelb.edu.au/hilda). This is the Household, Income, Labour Dynamics in Australia Survey. A longitudinal dataset collected on 17,000 people over 14 years. Let's see if we have any longitudinal methods for clustering data in R. [kml](https://www.rdocumentation.org/packages/kml/versions/2.4.1/topics/kml-package) looks good. `install.packages("kml")`
 
+No compiler found. FAAAARK
 
+### end of Day 3
+So I can't get Anaconda R to compile source packages. I give up.
 
+`conda install anaconda-clean`
+
+`anaconda-clean --yes`
+
+`rm -rf .anaconda_backup`
+
+`rm -rf ~/anaconda3`
