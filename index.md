@@ -28,3 +28,11 @@ Spent the entire day trying to figure out how to stop Anaconda installing a 'Ana
 [Anaconda team were very nice about it though](https://groups.google.com/a/continuum.io/forum/#!msg/anaconda/75Ps_8vNyWM/-Joh5VnxAAAJ)
 
 ## Day 2
+Installed r-essentials package via Anaconda. How nice of them to put together everything the budding datascientist needs in a single package! Fire up RStudio - wheee! data science here I come :-) ...wait a second, why does RStudio look like shite on my new shiny retina macbook pro?
+
+### end of Day 2
+Spent the afternoon trying to figure out how to display RStudio in high resolution. [Anaconda team came to the rescue again](https://github.com/ContinuumIO/anaconda-issues/issues/7089#issuecomment-341713687)
+
+
+
+
