@@ -24,3 +24,8 @@ The kernel spec can be installed for the current user with the following line:
 ```
 IRkernel::installspec()
 ```  
+
+## Step 3. Run a jupyter notebook  
+```
+jupyter notebook
+```
