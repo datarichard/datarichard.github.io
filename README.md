@@ -11,3 +11,7 @@ However if you just want miniconda, download the shell script and:
 ```
 bash ~/Downloads/Miniconda3-latest-MacOSX-x86_64.sh
 ```
+  
+Anaconda will install a bunch of packages (but not R). If you just installed miniconda then you will need to install the other packages you need.  
+
+e.g., to install Jupyter notebooks `conda install jupyter`  
