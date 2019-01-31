@@ -1,5 +1,10 @@
 # datarichard.github.io
-this is a personal blog describing my hapless attempt at datascience
+"Data science is statistics on a mac" -Kanye, probably
+
+## Step 0. Install R
+Oridinarily I would just use the Anaconda install (see below), but R is a bit limited in Anaconda. I've found it difficult to install custom packages and the Anaconda versions of RStudio are out-of-date.
+
+Download the latest R binary for Mac OSX [https://cloud.r-project.org/bin/macosx/]
   
 ## Step 1. Install Anaconda  
 See [here](https://conda.io/docs/user-guide/install/macos.html) for instructions and download the shell script. Then:  
