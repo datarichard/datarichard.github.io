@@ -61,3 +61,24 @@ IRkernel::installspec()
 ```
 jupyter notebook
 ```
+
+## Step 4. Install RStan
+Instructions for installing RStan are here [https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started]
+
+it is sometimes necessary to remove any existing RStan via
+```
+remove.packages("rstan")
+if (file.exists(".RData")) file.remove(".RData")
+```
+
+Then, restart R.
+
+In most cases, you can simply type (exactly like this)
+```
+install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)
+```
+
+You can check the C++ Toolchain in RStudio
+```
+pkgbuild::has_build_tools(debug = TRUE)
+```
