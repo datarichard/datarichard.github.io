@@ -1,6 +1,6 @@
 # Hello World
 
-these are the notes of an ex-neuroscientist trying to pivot to datascience
+these are the notes of an ex-cognitive-neuroscientist trying to pivot to datascience
 
 > "datascience is statistics on a mac"
 
