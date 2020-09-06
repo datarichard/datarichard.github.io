@@ -6,14 +6,14 @@ Oridinarily I would just use the Anaconda install (see below), but R is a bit li
 
 Download the latest R binary for Mac OSX [https://cloud.r-project.org/bin/macosx/]  
 
-Since I'm not running a virus scanner, and CRAN does not check the binaries for viruses it's a good idea to check the MD5-hash. e.g.,  
+Since I'm not running a virus scanner, and CRAN does not check the binaries for viruses it's a good idea to check the [hash](https://shapeshed.com/unix-sha1sum/). e.g.,  
 ```
-md5 R-3.5.2.pkg 
+shasum R-3.6.3.nn.pkg 
 ``` 
 
-Run the package installer and it should overwrite the previous R installation by default. You can check the installation in from the R command line with `which R`. It should return something like:  
+Run the package installer and it should overwrite the previous R installation by default. You can check the installation in from the R command line with `.libPaths()`. It should return something like:  
 ```
-/Library/Frameworks/R.framework/Versions/3.5/Resources/library
+/Library/Frameworks/R.framework/Versions/3.6/Resources/library
 ```
 
 Finally download RStudio from [https://www.rstudio.com/products/rstudio/download/] and follow the install instructions.  
@@ -21,15 +21,9 @@ Finally download RStudio from [https://www.rstudio.com/products/rstudio/download
 You can check the version of R from the RStudio terminal (or the bash terminal) with `R --version` e.g.,
 
 ```
-R version 3.5.2 (2018-12-20) -- "Eggshell Igloo"
-Copyright (C) 2018 The R Foundation for Statistical Computing
+R version 3.6.3 (2020-02-29) -- "Holding the Windsock"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under the terms of the
-GNU General Public License versions 2 or 3.
-For more information about these matters see
-http://www.gnu.org/licenses/.
 ```
 
 
