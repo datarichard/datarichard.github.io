@@ -2,7 +2,7 @@
 layout: post
 title: "Getting started"
 date: 2020-09-06 11:48:50 -0900
-categories: jekyll update
+categories:
 ---
 
 ## Step 0. Install R and RStudio
