@@ -6,7 +6,7 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Kanye, probably
 
-## What is datascience?
+## Before you start
 Step 1: find out what is datascience
 
 - [It's not statistics](http://bulletin.imstat.org/2014/09/data-science-how-is-it-different-to-statistics)
@@ -14,3 +14,7 @@ Step 1: find out what is datascience
 - [A venn diagram even I can understand](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram)
 
 
+## Getting started
+[Install R, Rstudio, Jupyter notebooks for R, and RStan](https://datarichard.github.io/2020/09/06/getting-started)
+
+<br>
