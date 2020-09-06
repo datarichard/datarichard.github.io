@@ -1,3 +1,7 @@
+---
+layout: home
+---
+
 # Hello World
 
 these are the notes of an ex-cognitive-neuroscientist trying to pivot to datascience
