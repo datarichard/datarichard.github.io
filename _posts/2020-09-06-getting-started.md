@@ -1,3 +1,10 @@
+---
+layout: post
+title: "Getting started"
+date: 2020-09-06 11:48:50 -0900
+categories: jekyll update
+---
+
 ## Step 0. Install R and RStudio
 Oridinarily I would just use the Anaconda install (see below), but R is a bit limited in Anaconda. I've found it difficult to install custom packages and the Anaconda versions of RStudio are out-of-date.
 
