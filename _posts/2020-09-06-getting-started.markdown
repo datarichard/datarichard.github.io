@@ -8,9 +8,9 @@ categories:
 ## Step 0. Install R and RStudio
 Oridinarily I would just use the Anaconda install (see below), but R is a bit limited in Anaconda. I've found it difficult to install custom packages and the Anaconda versions of RStudio are out-of-date.
 
-Download the latest R binary for Mac OSX [https://cloud.r-project.org/bin/macosx/]  
+Download the [latest R binary for Mac OSX](https://cloud.r-project.org/bin/macosx/)  
 
-Since I'm not running a virus scanner, and CRAN does not check the binaries for viruses it's a good idea to check the [hash](https://shapeshed.com/unix-sha1sum/). e.g.,  
+Since CRAN does not check the binaries for viruses it's a good idea to check the [hash](https://shapeshed.com/unix-sha1sum/). e.g.,  
 ```
 shasum R-3.6.3.nn.pkg 
 ``` 
@@ -20,7 +20,7 @@ Run the package installer and it should overwrite the previous R installation by
 /Library/Frameworks/R.framework/Versions/3.6/Resources/library
 ```
 
-Finally download RStudio from [https://www.rstudio.com/products/rstudio/download/] and follow the install instructions.  
+Finally download [RStudio](https://www.rstudio.com/products/rstudio/download/) and follow the install instructions.  
 
 You can check the version of R from the RStudio terminal (or the bash terminal) with `R --version` e.g.,
 
@@ -61,7 +61,7 @@ jupyter notebook
 ```
 
 ## Step 4. Install RStan
-Instructions for installing RStan are here [https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started]
+Instructions for installing RStan are here https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
 
 it is sometimes necessary to remove any existing RStan via
 ```
