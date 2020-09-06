@@ -6,9 +6,7 @@ categories:
 ---
 
 ## Step 0. Install R and RStudio
-Oridinarily I would just use the Anaconda install (see below), but R is a bit limited in Anaconda. I've found it difficult to install custom packages and the Anaconda versions of RStudio are out-of-date.
-
-Download the [latest R binary for Mac OSX](https://cloud.r-project.org/bin/macosx/)  
+RStudio is the preferred development environment for R. Download the [latest R binary for Mac OSX](https://cloud.r-project.org/bin/macosx/)  
 
 Since CRAN does not check the binaries for viruses it's a good idea to check the [hash](https://shapeshed.com/unix-sha1sum/). e.g.,  
 ```
@@ -31,31 +29,31 @@ Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ```
 
 
-## Step 1. Install Anaconda  
-See [here](https://conda.io/docs/user-guide/install/macos.html) for instructions and download the shell script. Then:  
-```
-bash ~/Downloads/Anaconda3-2018.12-MacOSX-x86_64.sh
-```  
-
-Anaconda will install a bunch of packages (but not R). However if you just want miniconda, download the relevant shell script and:
+## Step 1. Install Jupyter notebooks  
+Jupyter notebooks are also a popular development tool. Anaconda (miniconda) provides an install for Jupyter notebooks. Anaconda has a lot of cool stuff but I normally just install miniconda to reduce the overhead. See here: https://conda.io/en/latest/miniconda.html for instructions and download the shell script. Then:  
 ```
 bash ~/Downloads/Miniconda3-latest-MacOSX-x86_64.sh
 ```  
 
-If you just installed miniconda then you will need to install the other packages you need. e.g., to install Jupyter notebooks run `conda install jupyter`  
+After installing miniconda then you will need to install the jupyter notebook package:
+```
+conda install jupyter
+```
 
 ## Step 2. Install IRkernel for R  
-The instructions for getting Jupyter to run with an R kernel are [here](https://irkernel.github.io/installation/). First open an R session in terminal `R`. Then run the following commands in that R session:  
+The instructions for getting Jupyter to run with an R kernel are here: https://irkernel.github.io/installation/  
 
+First open an R session in terminal `R`. Then run the following commands in that R session:  
 ```
 install.packages('IRkernel')  # this will download the package from CRAN
 ```  
+
 The kernel spec can be installed for the current user with the following line:
 ```
 IRkernel::installspec()
 ```  
 
-## Step 3. Run a jupyter notebook  
+## Step 3. Run a jupyter notebook from the bash terminal 
 ```
 jupyter notebook
 ```
