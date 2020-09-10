@@ -10,6 +10,8 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
 [Math in markdown](https://datarichard.github.io/2020/09/10/math-in-markdown)
 
+[Pretty tables](https://datarichard.github.io/2020/09/11/pretty-tables)
+
 <br>
 
 ## Learning d3
