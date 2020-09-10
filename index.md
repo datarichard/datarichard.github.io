@@ -6,7 +6,9 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
 
 ## Getting started
-[Install R, Rstudio, Jupyter notebooks for R, and RStan](https://datarichard.github.io/2020/09/06/getting-started)
+[Install R, Rstudio, Jupyter notebooks for R, and RStan](https://datarichard.github.io/2020/09/06/getting-started)  
+
+[Math in markdown](https://datarichard.github.io/2020/09/10/math-in-markdown)
 
 <br>
 
