@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Getting started"
+author: "datarich(ard)"
 date: 2020-09-06 11:48:50 -0900
 categories:
 ---
