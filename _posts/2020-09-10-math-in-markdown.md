@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Math in markdown"
-author: "Datarich(ard)"
+author: "datarich(ard)"
 date: 2020-09-10 13:54:00 -0900
 categories:
 ---
@@ -59,7 +59,7 @@ or even this:
 
 <br>
 
-A list of **HTML special entity codes** which can be used for mathematical symbols is available online, see https://sites.psu.edu/symbolcodes/codehtml/#math
+A list of [HTML special entity codes](https://sites.psu.edu/symbolcodes/codehtml/#math) which can be used for mathematical symbols is available online, see https://sites.psu.edu/symbolcodes/codehtml/#math
 
-A list of Greek letters (e.g., &Beta; &Delta;, &mu;, &sigma;) is also available:  https://www.keynotesupport.com/internet/special-characters-greek-letters-symbols.shtml
+A list of [Greek letters](https://www.keynotesupport.com/internet/special-characters-greek-letters-symbols.shtml) (e.g., **&Beta; &Delta;, &mu;, &sigma;**) is also available:  https://www.keynotesupport.com/internet/special-characters-greek-letters-symbols.shtml
 
