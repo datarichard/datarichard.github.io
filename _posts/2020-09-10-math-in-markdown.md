@@ -37,7 +37,7 @@ to get this:
 
 Y = X<sup>2</sup>  
 
-or even try this:  
+or this:  
 
 ```
 <p align="center"> Y = X<sub>2</sub></p>
