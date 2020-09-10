@@ -1,13 +1,14 @@
 ---
 layout: post
 title: "Getting started"
+author: "Richard Morris"
 date: 2020-09-10 13:54:00 -0900
 categories:
 ---
 
 ## Github Markdown
 
-This is a Github flavoured markdown document. Markdown is a simple formatting syntax for authoring documents, which is supposed to include an easily accessible math syntax. Unfortunately Github flavoured markdown does not support math formatting.  
+This is a [Github flavoured markdown](https://guides.github.com/features/mastering-markdown/) document. Markdown is a simple formatting syntax for authoring documents, which is supposed to include an easily accessible math syntax. Unfortunately Github flavoured markdown does not support math formatting.  
 
 In this document you can't display maths equations such as: 
 
