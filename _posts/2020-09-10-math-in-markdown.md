@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Getting started"
-author: "Richard Morris"
+title: "Math in markdown"
+author: "Datarich(ard)"
 date: 2020-09-10 13:54:00 -0900
 categories:
 ---
