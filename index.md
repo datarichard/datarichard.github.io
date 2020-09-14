@@ -15,12 +15,7 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 <br>
 
 ## Learning d3
-[Visualizations](https://datarichard.github.io/visualizations)  
 
-
-[Moving bubble plots](https://observablehq.com/@datarichard/moving-bubble-plot-of-hospital-transfers-using-d3-js)
-
-<br>
 
 <div id="observablehq-a626d7c4"></div>
 <script type="module">
@@ -29,3 +24,7 @@ import define from "https://api.observablehq.com/@datarichard/moving-bubble-plot
 const inspect = Inspector.into("#observablehq-a626d7c4");
 (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
 </script>
+
+<br>
+
+[source](https://observablehq.com/@datarichard/moving-bubble-plot-of-hospital-transfers-using-d3-js)
