@@ -15,7 +15,7 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 <br>
 
 ## Learning d3
-[Hank](https://datarichard.github.io/2020/09/07/hank.html)  
+[Visualizations](https://datarichard.github.io/visualizations)  
 
 
 [Moving bubble plots](https://observablehq.com/@datarichard/moving-bubble-plot-of-hospital-transfers-using-d3-js)

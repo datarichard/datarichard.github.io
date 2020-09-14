@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>`substitute(Filename('', 'Page Title'), '^.', '\u&', '')`</title>
-    meta
-  </head>
   <body>
     <script>
 // this is a script that renders a chart
@@ -221,5 +216,5 @@ chart = {
 }
 </script>
   </body>
-</html>>
+</html>
 
