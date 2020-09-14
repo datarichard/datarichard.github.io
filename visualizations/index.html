@@ -1,36 +1,15 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>{{ page.title }}</title>
-			<!-- link to main stylesheet -->
-			<link rel="stylesheet" type="text/css" href="/css/main.css">
+
 		</head>
 		<body>
-			<nav>
-	    		<ul>
-	        		<li><a href="/">Home</a></li>
-		        	<li><a href="/about">About</a></li>
-	        		<li><a href="/cv">CV</a></li>
-	        		<li><a href="/blog">Blog</a></li>
-	    		</ul>
-			</nav>
-			<div class="container">
-			
-			{{ content }}
-<<<<<<< HEAD
-			<script src="js/main.js"></script>
-			
-			</div><!-- /.container -->
-=======
-			
-			</div><!-- /.container -->
-			<script src="js/main.js"></script>
->>>>>>> e3c5e33e9b985aed6a81fe0ae5992735e61cb56d
-			<footer>
-	    		<ul>
-	        		<li><a href="mailto:hankquinlanhub@gmail.com">email</a></li>
-	        		<li><a href="https://github.com/hankquinlan">github.com/hankquinlan</a></li>
-				</ul>
-			</footer>
+			<div id="observablehq-a626d7c4"></div>
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/@datarichard/moving-bubble-plot-of-hospital-transfers-using-d3-js.js?v=3";
+const inspect = Inspector.into("#observablehq-a626d7c4");
+(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+</script>
 		</body>
 	</html>
