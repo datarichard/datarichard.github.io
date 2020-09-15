@@ -16,6 +16,7 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
 ## Learning d3
 
+#### Moving bubble plot  
 
 <div id="observablehq-a626d7c4"></div>
 <script type="module">
@@ -28,3 +29,21 @@ const inspect = Inspector.into("#observablehq-a626d7c4");
 <br>
 
 [source](https://observablehq.com/@datarichard/moving-bubble-plot-of-hospital-transfers-using-d3-js)
+
+<br><br>
+
+#### Animated small multiples
+
+<div id="observablehq-3e10a46a"></div>
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/@datarichard/d3-animated-line-charts-small-multiples.js?v=3";
+const inspect = Inspector.into("#observablehq-3e10a46a");
+(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+</script>
+
+<br>
+
+[source](https://observablehq.com/@datarichard/d3-animated-line-charts-small-multiples)
+
+<br><br>
