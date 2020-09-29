@@ -27,6 +27,6 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
   theme(axis.ticks=element_blank())
 ```
 
-![](../assets/dartboard-1.png)<!-- -->
+![dartboard](../assets/dartboard-1.png)<!-- -->
 
 <br>
