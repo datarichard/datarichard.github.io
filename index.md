@@ -14,6 +14,11 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
 <br>
 
+## Dataviz
+[US election 2020](https://datarichard.github.io/2020/09/29/dartboard)
+
+<br>
+
 ## Learning d3
 
 #### Moving bubble plot  
