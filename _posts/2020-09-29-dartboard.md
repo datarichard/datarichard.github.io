@@ -1,7 +1,10 @@
-Dartboard
-================
-datarich(ard)
-2020-09-29 00:00:54 -0900
+---
+layout: post
+title: "Dartboard"
+author: "datarich(ard)"
+date: 2020-09-29 13:54:00 -0900
+categories:
+---
 
 Inspired by this [post on visualizing
 uncertainty](https://magazine.northwestern.edu/exclusives/understanding-uncertainty/),
