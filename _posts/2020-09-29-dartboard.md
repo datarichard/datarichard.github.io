@@ -30,6 +30,6 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
   theme(axis.ticks=element_blank())
 ```
 
-<img src="images/dartboard-1.png"></div>
+![dartboard](https://github.com/datarichard/datarichard.github.io/images/dartboard-1.png)
 
 <br>
