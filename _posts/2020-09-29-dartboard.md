@@ -30,6 +30,10 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
   theme(axis.ticks=element_blank())
 ```
 
+<<<<<<< HEAD
 ![dartboard](2020-09/assets/dartboard-1.png)<!-- -->
+=======
+![](2020-09/assets/dartboard-1.png)<!-- -->
+>>>>>>> 7580fa5b6c38859108e22a06ba4bb8221c7bda1c
 
 <br>
