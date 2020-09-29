@@ -32,6 +32,6 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
 
 <br>
 
-(updated but still no image)
+(Source: https://projects.fivethirtyeight.com/2020-election-forecast/)
 
 <br>
