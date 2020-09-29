@@ -1,9 +1,7 @@
 ---
-layout: post
-title: "US election 2020"
+title: "Dartboard"
 author: "datarich(ard)"
-date: 2020-09-29 13:54:00 -0900
-categories:
+date: 2020-09-29 00:00:54 -0900
 ---
 
 Inspired by this [post on visualizing
@@ -30,10 +28,6 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
   theme(axis.ticks=element_blank())
 ```
 
-<<<<<<< HEAD
-![dartboard](2020-09/assets/dartboard-1.png)<!-- -->
-=======
-![](2020-09/assets/dartboard-1.png)<!-- -->
->>>>>>> 7580fa5b6c38859108e22a06ba4bb8221c7bda1c
+![](assets/dartboard-1.png)<!-- -->
 
 <br>

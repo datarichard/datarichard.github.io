@@ -1,7 +1,9 @@
-Pretty tables
-================
-datarich(ard)
-2020-09-11 00:00:54 -0900
+---
+layout: post
+title: "Pretty tables"
+author: "datarich(ard)"
+date: 2020-09-11 00:00:54 -0900
+---
 
 ``` r
 # packages needed
