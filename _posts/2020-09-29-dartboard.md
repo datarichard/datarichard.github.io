@@ -28,10 +28,6 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
   theme(axis.ticks=element_blank())
 ```
 
-![dartboard](https://github.com/datarichard/datarichard.github.io/blob/master/_posts/assets/dartboard-1.png)<!-- -->
-
-<br>
-
-However for some reason the image is missing...
+![dartboard](../assets/dartboard-1.png)<!-- -->
 
 <br>
