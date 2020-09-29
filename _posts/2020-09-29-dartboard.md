@@ -33,3 +33,7 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
 ![dartboard](../images/dartboard-1.png)
 
 <br>
+
+Did this work?
+
+<br>
