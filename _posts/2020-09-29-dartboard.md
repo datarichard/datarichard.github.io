@@ -1,7 +1,10 @@
-Dartboard
-================
-datarich(ard)
-2020-09-29 00:00:54 -0900
+---
+layout: post
+title: "US election 2020"
+author: "datarich(ard)"
+date: 2020-09-29 00:00:00 -0900
+categories:
+---
 
 Inspired by this [post on visualizing
 uncertainty](https://magazine.northwestern.edu/exclusives/understanding-uncertainty/),
@@ -27,6 +30,6 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
   theme(axis.ticks=element_blank())
 ```
 
-![](../images/dartboard-1.png)<!-- -->
+![](images/dartboard-1.png)<!-- -->
 
 <br>
