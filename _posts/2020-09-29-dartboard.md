@@ -31,3 +31,7 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
 ![dartboard](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/dartboard-1.png)<!-- -->
 
 <br>
+
+(updated but still no image)
+
+<br>
