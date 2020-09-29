@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Dartboard"
+title: "US election 2020"
 author: "datarich(ard)"
 date: 2020-09-29 13:54:00 -0900
 categories:
@@ -30,6 +30,6 @@ ggplot(df, aes(fill=`2020`, xmin = x, ymin = y, xmax = x+1, ymax = y+1)) +
   theme(axis.ticks=element_blank())
 ```
 
-![dartboard](../assets/dartboard-1.png)<!-- -->
+![dartboard](2020-09/assets/dartboard-1.png)<!-- -->
 
 <br>
