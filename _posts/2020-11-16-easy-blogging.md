@@ -3,7 +3,6 @@ layout: post
 title: "Easy guide to github for writing a journal article"
 author: "datarich(ard)"
 date: 2020-11-16 11:48:50 -0900
-categories:
 ---
 
 ## Step 1. Start a new github rep with the article title  
