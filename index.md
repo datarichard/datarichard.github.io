@@ -12,6 +12,8 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
 [Pretty tables](https://datarichard.github.io/2020/09/11/pretty-tables)
 
+[Easy github publishing](https://datarichard.github.io/2020/11/16/easy-blogging)
+
 <br>
 
 ## Dataviz
