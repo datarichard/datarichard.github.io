@@ -19,6 +19,8 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 ## Dataviz
 [US election 2020](https://datarichard.github.io/2020/09/29/dartboard)
 
+[Depicting large data sets]((https://datarichard.github.io/2020/12/10/bin-sizes))
+
 <br>
 
 ## Learning d3
