@@ -16,6 +16,9 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
 <br>
 
+## Bayesian inference
+[Bayesian partial pooling shrinkage magic](https://datarichard.github.io/2020/12/10/partial-pooling)
+
 ## Dataviz
 [US election 2020](https://datarichard.github.io/2020/09/29/dartboard)
 
