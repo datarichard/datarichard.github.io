@@ -26,7 +26,8 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
 [Depicting large data sets](https://datarichard.github.io/2020/12/10/bin-sizes)
 
-[Intro to tidyverse](https://datarichard.github.io/2021/06/04/intro-to-tidyverse)
+[Intro to tidyverse](https://datarichard.github.io/2021/04/06/intro-to-tidyverse)  
+
 <br>
 
 ## Learning d3
