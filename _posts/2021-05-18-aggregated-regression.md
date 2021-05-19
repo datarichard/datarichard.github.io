@@ -1,7 +1,10 @@
-Aggregated regression in R
-================
-Dr Richard Morris
-18/05/2021
+---
+layout: post
+title: "Aggregated regression in R"
+author: "datarich(ard)"
+---
+
+<br>
 
 #### Aggregated regression
 
