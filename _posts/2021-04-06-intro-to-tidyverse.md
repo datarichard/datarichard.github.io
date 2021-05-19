@@ -1,7 +1,8 @@
-Intro to tidyverse
-================
-Dr Richard Morris
-06/04/2021
+---
+layout: post
+title: "Intro to tidyverse"
+author: "datarich(ard)"
+---
 
 ## R Markdown
 
@@ -266,7 +267,7 @@ p <- p + geom_col(color = "black", width = 0.66)
 p
 ```
 
-![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/barplot-1.png)<!-- -->
+![](../assets/barplot-1.png)<!-- -->
 
 This is the most basic plot we can do, but we start by checking it and
 then adding layers in each iteration until we have what we want.
@@ -281,7 +282,7 @@ p <- p + geom_errorbar(aes(ymin = M - SEM, ymax = M + SEM),
 p
 ```
 
-![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/add_error-1.png)<!-- -->
+![](../assets/add_error-1.png)<!-- -->
 
 Set the y-axis limits:
 
@@ -293,7 +294,7 @@ p <- p + scale_y_continuous(breaks = c(2, 4, 6, 8, 10),
 p
 ```
 
-![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/axis_limits-1.png)<!-- -->
+![](../assets/axis_limits-1.png)<!-- -->
 
 Add some labels:
 
@@ -308,7 +309,7 @@ p <- p + labs(
 p
 ```
 
-![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/add_labels-1.png)<!-- -->
+![](../assets/add_labels-1.png)<!-- -->
 
 <br>
 
@@ -327,7 +328,7 @@ p <- p + theme(
 p
 ```
 
-![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/remove_legend-1.png)<!-- -->
+![](../assets/remove_legend-1.png)<!-- -->
 
 <br>
 
@@ -392,4 +393,4 @@ datatable %>%
     facet_wrap(~variable) # the new column ("variable") contained the table name
 ```
 
-![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/reality-1.png)<!-- -->
+![](../assets/reality-1.png)<!-- -->
