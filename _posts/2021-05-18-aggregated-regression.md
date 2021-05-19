@@ -4,7 +4,7 @@ title: "Aggregated regression in R"
 author: "datarich(ard)"
 ---
 
-<br>
+================
 
 #### Aggregated regression
 
@@ -70,39 +70,40 @@ mtcars %>%
 
 <br>
 
-A logistic regression to predict the transmission type (“am \~ vs +
-cyl”) would be performed like this:
+A logistic regression to predict the transmission type (“am \~ cyl +
+gear”) would be performed like this:
 
 ``` r
-summary(glm(am ~ as.factor(cyl), 
+summary(glm(am ~ as.factor(cyl) + carb, 
             data = mtcars, 
             family = binomial(link = "logit")))
 ```
 
     ## 
     ## Call:
-    ## glm(formula = am ~ as.factor(cyl), family = binomial(link = "logit"), 
+    ## glm(formula = am ~ as.factor(cyl) + carb, family = binomial(link = "logit"), 
     ##     data = mtcars)
     ## 
     ## Deviance Residuals: 
     ##     Min       1Q   Median       3Q      Max  
-    ## -1.6120  -0.5553  -0.5553   0.7981   1.9728  
+    ## -1.8699  -0.5506  -0.1869   0.6185   1.9806  
     ## 
     ## Coefficients:
     ##                 Estimate Std. Error z value Pr(>|z|)   
-    ## (Intercept)       0.9808     0.6770   1.449   0.1474   
-    ## as.factor(cyl)6  -1.2685     1.0206  -1.243   0.2139   
-    ## as.factor(cyl)8  -2.7726     1.0206  -2.717   0.0066 **
+    ## (Intercept)      -0.6718     1.0924  -0.615  0.53854   
+    ## as.factor(cyl)6  -3.7609     1.9072  -1.972  0.04862 * 
+    ## as.factor(cyl)8  -5.5958     1.9381  -2.887  0.00389 **
+    ## carb              1.1144     0.5918   1.883  0.05967 . 
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## (Dispersion parameter for binomial family taken to be 1)
     ## 
     ##     Null deviance: 43.230  on 31  degrees of freedom
-    ## Residual deviance: 33.935  on 29  degrees of freedom
-    ## AIC: 39.935
+    ## Residual deviance: 26.287  on 28  degrees of freedom
+    ## AIC: 34.287
     ## 
-    ## Number of Fisher Scoring iterations: 4
+    ## Number of Fisher Scoring iterations: 5
 
 <br>
 
@@ -114,19 +115,26 @@ On the other hand, aggregated or summary data might look like this:
 ##### Aggregated counts
 
 ``` r
-mtcars_cnt <- count(mtcars, cyl, am)
+mtcars_cnt <- count(mtcars, cyl, carb, am)
 
 knitr::kable(mtcars_cnt)
 ```
 
-| cyl |  am |   n |
-|----:|----:|----:|
-|   4 |   0 |   3 |
-|   4 |   1 |   8 |
-|   6 |   0 |   4 |
-|   6 |   1 |   3 |
-|   8 |   0 |  12 |
-|   8 |   1 |   2 |
+| cyl | carb |  am |   n |
+|----:|-----:|----:|----:|
+|   4 |    1 |   0 |   1 |
+|   4 |    1 |   1 |   4 |
+|   4 |    2 |   0 |   2 |
+|   4 |    2 |   1 |   4 |
+|   6 |    1 |   0 |   2 |
+|   6 |    4 |   0 |   2 |
+|   6 |    4 |   1 |   2 |
+|   6 |    6 |   1 |   1 |
+|   8 |    2 |   0 |   4 |
+|   8 |    3 |   0 |   3 |
+|   8 |    4 |   0 |   5 |
+|   8 |    4 |   1 |   1 |
+|   8 |    8 |   1 |   1 |
 
 <br>
 
@@ -134,7 +142,7 @@ An aggregated regression is performed using the weights argument to
 indicate the units per response:
 
 ``` r
-summary(glm(am ~ as.factor(cyl), 
+summary(glm(am ~ as.factor(cyl) + carb, 
             data = mtcars_cnt, 
             family = binomial(link = "logit"),
             weights = n
@@ -143,28 +151,29 @@ summary(glm(am ~ as.factor(cyl),
 
     ## 
     ## Call:
-    ## glm(formula = am ~ as.factor(cyl), family = binomial(link = "logit"), 
+    ## glm(formula = am ~ as.factor(cyl) + carb, family = binomial(link = "logit"), 
     ##     data = mtcars_cnt, weights = n)
     ## 
     ## Deviance Residuals: 
-    ##      1       2       3       4       5       6  
-    ## -2.792   2.257  -2.116   2.255  -1.923   2.790  
+    ##     Min       1Q   Median       3Q      Max  
+    ## -2.6445  -1.2312  -0.3738   1.2369   1.9923  
     ## 
     ## Coefficients:
     ##                 Estimate Std. Error z value Pr(>|z|)   
-    ## (Intercept)       0.9808     0.6770   1.449  0.14740   
-    ## as.factor(cyl)6  -1.2685     1.0206  -1.243  0.21391   
-    ## as.factor(cyl)8  -2.7726     1.0206  -2.717  0.00659 **
+    ## (Intercept)      -0.6718     1.0925  -0.615  0.53858   
+    ## as.factor(cyl)6  -3.7609     1.9074  -1.972  0.04865 * 
+    ## as.factor(cyl)8  -5.5958     1.9383  -2.887  0.00389 **
+    ## carb              1.1144     0.5919   1.883  0.05971 . 
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## (Dispersion parameter for binomial family taken to be 1)
     ## 
-    ##     Null deviance: 43.230  on 5  degrees of freedom
-    ## Residual deviance: 33.935  on 3  degrees of freedom
-    ## AIC: 39.935
+    ##     Null deviance: 43.230  on 12  degrees of freedom
+    ## Residual deviance: 26.287  on  9  degrees of freedom
+    ## AIC: 34.287
     ## 
-    ## Number of Fisher Scoring iterations: 4
+    ## Number of Fisher Scoring iterations: 5
 
 <br>
 
@@ -178,7 +187,7 @@ Aggregated data might also look like this:
 ##### Aggregated proportions
 
 ``` r
-mtcars_wcnt <- count(mtcars, cyl, am) %>%
+mtcars_wcnt <- count(mtcars, cyl, carb, am) %>%
   spread(am, n, fill = 0) %>%
   rename(auto = `1`, man = `0`) %>%
   mutate(n = man + auto,
@@ -187,18 +196,24 @@ mtcars_wcnt <- count(mtcars, cyl, am) %>%
 knitr::kable(mtcars_wcnt)
 ```
 
-| cyl | man | auto |   n |         p |
-|----:|----:|-----:|----:|----------:|
-|   4 |   3 |    8 |  11 | 0.7272727 |
-|   6 |   4 |    3 |   7 | 0.4285714 |
-|   8 |  12 |    2 |  14 | 0.1428571 |
+| cyl | carb | man | auto |   n |         p |
+|----:|-----:|----:|-----:|----:|----------:|
+|   4 |    1 |   1 |    4 |   5 | 0.8000000 |
+|   4 |    2 |   2 |    4 |   6 | 0.6666667 |
+|   6 |    1 |   2 |    0 |   2 | 0.0000000 |
+|   6 |    4 |   2 |    2 |   4 | 0.5000000 |
+|   6 |    6 |   0 |    1 |   1 | 1.0000000 |
+|   8 |    2 |   4 |    0 |   4 | 0.0000000 |
+|   8 |    3 |   3 |    0 |   3 | 0.0000000 |
+|   8 |    4 |   5 |    1 |   6 | 0.1666667 |
+|   8 |    8 |   0 |    1 |   1 | 1.0000000 |
 
 <br>
 
 The formula and weights arguments need updating:
 
 ``` r
-summary(glm(p ~ as.factor(cyl), 
+summary(glm(p ~ as.factor(cyl) + carb, 
             data = mtcars_wcnt, 
             family = binomial(link = "logit"),
             weights = n
@@ -207,34 +222,37 @@ summary(glm(p ~ as.factor(cyl),
 
     ## 
     ## Call:
-    ## glm(formula = p ~ as.factor(cyl), family = binomial(link = "logit"), 
+    ## glm(formula = p ~ as.factor(cyl) + carb, family = binomial(link = "logit"), 
     ##     data = mtcars_wcnt, weights = n)
     ## 
     ## Deviance Residuals: 
-    ## [1]  0  0  0
+    ##       1        2        3        4        5        6        7        8  
+    ##  0.9179  -0.9407  -0.3772  -0.0251   0.4468  -0.3738  -0.5602   0.1789  
+    ##       9  
+    ##  0.3699  
     ## 
     ## Coefficients:
     ##                 Estimate Std. Error z value Pr(>|z|)   
-    ## (Intercept)       0.9808     0.6770   1.449   0.1474   
-    ## as.factor(cyl)6  -1.2685     1.0206  -1.243   0.2139   
-    ## as.factor(cyl)8  -2.7726     1.0206  -2.717   0.0066 **
+    ## (Intercept)      -0.6718     1.0925  -0.615  0.53858   
+    ## as.factor(cyl)6  -3.7609     1.9074  -1.972  0.04865 * 
+    ## as.factor(cyl)8  -5.5958     1.9383  -2.887  0.00389 **
+    ## carb              1.1144     0.5919   1.883  0.05971 . 
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## (Dispersion parameter for binomial family taken to be 1)
     ## 
-    ##     Null deviance: 9.2948e+00  on 2  degrees of freedom
-    ## Residual deviance: 8.8818e-16  on 0  degrees of freedom
-    ## AIC: 13.591
+    ##     Null deviance: 19.6356  on 8  degrees of freedom
+    ## Residual deviance:  2.6925  on 5  degrees of freedom
+    ## AIC: 18.485
     ## 
-    ## Number of Fisher Scoring iterations: 4
+    ## Number of Fisher Scoring iterations: 5
 
 <br>
 
 So far very similar results across aggregates and individual datasets.
 However as we start to add independent variables (especially continuous
-variables), results begin to diverge. Below we add `carb` and `mpg` as
-predictors:
+variables), results begin to diverge. Below we add `mpg` as a predictor:
 
 ##### Individual
 
@@ -306,11 +324,11 @@ knitr::kable(mtcars_p)
 <br>
 
 ``` r
-  glm(formula = am ~ as.factor(cyl) + carb + mpg,
-      family = binomial,
-      data = mtcars_p,
-      weights = n
-      ) %>%
+glm(formula = am ~ as.factor(cyl) + carb + mpg,
+    family = binomial,
+    data = mtcars_p,
+    weights = n
+  ) %>%
   summary()
 ```
 
