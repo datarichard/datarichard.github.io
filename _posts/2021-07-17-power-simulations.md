@@ -156,7 +156,7 @@ effect_03 <- simulate_power(d = 0.3, n_increase = 30)
 effect_02 <- simulate_power(d = 0.2, n_increase = 40)
 ```
 
-![](../assets/power_sim_plot-1.png)<!-- -->
+![power_sim](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/power_sim_plot-1.png)<!-- -->
 
 <br>
 
