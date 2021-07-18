@@ -21,6 +21,7 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 
 [Aggregated regression in R](https://datarichard.github.io/2021/05/18/aggregated-regression)  
 
+[Power simulations in R](https://datarichard.github.io/2021/07/17/power-simulations)  
 
 <br>
 
