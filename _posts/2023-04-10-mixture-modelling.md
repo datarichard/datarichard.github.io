@@ -172,7 +172,7 @@ sim_data <- d %>%
   )
 ```
 
-![](../assets/mixtures_fig1a-1.png)<!-- -->
+![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/mixtures_fig1a-1.png)<!-- -->
 
 <br>
 
@@ -267,7 +267,7 @@ p <- sim_data %>%
   ) 
 ```
 
-![](../assets/mixtures_fig1b-1.png)<!-- -->
+![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/mixtures_fig1b-1.png)<!-- -->
 
 <br>
 
@@ -349,7 +349,7 @@ sim_data <- d %>%
   )
 ```
 
-![](../assets/mixtures_fig2a-1.png)<!-- -->
+![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/mixtures_fig2a-1.png)<!-- -->
 
 <br>
 
@@ -440,7 +440,7 @@ p <- sim_data %>%
   ungroup()
 ```
 
-![](../assets/mixtures_fig2b-1.png)<!-- -->
+![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/mixtures_fig2b-1.png)<!-- -->
 
 <br>
 
@@ -520,7 +520,7 @@ sim_data <- d %>%
   )
 ```
 
-![](../assets/mixtures_fig3a-1.png)<!-- -->
+![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/mixtures_fig3a-1.png)<!-- -->
 
 Fit the simulated data. Note the priors for the slopes (`mu1_x` and
 `mu2_x`) are steeper and wider than the truth.
@@ -615,7 +615,7 @@ p <- sim_data %>%
   ungroup()
 ```
 
-![](../assets/mixtures_fig3b-1.png)<!-- -->
+![](https://raw.githubusercontent.com/datarichard/datarichard.github.io/master/assets/mixtures_fig3b-1.png)<!-- -->
 
 <br>
 
