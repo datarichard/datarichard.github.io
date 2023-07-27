@@ -17,6 +17,8 @@ these are the notes of an ex-cognitive-neuroscientist trying to pivot to datasci
 <br>
 
 ## Modelling & Bayesian inference
+[RCT in schools](https://datarichard.github.io/2023/07/05/RCT-schools)  
+
 [Finite mixture models with brms](https://datarichard.github.io/2023/04/10/mixture-modelling)  
 
 [Bayesian partial pooling shrinkage magic](https://datarichard.github.io/2020/12/11/partial-pooling)  
