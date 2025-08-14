@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Finite mixture modelling with brms</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Richard W Morris</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    R code
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Post-1.html">RCT in schools</a>
+    </li>
+    <li>
+      <a href="Post-2.html">Mixture modelling</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Finite mixture modelling with brms</h1>
+
+</div>
+
+
+<p>I couldn’t find much on the interblogs on finite mixture modelling
+using <strong>brms</strong> so I’ve provided this document to offer some
+practical code to help develop and apply a mixture model as a starting
+point.</p>
+<p><br></p>
+<div id="finite-mixture-models" class="section level2">
+<h2>Finite Mixture Models</h2>
+<p>From Wikipedia:</p>
+<blockquote>
+<p>In statistics, a mixture model is a probabilistic model for
+representing the presence of subpopulations within an overall
+population, without requiring that an observed data set should identify
+the sub-population to which an individual observation belongs. Formally
+a mixture model corresponds to the mixture distribution that represents
+the probability distribution of observations in the overall population.
+However, while problems associated with “mixture distributions” relate
+to deriving the properties of the overall population from those of the
+sub-populations, “mixture models” are used to make statistical
+inferences about the properties of the sub-populations given only
+observations on the pooled population, without sub-population identity
+information.</p>
+</blockquote>
+<p>Worked examples of finite mixture models in <strong>brms</strong>
+from Paul Burkner: <a
+href="http://paul-buerkner.github.io/brms/reference/mixture.html"
+class="uri">http://paul-buerkner.github.io/brms/reference/mixture.html</a></p>
+<p>Mixture models may be used directly for modeling data with multimodal
+distributions, or they may be used as priors for other parameters. For
+example a multilevel mixture model:</p>
+<p><code>brm(y ~ x + z + (1 | g), family = mixture(gaussian, gaussian))</code></p>
+<p><br></p>
+<p>Or a growth mixture model:</p>
+<p><code>brm(y ~ time + z + (1 + time | g), family = mixture(gaussian, gaussian))</code></p>
+<p><a
+href="https://m-clark.github.io/mixed-models-with-R/bayesian.html#beyond-the-model"
+class="uri">https://m-clark.github.io/mixed-models-with-R/bayesian.html#beyond-the-model</a></p>
+<p><br></p>
+<p>Note: See the <strong>brms</strong> formula help for details on the
+mixture model specification</p>
+<p><a
+href="http://paul-buerkner.github.io/brms/reference/brmsformula.html"
+class="uri">http://paul-buerkner.github.io/brms/reference/brmsformula.html</a></p>
+<p><br></p>
+<p>Finite mixture models are usually latent categorical variables, which
+are made possible in Stan by marginalizing out the discrete parameters
+(e.g., cluster membership). The cluster membership can then be recovered
+in the generated quantities block, as described next. (<a
+href="https://mc-stan.org/docs/2_18/stan-users-guide/mixture-modeling-chapter.html"
+class="uri">https://mc-stan.org/docs/2_18/stan-users-guide/mixture-modeling-chapter.html</a>)</p>
+<p><br></p>
+<div id="recovering-posterior-mixture-proportions"
+class="section level4">
+<h4>Recovering posterior mixture proportions</h4>
+<p>The posterior p(z) over the mixture indicator (z ∈ 1:K) is often of
+interest as p(z = k) is the posterior probability that that observation
+y was generated by mixture component k. The posterior can be computed
+via Bayes’s rule. The normalization can be done via summation, because z
+∈ 1:K only takes on finitely many values.<br />
+(<a
+href="https://mc-stan.org/docs/2_18/stan-users-guide/summing-out-the-responsibility-parameter.html"
+class="uri">https://mc-stan.org/docs/2_18/stan-users-guide/summing-out-the-responsibility-parameter.html</a>)</p>
+<p>The generated quantities block may be used to draw discrete parameter
+values using the built-in pseudo-random number generators. For example
+see categorical_logit_rng() in the section titled Discrete
+Sampling:<br />
+<a
+href="https://mc-stan.org/docs/2_18/stan-users-guide/change-point-section.html"
+class="uri">https://mc-stan.org/docs/2_18/stan-users-guide/change-point-section.html</a></p>
+<p><br></p>
+</div>
+</div>
+<div id="simulation" class="section level2">
+<h2>Simulation</h2>
+<p>Simulation involves specifying the model in <strong>brms</strong> and
+then sampling from the priors to <em>draw</em> a single dataset.</p>
+<p>Below we specify a simple mixture model with two Gaussian
+distributions in <strong>brms</strong>, via the prior specification. The
+parameters <code>mu1</code> and <code>mu2</code>, and
+<code>sigma1</code> and <code>sigma2</code>, are the means and standard
+deviations of each distribution respectively. The location of each
+distribution needs to be different for identification purposes,
+otherwise any single observation will be exchangable between any of the
+distributions and the model will not fit.</p>
+<p><code>theta</code> is the mixing proportion, representing the
+relative size of each distribution.</p>
+<pre class="r"><code># brms requires a dataset even though it will not be used to sample from the 
+# priors
+
+set.seed(1) # for replicability
+
+d &lt;- tibble(
+  y = c(rnorm(200), rnorm(100, 6)) # mu1 = N(0,1), mu2 = N(6,1), theta = 0.66
+)
+
+# Specify the mixture model for brms
+mix &lt;- mixture(gaussian, gaussian)
+
+
+# Specify the parameters of the Gaussians, as well as theta
+priors &lt;- get_prior(formula = bf(y ~ 1), 
+                    data = d, 
+                    family = mix)
+
+priors$prior[1] &lt;- set_prior(&quot;constant(1)&quot;, class = &quot;sigma1&quot;)
+priors$prior[2] &lt;- set_prior(&quot;gamma(1, 3)&quot;, class = &quot;sigma2&quot;)
+priors$prior[3] &lt;- set_prior(&quot;dirichlet(0.66, 0.33)&quot;, class = &quot;theta&quot;)
+priors$prior[4] &lt;- set_prior(&quot;normal(0, 1)&quot;, class=&quot;Intercept&quot;, dpar = &quot;mu1&quot;)
+priors$prior[5] &lt;- set_prior(&quot;normal(5, 1)&quot;, class=&quot;Intercept&quot;, dpar = &quot;mu2&quot;)</code></pre>
+<p>After specifying the priors (i.e., parameters), we build (fit) the
+model using <code>sample_prior = "only"</code>.</p>
+<pre class="r"><code>mix.1 &lt;- brm(formula = bf(y ~ 1), 
+             data = d, 
+             family = mix,
+             prior = priors, 
+             sample_prior = &quot;only&quot;,
+             seed = 1,
+             file = &quot;mixtures_mix1.rds&quot;) </code></pre>
+<pre><code>##  Family: mixture(gaussian, gaussian) 
+##   Links: mu1 = identity; sigma1 = identity; mu2 = identity; sigma2 = identity; theta1 = identity; theta2 = identity 
+## Formula: y ~ 1 
+##    Data: d (Number of observations: 300) 
+##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup draws = 4000
+## 
+## Regression Coefficients:
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## mu1_Intercept    -0.03      0.98    -1.89     1.77 1.00     2428     2595
+## mu2_Intercept     5.03      1.01     3.06     7.05 1.00     4232     2899
+## 
+## Further Distributional Parameters:
+##        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma1     1.00      0.00     1.00     1.00   NA       NA       NA
+## sigma2     0.33      0.33     0.01     1.18 1.00     2342     1877
+## theta1     0.67      0.33     0.01     1.00 1.00     2488     1368
+## theta2     0.33      0.33     0.00     0.99 1.00     2488     1368
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p><br></p>
+<p>After specifying and building the model we can draw a single dataset
+from it to create simulated data using
+<code>posterior_predict</code>.</p>
+<pre class="r"><code>set.seed(5) # for replicability  
+
+# Simulate data from the parameterized model
+sim_data &lt;- d %&gt;%
+  mutate(
+    y_obs = c(t(posterior_predict(mix.1, nsamples = 1)))
+  )</code></pre>
+<p><img src="Mixture-modelling_files/figure-html/mixtures_fig1a-1.png" width="672" /></p>
+<p><br></p>
+<p>Finally we can fit a mixture model to the simulated data. Note this
+fit has much wider priors than the original specification.</p>
+<pre class="r"><code>sim.1 &lt;- brm(bf(y_obs ~ 1), 
+               sim_data, 
+               family = mix,
+               prior = c(
+                 prior(normal(0, 7), Intercept, dpar = mu1),
+                 prior(normal(5, 7), Intercept, dpar = mu2)),
+               init=0,
+               seed=1,
+               file = &quot;mixtures_sim1.rds&quot;) </code></pre>
+<pre><code>##  Family: mixture(gaussian, gaussian) 
+##   Links: mu1 = identity; sigma1 = identity; mu2 = identity; sigma2 = identity; theta1 = identity; theta2 = identity 
+## Formula: y_obs ~ 1 
+##    Data: sim_data (Number of observations: 300) 
+##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup draws = 4000
+## 
+## Regression Coefficients:
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## mu1_Intercept     0.51      0.11     0.30     0.74 1.00     2126     2102
+## mu2_Intercept     4.13      0.03     4.07     4.18 1.00     4584     2771
+## 
+## Further Distributional Parameters:
+##        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma1     1.15      0.09     0.99     1.33 1.00     3009     2366
+## sigma2     0.35      0.02     0.31     0.39 1.00     2922     2161
+## theta1     0.40      0.03     0.34     0.45 1.00     3386     2479
+## theta2     0.60      0.03     0.55     0.66 1.00     3386     2479
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>The fit of the simulated data has recovered the original parameters
+well. <code>mu1</code> and <code>sigma1</code> are close to 0 and 1
+respectively. <code>mu2</code> and <code>sigma2</code> are close to 5
+and 0.33 respectively. However the relative sizes of <code>theta1</code>
+and <code>theta2</code> are 0.4 and 0.6 respectively, which is the
+reverse of the true model (0.66, 0.33).</p>
+<div id="recovering-the-clusters" class="section level4">
+<h4>Recovering the clusters</h4>
+<p>From wikipedia: <a
+href="https://en.wikipedia.org/wiki/Probability_density_function"
+class="uri">https://en.wikipedia.org/wiki/Probability_density_function</a></p>
+<blockquote>
+<p>while the absolute likelihood for a continuous random variable to
+take on any particular value is 0 (since there is an infinite set of
+possible values to begin with), the value of the PDF at two different
+samples can be used to infer, in any particular draw of the random
+variable, how much more likely it is that the random variable would be
+close to one sample compared to the other sample.</p>
+</blockquote>
+<p>Note that when x has the same density in both distributions, we need
+the denominator in Bayes rule (i.e., <code>theta</code>) to correctly
+adjust posterior probability!</p>
+<pre class="r"><code>#  https://stats.stackexchange.com/questions/363046/probability-that-an-observation-comes-from-population-a-or-b  
+
+est = posterior_summary(sim.1)[, &#39;Estimate&#39;]
+
+relative_p &lt;- function(.y,  
+                       mu1=est[[&#39;b_mu1_Intercept&#39;]], 
+                       mu2=est[[&#39;b_mu2_Intercept&#39;]],
+                       sigma1=est[[&#39;sigma1&#39;]], 
+                       sigma2=est[[&#39;sigma2&#39;]],
+                       denom1=est[[&#39;theta1&#39;]], 
+                       denom2=est[[&#39;theta2&#39;]]) {
+  
+  d1 &lt;- dnorm(.y, mu1, sigma1) * denom1
+  d2 &lt;- dnorm(.y, mu2, sigma2) * denom2
+
+  out = c(d1 / (d1 + d2),
+          d2 / (d1 + d2))
+  
+  return(out)
+}
+
+p &lt;- sim_data %&gt;%
+  rowwise() %&gt;%
+  mutate(
+    p_mu1 = relative_p(.y = y_obs)[1],
+    p_mu2 = relative_p(.y = y_obs)[2],
+    p_max = which.max(c(p_mu1, p_mu2))
+  ) </code></pre>
+<p><img src="Mixture-modelling_files/figure-html/mixtures_fig1b-1.png" width="672" /></p>
+<p><br></p>
+<p><br></p>
+</div>
+</div>
+<div id="add-a-mixture-of-slopes" class="section level2">
+<h2>Add a mixture of slopes</h2>
+<p>So far we have just modelled a mixture of intercepts, so adding a
+mixture of slopes is straightforward. However note that the slopes will
+not have different mixtures.</p>
+<pre class="r"><code># add an x variable to the data (which is required but will not be used)
+
+set.seed(1)
+d &lt;- d %&gt;%
+  mutate(x = rnorm(300))
+
+# Customise the priors we need to specify for an intercept + slope model
+priors &lt;- get_prior(bf(y ~ 1 + x), 
+                    d, 
+                    family = mix)
+
+priors$prior[1] &lt;- set_prior(&quot;constant(1.5)&quot;, class = &quot;sigma1&quot;)
+priors$prior[2] &lt;- set_prior(&quot;constant(1.5)&quot;, class = &quot;sigma2&quot;)
+priors$prior[3] &lt;- set_prior(&quot;dirichlet(1)&quot;, class = &quot;theta&quot;)
+priors$prior[4] &lt;- set_prior(&quot;normal(-3, 1)&quot;, class=&quot;b&quot;, dpar = &quot;mu1&quot;)
+priors$prior[6] &lt;- set_prior(&quot;normal(0, 3)&quot;, class=&quot;Intercept&quot;, dpar = &quot;mu1&quot;)
+priors$prior[7] &lt;- set_prior(&quot;normal(3, 1)&quot;, class=&quot;b&quot;, dpar = &quot;mu2&quot;)
+priors$prior[9] &lt;- set_prior(&quot;normal(0, 3)&quot;, class=&quot;Intercept&quot;, dpar = &quot;mu2&quot;)
+
+
+mix.2 &lt;- brm(bf(y ~ x), 
+             d, 
+             family = mix,
+             prior = priors, 
+             sample_prior = &quot;only&quot;,
+             seed = 1,
+             file = &quot;mixtures_mix2.rds&quot;
+             )</code></pre>
+<pre><code>##  Family: mixture(gaussian, gaussian) 
+##   Links: mu1 = identity; sigma1 = identity; mu2 = identity; sigma2 = identity; theta1 = identity; theta2 = identity 
+## Formula: y ~ x 
+##    Data: d (Number of observations: 300) 
+##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup draws = 4000
+## 
+## Regression Coefficients:
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## mu1_Intercept    -1.61      2.49    -6.65     3.09 1.00     2450     1954
+## mu2_Intercept     1.56      2.49    -3.11     6.56 1.00     4942     3205
+## mu1_x            -3.03      0.96    -4.92    -1.18 1.00     3539     2352
+## mu2_x             3.00      0.98     1.10     4.90 1.00     3717     2405
+## 
+## Further Distributional Parameters:
+##        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma1     1.50      0.00     1.50     1.50   NA       NA       NA
+## sigma2     1.50      0.00     1.50     1.50   NA       NA       NA
+## theta1     0.50      0.29     0.03     0.98 1.00     3554     2059
+## theta2     0.50      0.29     0.02     0.97 1.00     3554     2059
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p><br></p>
+<p>Drawing a single dataset</p>
+<pre class="r"><code>set.seed(4) # for replicability
+
+# Simulate data from the parameterized model
+sim_data &lt;- d %&gt;%
+  mutate(
+    y_obs = c(t(posterior_predict(mix.2, nsamples = 1)))
+  )</code></pre>
+<p><img src="Mixture-modelling_files/figure-html/mixtures_fig2a-1.png" width="672" /></p>
+<p><br></p>
+<p>Fit the simulated data. Note the priors for the slopes
+(<code>mu1_x</code> and <code>mu2_x</code>) are steeper and wider than
+the truth.</p>
+<pre class="r"><code># fit the simulated data
+custom_priors &lt;- get_prior(bf(y_obs ~ 1 + x), 
+                           sim_data, 
+                           family = mix)
+
+custom_priors$prior[1] &lt;- set_prior(&quot;gamma(2, 2)&quot;, class = &quot;sigma1&quot;)
+custom_priors$prior[2] &lt;- set_prior(&quot;gamma(2, 2)&quot;, class = &quot;sigma2&quot;)
+custom_priors$prior[4] &lt;- set_prior(&quot;normal(-5, 3)&quot;, class=&quot;b&quot;, dpar = &quot;mu1&quot;)
+custom_priors$prior[6] &lt;- set_prior(&quot;normal(0, 3)&quot;, class=&quot;Intercept&quot;, dpar = &quot;mu1&quot;)
+custom_priors$prior[7] &lt;- set_prior(&quot;normal(5, 3)&quot;, class=&quot;b&quot;, dpar = &quot;mu2&quot;)
+custom_priors$prior[9] &lt;- set_prior(&quot;normal(0, 3)&quot;, class=&quot;Intercept&quot;, dpar = &quot;mu2&quot;)
+
+sim.2 &lt;- brm(bf(y_obs ~ 1 + x), 
+             sim_data, 
+             family = mix,
+             prior = custom_priors,
+             init = 0,
+             seed = 1,
+             file = &quot;mixtures_sim2.rds&quot;
+) </code></pre>
+<pre><code>##  Family: mixture(gaussian, gaussian) 
+##   Links: mu1 = identity; sigma1 = identity; mu2 = identity; sigma2 = identity; theta1 = identity; theta2 = identity 
+## Formula: y_obs ~ 1 + x 
+##    Data: sim_data (Number of observations: 300) 
+##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup draws = 4000
+## 
+## Regression Coefficients:
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## mu1_Intercept    -2.17      0.16    -2.49    -1.86 1.00     2357     2979
+## mu2_Intercept     0.13      0.13    -0.13     0.39 1.00     3873     3523
+## mu1_x            -2.15      0.15    -2.44    -1.85 1.00     3855     2805
+## mu2_x             3.33      0.13     3.08     3.58 1.00     4730     2827
+## 
+## Further Distributional Parameters:
+##        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma1     1.37      0.13     1.14     1.64 1.00     3791     2898
+## sigma2     1.59      0.10     1.40     1.80 1.00     3972     3144
+## theta1     0.39      0.04     0.31     0.46 1.00     4373     2810
+## theta2     0.61      0.04     0.54     0.69 1.00     4373     2810
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p><br></p>
+<p>Recovering the clusters</p>
+<pre class="r"><code>est = posterior_summary(sim.2)[, &#39;Estimate&#39;]
+
+relative_p &lt;- function(.y, .x, 
+                       mu1=est[[&#39;b_mu1_Intercept&#39;]], 
+                       mu1x=est[[&#39;b_mu1_x&#39;]], 
+                       mu2=est[[&#39;b_mu2_Intercept&#39;]],
+                       mu2x = est[[&#39;b_mu2_x&#39;]],
+                       sigma1=est[[&#39;sigma1&#39;]], 
+                       sigma2=est[[&#39;sigma2&#39;]],
+                       denom1=est[[&#39;theta1&#39;]], 
+                       denom2=est[[&#39;theta2&#39;]]) {
+  
+  d1 &lt;- dnorm(.y, mu1 + .x*mu1x, sigma1) * denom1
+  d2 &lt;- dnorm(.y, mu2 + .x*mu2x, sigma2) * denom2
+
+  out = c(d1 / (d1 + d2),
+          d2 / (d1 + d2))
+  
+  return(out)
+}
+
+p &lt;- sim_data %&gt;%
+  rowwise() %&gt;%
+  mutate(
+    p_mu1 = relative_p(.y = y_obs, .x = x)[1],
+    p_mu2 = relative_p(.y = y_obs, .x = x)[2],
+    p_max = which.max(c(p_mu1, p_mu2))
+  ) %&gt;%
+  ungroup()</code></pre>
+<p><img src="Mixture-modelling_files/figure-html/mixtures_fig2b-1.png" width="672" /></p>
+<p><br></p>
+<p><br></p>
+</div>
+<div id="adding-a-parametric-term" class="section level2">
+<h2>Adding a parametric term</h2>
+<pre class="r"><code># add an x^2 variable to the data (which is required but will not be used)
+
+d &lt;- d %&gt;%
+  mutate(x2 = x*x)
+
+# Customise the priors we need to specify for an intercept + slope model
+priors &lt;- get_prior(bf(y ~ 1 + x + x2), 
+                    d, 
+                    family = mix)
+
+priors$prior[1] &lt;- set_prior(&quot;constant(1.5)&quot;, class=&quot;sigma1&quot;)
+priors$prior[2] &lt;- set_prior(&quot;constant(1.5)&quot;, class=&quot;sigma2&quot;)
+priors$prior[3] &lt;- set_prior(&quot;dirichlet(1)&quot;,  class=&quot;theta&quot;)
+priors$prior[5] &lt;- set_prior(&quot;normal(1, 1)&quot;,  class=&quot;b&quot;, coef=&quot;x&quot;,  dpar=&quot;mu1&quot;)
+priors$prior[6] &lt;- set_prior(&quot;normal(0, 1)&quot;,  class=&quot;b&quot;, coef=&quot;x2&quot;, dpar=&quot;mu1&quot;)
+priors$prior[7] &lt;- set_prior(&quot;normal(0, 3)&quot;,  class=&quot;Intercept&quot;,    dpar=&quot;mu1&quot;)
+priors$prior[9] &lt;- set_prior(&quot;normal(0, 1)&quot;,  class=&quot;b&quot;, coef=&quot;x&quot;,  dpar=&quot;mu2&quot;)
+priors$prior[10] &lt;- set_prior(&quot;normal(-3, 1)&quot;, class=&quot;b&quot;, coef=&quot;x2&quot;, dpar=&quot;mu2&quot;)
+priors$prior[11] &lt;- set_prior(&quot;normal(0, 3)&quot;, class=&quot;Intercept&quot;,    dpar=&quot;mu2&quot;)
+
+
+mix.3 &lt;- brm(bf(y ~ 1 + x + x2), 
+             d, 
+             family = mix,
+             prior = priors, 
+             sample_prior = &quot;only&quot;,
+             seed = 1,
+             init=0,
+             file = &quot;mixtures_mix3.rds&quot;
+             )</code></pre>
+<pre><code>##  Family: mixture(gaussian, gaussian) 
+##   Links: mu1 = identity; sigma1 = identity; mu2 = identity; sigma2 = identity; theta1 = identity; theta2 = identity 
+## Formula: y ~ 1 + x + x2 
+##    Data: d (Number of observations: 300) 
+##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup draws = 4000
+## 
+## Regression Coefficients:
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## mu1_Intercept    -1.79      2.70    -7.22     3.26 1.00     2543     1956
+## mu2_Intercept     4.46      2.68    -0.63     9.99 1.00     4229     3208
+## mu1_x             1.01      0.96    -0.90     2.89 1.00     3823     2981
+## mu1_x2            0.03      1.02    -1.95     2.06 1.00     3813     2648
+## mu2_x             0.01      0.99    -1.98     1.94 1.00     3374     3004
+## mu2_x2           -2.98      1.00    -4.93    -0.96 1.00     3672     2674
+## 
+## Further Distributional Parameters:
+##        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma1     1.50      0.00     1.50     1.50   NA       NA       NA
+## sigma2     1.50      0.00     1.50     1.50   NA       NA       NA
+## theta1     0.50      0.28     0.03     0.97 1.00     3820     2581
+## theta2     0.50      0.28     0.03     0.97 1.00     3820     2581
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>Drawing a single dataset</p>
+<pre class="r"><code>set.seed(8) # 8 or 3 for replicability
+
+# Simulate data from the parameterized model
+sim_data &lt;- d %&gt;%
+  mutate(
+    y_obs = c(t(posterior_predict(mix.3, nsamples = 1)))
+  )</code></pre>
+<p><img src="Mixture-modelling_files/figure-html/mixtures_fig3a-1.png" width="672" /></p>
+<p>Fit the simulated data. Note the priors for the slopes
+(<code>mu1_x</code> and <code>mu2_x</code>) are steeper and wider than
+the truth.</p>
+<pre class="r"><code># fit the simulated data
+custom_priors &lt;- get_prior(bf(y_obs ~ 1 + x + x2), 
+                           sim_data, 
+                           family = mix)
+
+custom_priors$prior[1] &lt;- set_prior(&quot;gamma(2, 2)&quot;, class=&quot;sigma1&quot;)
+custom_priors$prior[2] &lt;- set_prior(&quot;gamma(2, 2)&quot;, class=&quot;sigma2&quot;)
+custom_priors$prior[5] &lt;- set_prior(&quot;normal(1, 3)&quot;, class=&quot;b&quot;, coef=&quot;x&quot;,  dpar=&quot;mu1&quot;)
+custom_priors$prior[6] &lt;- set_prior(&quot;normal(0, 3)&quot;, class=&quot;b&quot;, coef=&quot;x2&quot;, dpar=&quot;mu1&quot;)
+custom_priors$prior[7] &lt;- set_prior(&quot;normal(0, 3)&quot;, class=&quot;Intercept&quot;,    dpar=&quot;mu1&quot;)
+custom_priors$prior[9]  &lt;- set_prior(&quot;normal(0, 3)&quot;,  class=&quot;b&quot;, coef=&quot;x&quot;,  dpar=&quot;mu2&quot;)
+custom_priors$prior[10] &lt;- set_prior(&quot;normal(-3, 3)&quot;, class=&quot;b&quot;, coef=&quot;x2&quot;, dpar=&quot;mu2&quot;)
+custom_priors$prior[11] &lt;- set_prior(&quot;normal(0, 3)&quot;,  class=&quot;Intercept&quot;,    dpar=&quot;mu2&quot;)
+
+sim.3 &lt;- brm(bf(y_obs ~ 1 + x + x2), 
+             sim_data, 
+             family = mix,
+             prior = custom_priors,
+             init = 0,
+             seed = 1,
+             file = &quot;mixtures_sim3.rds&quot;
+) </code></pre>
+<pre><code>##  Family: mixture(gaussian, gaussian) 
+##   Links: mu1 = identity; sigma1 = identity; mu2 = identity; sigma2 = identity; theta1 = identity; theta2 = identity 
+## Formula: y_obs ~ 1 + x + x2 
+##    Data: sim_data (Number of observations: 300) 
+##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup draws = 4000
+## 
+## Regression Coefficients:
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## mu1_Intercept    -3.91      0.29    -4.45    -3.33 1.00     3940     3182
+## mu2_Intercept     3.39      0.12     3.16     3.62 1.00     4899     3877
+## mu1_x             1.41      0.32     0.76     2.02 1.00     4750     3164
+## mu1_x2           -0.39      0.26    -0.88     0.12 1.00     4106     2665
+## mu2_x             0.07      0.11    -0.14     0.28 1.00     6316     2721
+## mu2_x2           -2.91      0.07    -3.04    -2.77 1.00     6486     3241
+## 
+## Further Distributional Parameters:
+##        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma1     1.59      0.17     1.29     1.98 1.00     4668     3067
+## sigma2     1.41      0.07     1.28     1.56 1.00     5663     3134
+## theta1     0.23      0.03     0.18     0.28 1.00     6267     2817
+## theta2     0.77      0.03     0.72     0.82 1.00     6267     2817
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p><br></p>
+<p>Recovering the clusters</p>
+<pre class="r"><code>est = posterior_summary(sim.3)[, &#39;Estimate&#39;]
+
+relative_p &lt;- function(.y, .x, .x2,
+                       mu1=  est[[&#39;b_mu1_Intercept&#39;]], 
+                       mu1x= est[[&#39;b_mu1_x&#39;]],
+                       mu1x2=est[[&#39;b_mu1_x2&#39;]],
+                       mu2=  est[[&#39;b_mu2_Intercept&#39;]],
+                       mu2x= est[[&#39;b_mu2_x&#39;]],
+                       mu2x2=est[[&#39;b_mu2_x2&#39;]],
+                       sigma1=est[[&#39;sigma1&#39;]], 
+                       sigma2=est[[&#39;sigma2&#39;]],
+                       denom1=est[[&#39;theta1&#39;]], 
+                       denom2=est[[&#39;theta2&#39;]]) {
+  
+  d1 &lt;- dnorm(.y, mu1 + .x*mu1x + .x2*mu1x2, sigma1) * denom1
+  d2 &lt;- dnorm(.y, mu2 + .x*mu2x + .x2*mu2x2, sigma2) * denom2
+
+  out = c(d1 / (d1 + d2),
+          d2 / (d1 + d2))
+  
+  return(out)
+}
+
+p &lt;- sim_data %&gt;%
+  rowwise() %&gt;%
+  mutate(
+    p_mu1 = relative_p(.y = y_obs, .x = x, .x2 = x2)[1],
+    p_mu2 = relative_p(.y = y_obs, .x = x, .x2 = x2)[2],
+    p_max = which.max(c(p_mu1, p_mu2))
+  ) %&gt;%
+  ungroup()</code></pre>
+<p><img src="Mixture-modelling_files/figure-html/mixtures_fig3b-1.png" width="672" /></p>
+<p><br></p>
+<p><br></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

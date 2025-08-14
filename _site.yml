@@ -3,10 +3,14 @@ output_dir: docs
 navbar:
   title: "Richard W Morris"
   left:
-    - text: "Home"
+    - text: Home
       href: index.html
-    - text: "About"
-      href: about.html
+    - text: R code
+      menu:  
+      - text: RCT in schools
+        href: Post-1.html
+      - text: Mixture modelling
+        href: Post-2.html
 
 output:  
   html_document:
