@@ -8,9 +8,9 @@ navbar:
     - text: R code
       menu:  
       - text: RCT in schools
-        href: Post-1.html
+        href: RCT-in-schools.html
       - text: Mixture modelling
-        href: Post-2.html
+        href: Mixture-modelling.html
 
 output:  
   html_document:
