@@ -7,6 +7,6 @@ navbar:
     - text: "About"
       href: about.html
 
-output:
+output:  
   html_document:
     theme: paper
