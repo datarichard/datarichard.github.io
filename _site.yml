@@ -1,0 +1,12 @@
+name: "Richard W Morris"
+navbar:
+  title: "Richard W Morris"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+
+output:
+  html_document:
+    theme: paper
