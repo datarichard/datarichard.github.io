@@ -1382,8 +1382,8 @@ emmeans::emmeans(aov.interact.school,  ~ Time|Treatment) %&gt;%
   spread(Treatment, delta) %&gt;%
   mutate(estimate = `1` - `0`) # 10.52004, p = .0335</code></pre>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<pre><code>## Warning in (mth$objs[[1]])(object, trms, xlev, grid, ...): Some predictors are correlated with
-## the intercept - results may be very biased</code></pre>
+<pre><code>## Warning in (mth$objs[[1]])(object, trms, xlev, grid, ...): Some predictors are correlated
+## with the intercept - results may be very biased</code></pre>
 <pre><code>##       0     1 estimate
 ## 1 80.76 90.26    9.501</code></pre>
 <pre class="r"><code># Nb. If we don&#39;t add Time as a nested variable here, we get the same result as 
@@ -1403,8 +1403,8 @@ fit.3 %&gt;%
   tidy(effects = &quot;fixed&quot;) %&gt;%
   filter(term == &quot;Time:Treatment&quot;) # 9.51 (4.01), p = .0213</code></pre>
 <pre><code>## # A tibble: 0 × 7
-## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;, statistic &lt;dbl&gt;,
-## #   df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
+## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;,
+## #   statistic &lt;dbl&gt;, df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
 <pre class="r"><code># Nb. Adding Pre as a covariate on the RHS is invalid since Pre is already 
 # included on the LHS in the first level of Time
 fit.3b &lt;- df %&gt;%
@@ -1453,8 +1453,8 @@ might not be justified…</p>
   tidy(effects = &quot;fixed&quot;) %&gt;%
   filter(term == &quot;Time:Treatment&quot;) # 9.98 (4.48), p = .0277</code></pre>
 <pre><code>## # A tibble: 0 × 7
-## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;, statistic &lt;dbl&gt;,
-## #   df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
+## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;,
+## #   statistic &lt;dbl&gt;, df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
 <p>This gives us a similar estimate (with less precision) to the LMM
 with change scores above.</p>
 <p>To answer the question, the post scores ANCOVA relies on random
