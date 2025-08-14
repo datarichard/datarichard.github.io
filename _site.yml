@@ -1,4 +1,5 @@
 name: "Richard W Morris"
+output_dir: docs
 navbar:
   title: "Richard W Morris"
   left:
