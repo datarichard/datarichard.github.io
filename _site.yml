@@ -10,7 +10,7 @@ navbar:
     - text: R examples
       href: rcode.html
     - text: CV
-      href: docs/CV.pdf
+      href: CV.pdf
 
 output:  
   html_document:

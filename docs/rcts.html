@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -219,6 +222,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -226,6 +292,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -252,7 +328,7 @@ $(document).ready(function () {
   <a href="rcode.html">R examples</a>
 </li>
 <li>
-  <a href="docs/CV.pdf">CV</a>
+  <a href="CV.pdf">CV</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -271,92 +347,7 @@ $(document).ready(function () {
 </div>
 
 
-<p>Causal inference, <em>aka</em> estimating the average treatment
-effect (ATE, or <span class="math inline">\(\tau\)</span>), usually
-requires random allocation to a treatment and a control group but not
-always. The critical reference here is <a
-href="https://scholar.google.com/scholar_lookup?hl=en&amp;volume=66&amp;publication_year=1974&amp;pages=688&amp;journal=Journal+of+Educational+Psychology&amp;author=D.+B.+Rubin&amp;title=“Estimating+Causal+Effects+of+Treatments+in+Randomized+and+Nonrandomized+Studies%2C”&amp;doi=10.1037%2Fh0037350">Rubin,
-1974</a>, which is the fundamental reference in the field, along with
-many modern representations of it (e.g., <a
-href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5898524/">Twisk et al
-2018</a>; <a
-href="https://trialsjournal.biomedcentral.com/articles/10.1186/s13063-018-3108-3">Clifton
-&amp; Clifton 2019</a>; <a
-href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6290914/">O’Connell
-et al 2017</a>).</p>
-<p><br></p>
-<div id="rubin-1974" class="section level1">
-<h1>Rubin 1974</h1>
-<p>Randomization guarantees that any pre-existing differences between
-groups are non-systematic, so the estimand <span
-class="math inline">\(\tau\)</span> will be <strong>unbiased</strong> -
-but potentially not very precise. Note that <em>unbiased</em> does not
-require random sampling from a broader population or any other
-assumption here (although generalizability might). And it only
-guarantees <em>unbiased</em> in the long run, as a hidden confound could
-(randomly) occur in any particular random draw.</p>
-<p>While randomization guarantees that pre-existing differences are not
-systematic, it is not the only way to <em>deal</em> with pre-existing
-differences. We can also <strong>match</strong> groups on the important
-causal variables to remove (or reduce) pre-existing differences. This is
-different from randomization which can leave pre-existing differences
-between groups, because it removes/reduces the differences and so will
-also produce more precise causal estimates. In practice we rarely have a
-“complete &amp; true” causal model to guarantee we have removed the
-pre-existing differences, and so is the reason we rely on randomization
-as it does not depend upon our prior knowledge.</p>
-<p>We can match groups by selecting matched pairs, or we can also add
-the pre-existing variable as a covariate to our model (e.g., ANCOVA).
-The ANCOVA determines the effect of each variable holding the other
-covariates at the same value (e.g., 0). When these other covariates
-represent pre-existing differences it is similar (but not equivalent?)
-to matching.</p>
-<p>In nonrandomized designs we do not always want to match pre-existing
-differences (!!). In <strong>Lord’s Paradox</strong>, a dietician wanted
-to know how the school cafeteria diet affected weight gain among boys
-and girls. Pre and post weights were measured at the beginning and end
-of term respectively. There were pre-existing differences since boys
-were generally heavier than girls at the beginning of term, and there
-were also post differences as these pre differences tended to carry over
-(plus any differential diet effects). Adding the initial pre weights as
-a covariate (i.e., ANCOVA on post weights) will determine whether the
-post weights differed between boys and girls with identical frequency
-distributions of initial weight. However when equating boys and girls by
-the same pre weight, one is selecting relatively light boys and
-relatively heavy girls. Under <em>regression-to-the-mean</em>, those
-light boys will end up gaining more weight and the heavy girls will end
-up gaining less weight, even without any impact of dining hall diet.
-Thus when groups are equated, one group appears to be affected by diet
-more than the other, using either post weights or weight gain (post -
-pre). The important point to draw is that equating for pre-existing
-differences is not always pertinent to the research question and can
-also produce biased estimates (by introducing RTM effects).</p>
-<p><a href="https://en.wikipedia.org/wiki/Lord&#39;s_paradox">Pearl
-(2016)</a> provides a succinct explanation for the different estimates
-produced by covariate adjustment of pre scores, according to the
-difference between direct and total effects. In a causal model of Lords
-Paradox, initial weight is a mediating variable of the effect of sex on
-final weight (i.e., Sex -&gt; Initial Weight -&gt; Final Weight). Thus
-including initial weight as a covariate estimates the <em>direct
-effect</em> of sex on final weight (or weight gain). Conversely,
-omitting initial weight then estimates the <em>total effect</em> of sex
-on final weight. The appropriate estimate (and therefore estimand)
-depends on the research question at hand.</p>
-<p>In general, the <span class="math inline">\(\tau\)</span> in an RCT
-can be estimated from post or gain scores, as pre-existing differences
-are random (as are RTM effects) and therefore the estimate is unbiased,
-however including pre scores as a covariate in an ANCOVA is always more
-efficient (Rubin, 1974). On the other hand, when <a
-href="http://www.jerrydallal.com/lhsp/prepost.htm">assignment is not
-random and experimental groups are defined by a variable that is
-relevant to the change in measurement, then gain scores without
-covariate adjustment for pre score differences usually produce a more
-relevant estimand</a>.</p>
-<p>Below we explore these issues in the context of an educational
-program evaluation.</p>
-<p><br></p>
-<p><br></p>
-</div>
+<p><font size="3"></p>
 <div id="practical-exam" class="section level1">
 <h1>Practical exam</h1>
 <p>You have been asked to evaluate a numeracy program that is provided
@@ -415,103 +406,22 @@ id="table-1-results-of-hlm-analysis-with-year-4-numeracy-score-as-dependent-vari
 class="section level6">
 <h6>Table 1: Results of HLM analysis, with Year 4 Numeracy score as
 dependent variable</h6>
-<table>
-<colgroup>
-<col width="32%" />
-<col width="22%" />
-<col width="14%" />
-<col width="9%" />
-<col width="9%" />
-<col width="11%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Model</th>
-<th align="right">Coefficient (B)</th>
-<th align="right">Std Error</th>
-<th align="right">Beta</th>
-<th align="right">t</th>
-<th align="right">p-value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Constant</td>
-<td align="right">92.011</td>
-<td align="right">28.832</td>
-<td align="right">1.000</td>
-<td align="right">3.191</td>
-<td align="right">0.001</td>
-</tr>
-<tr class="even">
-<td align="left">Relative school growth</td>
-<td align="right">0.884</td>
-<td align="right">0.069</td>
-<td align="right">0.246</td>
-<td align="right">12.757</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="odd">
-<td align="left">Year 3 Numeracy</td>
-<td align="right">0.741</td>
-<td align="right">0.020</td>
-<td align="right">0.711</td>
-<td align="right">36.756</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="even">
-<td align="left">SES</td>
-<td align="right">0.065</td>
-<td align="right">0.022</td>
-<td align="right">0.066</td>
-<td align="right">3.003</td>
-<td align="right">0.003</td>
-</tr>
-<tr class="odd">
-<td align="left">Gender</td>
-<td align="right">5.216</td>
-<td align="right">2.703</td>
-<td align="right">0.035</td>
-<td align="right">1.930</td>
-<td align="right">0.054</td>
-</tr>
-<tr class="even">
-<td align="left">First Nations status</td>
-<td align="right">-17.001</td>
-<td align="right">6.108</td>
-<td align="right">-0.053</td>
-<td align="right">-2.783</td>
-<td align="right">0.005</td>
-</tr>
-<tr class="odd">
-<td align="left">Language Background</td>
-<td align="right">0.107</td>
-<td align="right">1.649</td>
-<td align="right">0.001</td>
-<td align="right">0.065</td>
-<td align="right">0.948</td>
-</tr>
-<tr class="even">
-<td align="left">Treatment</td>
-<td align="right">4.126</td>
-<td align="right">3.070</td>
-<td align="right">0.256</td>
-<td align="right">1.344</td>
-<td align="right">0.179</td>
-</tr>
-</tbody>
-</table>
+<pre><code>## # A tibble: 8 × 6
+##   Model                  `Coefficient (B)` `Std Error`   Beta      t `p-value`
+##   &lt;chr&gt;                              &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Constant                          92.0        28.8    1      3.19      0.001
+## 2 Relative school growth             0.884       0.069  0.246 12.8       0    
+## 3 Year 3 Numeracy                    0.741       0.02   0.711 36.8       0    
+## 4 SES                                0.065       0.022  0.066  3.00      0.003
+## 5 Gender                             5.22        2.70   0.035  1.93      0.054
+## 6 First Nations status             -17.0         6.11  -0.053 -2.78      0.005
+## 7 Language Background                0.107       1.65   0.001  0.065     0.948
+## 8 Treatment                          4.13        3.07   0.256  1.34      0.179</code></pre>
 <p><br></p>
 </div>
 <div id="what-are-the-assumptions-of-the-model-described-above"
 class="section level4">
 <h4>What are the assumptions of the model described above?</h4>
-<pre><code># From Dorothy Bishop https://doi.org/10.1177/25152459241267904
-Analyses of intervention effects conducted in schools can be affected by clustering if randomization is conducted at the level of the schools or classrooms because children within a school/classroom are likely to be more similar to each otherthan to children from different schools/classrooms. Standard errors and p-values from a typical regression model depend on the assumption tha tthe residuals in the model across cases are independent from each other. If children within classrooms are more similar to each other, the assumption of independence of residuals is violated, and this will usually reduce the precision of confidence intervals (and hence reduce the statistical significance of effects).  
-
-The key statistic for any analysis that seeks to control for the effects of clusters is the intracluster correlation coefficient (ICC). The ICC is the proportion of total variance in a dependent variable explained by the cluster variable. So an ICC of 0.15 means the 15% of the variance in scores can be explained by the cluster variable. Typically ICCs greater than 0.10 are considered likely to have significant effects on standard errors. 
-
-If so then we could include school as a fixed effect with an HC1 or HC2 adjustment.</code></pre>
 <p>The model above represents an ANCOVA analysis of treatment
 differences at the post test, where the Year 3 numeracy scores are
 included as a pre score covariate in the model (ANCOVA-post). The <span
@@ -552,254 +462,29 @@ determine whether those differences are due to a systematic effect or
 random variation (sometimes random allocation results in significant
 differences between groups).</p>
 <p>Let’s take a look at the data</p>
-<table style="width:100%;">
-<colgroup>
-<col width="10%" />
-<col width="11%" />
-<col width="11%" />
-<col width="9%" />
-<col width="7%" />
-<col width="14%" />
-<col width="20%" />
-<col width="5%" />
-<col width="10%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">School_ID</th>
-<th align="right">Student_ID</th>
-<th align="right">Year_level</th>
-<th align="right">Numeracy</th>
-<th align="right">Gender</th>
-<th align="right">First_Nations</th>
-<th align="right">Language_background</th>
-<th align="right">SES</th>
-<th align="left">Treatment</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">1100067</td>
-<td align="right">1</td>
-<td align="right">3</td>
-<td align="right">464.3</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1159</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left">1100067</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">542.7</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1159</td>
-<td align="left">0</td>
-</tr>
-<tr class="odd">
-<td align="left">1100067</td>
-<td align="right">1</td>
-<td align="right">5</td>
-<td align="right">531.1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1159</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left">1100067</td>
-<td align="right">1</td>
-<td align="right">6</td>
-<td align="right">554.9</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1159</td>
-<td align="left">0</td>
-</tr>
-<tr class="odd">
-<td align="left">1100044</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">258.1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1064</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">1100044</td>
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="right">387.2</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1064</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1100044</td>
-<td align="right">2</td>
-<td align="right">5</td>
-<td align="right">428.1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1064</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">1100044</td>
-<td align="right">2</td>
-<td align="right">6</td>
-<td align="right">542.3</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1064</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1100044</td>
-<td align="right">3</td>
-<td align="right">3</td>
-<td align="right">352.5</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1064</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">1100044</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">456.7</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1064</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1100044</td>
-<td align="right">3</td>
-<td align="right">5</td>
-<td align="right">533.6</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1064</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">1100044</td>
-<td align="right">3</td>
-<td align="right">6</td>
-<td align="right">617.3</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1064</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1100045</td>
-<td align="right">4</td>
-<td align="right">3</td>
-<td align="right">449.1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1124</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left">1100045</td>
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="right">509.7</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1124</td>
-<td align="left">0</td>
-</tr>
-<tr class="odd">
-<td align="left">1100045</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">605.8</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1124</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left">1100045</td>
-<td align="right">4</td>
-<td align="right">6</td>
-<td align="right">654.8</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1124</td>
-<td align="left">0</td>
-</tr>
-<tr class="odd">
-<td align="left">1100100</td>
-<td align="right">5</td>
-<td align="right">3</td>
-<td align="right">349.2</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1163</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left">1100100</td>
-<td align="right">5</td>
-<td align="right">4</td>
-<td align="right">402.9</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1163</td>
-<td align="left">0</td>
-</tr>
-<tr class="odd">
-<td align="left">1100100</td>
-<td align="right">5</td>
-<td align="right">5</td>
-<td align="right">450.3</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1163</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left">1100100</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">520.0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1163</td>
-<td align="left">0</td>
-</tr>
-</tbody>
-</table>
+<pre><code>## # A tibble: 20 × 9
+##    School_ID Student_ID Year_level Numeracy Gender First_Nations Language_background   SES Treatment
+##    &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;               &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    
+##  1 1100067            1          3     464.      0             0                   0  1159 0        
+##  2 1100067            1          4     543.      0             0                   0  1159 0        
+##  3 1100067            1          5     531.      0             0                   0  1159 0        
+##  4 1100067            1          6     555.      0             0                   0  1159 0        
+##  5 1100044            2          3     258.      1             0                   1  1064 1        
+##  6 1100044            2          4     387.      1             0                   1  1064 1        
+##  7 1100044            2          5     428.      1             0                   1  1064 1        
+##  8 1100044            2          6     542.      1             0                   1  1064 1        
+##  9 1100044            3          3     352.      0             0                   1  1064 1        
+## 10 1100044            3          4     457.      0             0                   1  1064 1        
+## 11 1100044            3          5     534.      0             0                   1  1064 1        
+## 12 1100044            3          6     617.      0             0                   1  1064 1        
+## 13 1100045            4          3     449.      1             0                   0  1124 0        
+## 14 1100045            4          4     510.      1             0                   0  1124 0        
+## 15 1100045            4          5     606.      1             0                   0  1124 0        
+## 16 1100045            4          6     655.      1             0                   0  1124 0        
+## 17 1100100            5          3     349.      0             0                   0  1163 0        
+## 18 1100100            5          4     403.      0             0                   0  1163 0        
+## 19 1100100            5          5     450.      0             0                   0  1163 0        
+## 20 1100100            5          6     520.      0             0                   0  1163 0</code></pre>
 <p>The records are arranged in long format with rows arranged by school,
 student and year; and each row representing a student-year
 observation.</p>
@@ -1368,8 +1053,8 @@ emmeans::emmeans(aov.interact.school,  ~ Time|Treatment) %&gt;%
   spread(Treatment, delta) %&gt;%
   mutate(estimate = `1` - `0`) # 10.52004, p = .0335</code></pre>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<pre><code>## Warning in (mth$objs[[1]])(object, trms, xlev, grid, ...): Some predictors are
-## correlated with the intercept - results may be very biased</code></pre>
+<pre><code>## Warning in (mth$objs[[1]])(object, trms, xlev, grid, ...): Some predictors are correlated with the intercept - results may be very
+## biased</code></pre>
 <pre><code>##       0     1 estimate
 ## 1 80.76 90.26    9.501</code></pre>
 <pre class="r"><code># Nb. If we don&#39;t add Time as a nested variable here, we get the same result as 
@@ -1389,8 +1074,7 @@ fit.3 %&gt;%
   tidy(effects = &quot;fixed&quot;) %&gt;%
   filter(term == &quot;Time:Treatment&quot;) # 9.51 (4.01), p = .0213</code></pre>
 <pre><code>## # A tibble: 0 × 7
-## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;,
-## #   statistic &lt;dbl&gt;, df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
+## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;, statistic &lt;dbl&gt;, df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
 <pre class="r"><code># Nb. Adding Pre as a covariate on the RHS is invalid since Pre is already 
 # included on the LHS in the first level of Time
 fit.3b &lt;- df %&gt;%
@@ -1439,8 +1123,7 @@ might not be justified…</p>
   tidy(effects = &quot;fixed&quot;) %&gt;%
   filter(term == &quot;Time:Treatment&quot;) # 9.98 (4.48), p = .0277</code></pre>
 <pre><code>## # A tibble: 0 × 7
-## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;,
-## #   statistic &lt;dbl&gt;, df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
+## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;, statistic &lt;dbl&gt;, df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
 <p>This gives us a similar estimate (with less precision) to the LMM
 with change scores above.</p>
 <p>To answer the question, the post scores ANCOVA relies on random
@@ -1785,6 +1468,96 @@ rather than as a linear term.</p>
 </div>
 </div>
 </div>
+<div id="rubin-1974" class="section level1">
+<h1>Rubin 1974</h1>
+<p>Causal inference, <em>aka</em> estimating the average treatment
+effect (ATE, or <span class="math inline">\(\tau\)</span>), usually
+requires random allocation to a treatment and a control group but not
+always. The critical reference here is <a
+href="https://scholar.google.com/scholar_lookup?hl=en&amp;volume=66&amp;publication_year=1974&amp;pages=688&amp;journal=Journal+of+Educational+Psychology&amp;author=D.+B.+Rubin&amp;title=“Estimating+Causal+Effects+of+Treatments+in+Randomized+and+Nonrandomized+Studies%2C”&amp;doi=10.1037%2Fh0037350">Rubin,
+1974</a>, which is the fundamental reference in the field, along with
+many modern representations of it (e.g., <a
+href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5898524/">Twisk et al
+2018</a>; <a
+href="https://trialsjournal.biomedcentral.com/articles/10.1186/s13063-018-3108-3">Clifton
+&amp; Clifton 2019</a>; <a
+href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6290914/">O’Connell
+et al 2017</a>).</p>
+<p><br></p>
+<p>Randomization guarantees that any pre-existing differences between
+groups are non-systematic, so the estimand <span
+class="math inline">\(\tau\)</span> will be <strong>unbiased</strong> -
+but potentially not very precise. Note that <em>unbiased</em> does not
+require random sampling from a broader population or any other
+assumption here (although generalizability might). And it only
+guarantees <em>unbiased</em> in the long run, as a hidden confound could
+(randomly) occur in any particular random draw.</p>
+<p>While randomization guarantees that pre-existing differences are not
+systematic, it is not the only way to <em>deal</em> with pre-existing
+differences. We can also <strong>match</strong> groups on the important
+causal variables to remove (or reduce) pre-existing differences. This is
+different from randomization which can leave pre-existing differences
+between groups, because it removes/reduces the differences and so will
+also produce more precise causal estimates. In practice we rarely have a
+“complete &amp; true” causal model to guarantee we have removed the
+pre-existing differences, and so is the reason we rely on randomization
+as it does not depend upon our prior knowledge.</p>
+<p>We can match groups by selecting matched pairs, or we can also add
+the pre-existing variable as a covariate to our model (e.g., ANCOVA).
+The ANCOVA determines the effect of each variable holding the other
+covariates at the same value (e.g., 0). When these other covariates
+represent pre-existing differences it is similar (but not equivalent?)
+to matching.</p>
+<p>In nonrandomized designs we do not always want to match pre-existing
+differences (!!). In <strong>Lord’s Paradox</strong>, a dietician wanted
+to know how the school cafeteria diet affected weight gain among boys
+and girls. Pre and post weights were measured at the beginning and end
+of term respectively. There were pre-existing differences since boys
+were generally heavier than girls at the beginning of term, and there
+were also post differences as these pre differences tended to carry over
+(plus any differential diet effects). Adding the initial pre weights as
+a covariate (i.e., ANCOVA on post weights) will determine whether the
+post weights differed between boys and girls with identical frequency
+distributions of initial weight. However when equating boys and girls by
+the same pre weight, one is selecting relatively light boys and
+relatively heavy girls. Under <em>regression-to-the-mean</em>, those
+light boys will end up gaining more weight and the heavy girls will end
+up gaining less weight, even without any impact of dining hall diet.
+Thus when groups are equated, one group appears to be affected by diet
+more than the other, using either post weights or weight gain (post -
+pre). The important point to draw is that equating for pre-existing
+differences is not always pertinent to the research question and can
+also produce biased estimates (by introducing RTM effects).</p>
+<p><a href="https://en.wikipedia.org/wiki/Lord&#39;s_paradox">Pearl
+(2016)</a> provides a succinct explanation for the different estimates
+produced by covariate adjustment of pre scores, according to the
+difference between direct and total effects. In a causal model of Lords
+Paradox, initial weight is a mediating variable of the effect of sex on
+final weight (i.e., Sex -&gt; Initial Weight -&gt; Final Weight). Thus
+including initial weight as a covariate estimates the <em>direct
+effect</em> of sex on final weight (or weight gain). Conversely,
+omitting initial weight then estimates the <em>total effect</em> of sex
+on final weight. The appropriate estimate (and therefore estimand)
+depends on the research question at hand.</p>
+<p>In general, the <span class="math inline">\(\tau\)</span> in an RCT
+can be estimated from post or gain scores, as pre-existing differences
+are random (as are RTM effects) and therefore the estimate is unbiased,
+however including pre scores as a covariate in an ANCOVA is always more
+efficient (Rubin, 1974). On the other hand, when <a
+href="http://www.jerrydallal.com/lhsp/prepost.htm">assignment is not
+random and experimental groups are defined by a variable that is
+relevant to the change in measurement, then gain scores without
+covariate adjustment for pre score differences usually produce a more
+relevant estimand</a>.</p>
+<pre><code># From Dorothy Bishop https://doi.org/10.1177/25152459241267904
+Analyses of intervention effects conducted in schools can be affected by clustering if randomization is conducted at the level of the schools or classrooms because children within a school/classroom are likely to be more similar to each otherthan to children from different schools/classrooms. Standard errors and p-values from a typical regression model depend on the assumption tha tthe residuals in the model across cases are independent from each other. If children within classrooms are more similar to each other, the assumption of independence of residuals is violated, and this will usually reduce the precision of confidence intervals (and hence reduce the statistical significance of effects).  
+
+The key statistic for any analysis that seeks to control for the effects of clusters is the intracluster correlation coefficient (ICC). The ICC is the proportion of total variance in a dependent variable explained by the cluster variable. So an ICC of 0.15 means the 15% of the variance in scores can be explained by the cluster variable. Typically ICCs greater than 0.10 are considered likely to have significant effects on standard errors. 
+
+If so then we could include school as a fixed effect with an HC1 or HC2 adjustment.</code></pre>
+<p><br></p>
+<p><br></p>
+</div>
 <div id="takeaways" class="section level1">
 <h1>Takeaways</h1>
 <p>In general gain score analyses answer a distinctly different question
@@ -1842,6 +1615,8 @@ abline(h=0, lty = 2)</code></pre>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -1874,6 +1649,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
