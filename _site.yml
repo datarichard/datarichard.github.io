@@ -4,15 +4,13 @@ navbar:
   title: "Richard W Morris"
   left:
     - text: Home
-      href: about.html
+      href: index.html
     - text: About
       href: about.html
-    - text: R code
-      menu:  
-      - text: RCT in schools
-        href: RCT-in-schools.html
-      - text: Mixture modelling
-        href: Mixture-modelling.html
+    - text: R examples
+      href: rcode.html
+    - text: CV
+      href: docs/CV.pdf
 
 output:  
   html_document:

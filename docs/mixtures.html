@@ -248,20 +248,11 @@ $(document).ready(function () {
 <li>
   <a href="about.html">About</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    R code
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="RCT-in-schools.html">RCT in schools</a>
-    </li>
-    <li>
-      <a href="Mixture-modelling.html">Mixture modelling</a>
-    </li>
-  </ul>
+<li>
+  <a href="rcode.html">R examples</a>
+</li>
+<li>
+  <a href="docs/CV.pdf">CV</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -430,7 +421,7 @@ sim_data &lt;- d %&gt;%
   mutate(
     y_obs = c(t(posterior_predict(mix.1, nsamples = 1)))
   )</code></pre>
-<p><img src="Mixture-modelling_files/figure-html/mixtures_fig1a-1.png" width="672" /></p>
+<p><img src="mixtures_files/figure-html/mixtures_fig1a-1.png" width="672" /></p>
 <p><br></p>
 <p>Finally we can fit a mixture model to the simulated data. Note this
 fit has much wider priors than the original specification.</p>
@@ -515,7 +506,7 @@ p &lt;- sim_data %&gt;%
     p_mu2 = relative_p(.y = y_obs)[2],
     p_max = which.max(c(p_mu1, p_mu2))
   ) </code></pre>
-<p><img src="Mixture-modelling_files/figure-html/mixtures_fig1b-1.png" width="672" /></p>
+<p><img src="mixtures_files/figure-html/mixtures_fig1b-1.png" width="672" /></p>
 <p><br></p>
 <p><br></p>
 </div>
@@ -586,7 +577,7 @@ sim_data &lt;- d %&gt;%
   mutate(
     y_obs = c(t(posterior_predict(mix.2, nsamples = 1)))
   )</code></pre>
-<p><img src="Mixture-modelling_files/figure-html/mixtures_fig2a-1.png" width="672" /></p>
+<p><img src="mixtures_files/figure-html/mixtures_fig2a-1.png" width="672" /></p>
 <p><br></p>
 <p>Fit the simulated data. Note the priors for the slopes
 (<code>mu1_x</code> and <code>mu2_x</code>) are steeper and wider than
@@ -666,7 +657,7 @@ p &lt;- sim_data %&gt;%
     p_max = which.max(c(p_mu1, p_mu2))
   ) %&gt;%
   ungroup()</code></pre>
-<p><img src="Mixture-modelling_files/figure-html/mixtures_fig2b-1.png" width="672" /></p>
+<p><img src="mixtures_files/figure-html/mixtures_fig2b-1.png" width="672" /></p>
 <p><br></p>
 <p><br></p>
 </div>
@@ -736,7 +727,7 @@ sim_data &lt;- d %&gt;%
   mutate(
     y_obs = c(t(posterior_predict(mix.3, nsamples = 1)))
   )</code></pre>
-<p><img src="Mixture-modelling_files/figure-html/mixtures_fig3a-1.png" width="672" /></p>
+<p><img src="mixtures_files/figure-html/mixtures_fig3a-1.png" width="672" /></p>
 <p>Fit the simulated data. Note the priors for the slopes
 (<code>mu1_x</code> and <code>mu2_x</code>) are steeper and wider than
 the truth.</p>
@@ -821,7 +812,7 @@ p &lt;- sim_data %&gt;%
     p_max = which.max(c(p_mu1, p_mu2))
   ) %&gt;%
   ungroup()</code></pre>
-<p><img src="Mixture-modelling_files/figure-html/mixtures_fig3b-1.png" width="672" /></p>
+<p><img src="mixtures_files/figure-html/mixtures_fig3b-1.png" width="672" /></p>
 <p><br></p>
 <p><br></p>
 </div>

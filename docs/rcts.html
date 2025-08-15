@@ -248,20 +248,11 @@ $(document).ready(function () {
 <li>
   <a href="about.html">About</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    R code
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="RCT-in-schools.html">RCT in schools</a>
-    </li>
-    <li>
-      <a href="Mixture-modelling.html">Mixture modelling</a>
-    </li>
-  </ul>
+<li>
+  <a href="rcode.html">R examples</a>
+</li>
+<li>
+  <a href="docs/CV.pdf">CV</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -280,18 +271,13 @@ $(document).ready(function () {
 </div>
 
 
-<p>I recently applied for a senior statistical consultant position. The
-interview process included a practical component which I fumbled in the
-endzone. But it got me interested in causal inference with nonrandomized
-data.</p>
 <p>Causal inference, <em>aka</em> estimating the average treatment
 effect (ATE, or <span class="math inline">\(\tau\)</span>), usually
 requires random allocation to a treatment and a control group but not
 always. The critical reference here is <a
 href="https://scholar.google.com/scholar_lookup?hl=en&amp;volume=66&amp;publication_year=1974&amp;pages=688&amp;journal=Journal+of+Educational+Psychology&amp;author=D.+B.+Rubin&amp;title=“Estimating+Causal+Effects+of+Treatments+in+Randomized+and+Nonrandomized+Studies%2C”&amp;doi=10.1037%2Fh0037350">Rubin,
-1974</a>, which is such a fundamental reference in this field that the
-practical component I fumbled was essentially a test of whether I had
-read Rubin and the modern representations of it (e.g., <a
+1974</a>, which is the fundamental reference in the field, along with
+many modern representations of it (e.g., <a
 href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5898524/">Twisk et al
 2018</a>; <a
 href="https://trialsjournal.biomedcentral.com/articles/10.1186/s13063-018-3108-3">Clifton
@@ -1219,7 +1205,7 @@ p1 + p2 + plot_layout(guides = &#39;collect&#39;) &amp;
   theme_minimal() + 
   theme(legend.position = &quot;bottom&quot;,
         axis.title.x = element_text(size = 10, color = &quot;grey30&quot;))</code></pre>
-<p><img src="RCT-in-schools_files/figure-html/rct_prevpost_1-1.png" width="672" /></p>
+<p><img src="rcts_files/figure-html/rct_prevpost_1-1.png" width="672" /></p>
 <p>The distinct slopes for each treatment group are shown in dark blue
 (program) and light blue (non-program). The vertical distance between
 these slopes in each panel indicate the treatment effect. Where the
@@ -1382,8 +1368,8 @@ emmeans::emmeans(aov.interact.school,  ~ Time|Treatment) %&gt;%
   spread(Treatment, delta) %&gt;%
   mutate(estimate = `1` - `0`) # 10.52004, p = .0335</code></pre>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<pre><code>## Warning in (mth$objs[[1]])(object, trms, xlev, grid, ...): Some predictors are correlated
-## with the intercept - results may be very biased</code></pre>
+<pre><code>## Warning in (mth$objs[[1]])(object, trms, xlev, grid, ...): Some predictors are
+## correlated with the intercept - results may be very biased</code></pre>
 <pre><code>##       0     1 estimate
 ## 1 80.76 90.26    9.501</code></pre>
 <pre class="r"><code># Nb. If we don&#39;t add Time as a nested variable here, we get the same result as 
@@ -1662,7 +1648,7 @@ summary(fit.9)</code></pre>
 ## Number of Observations: 7716
 ## Number of Groups: 49</code></pre>
 <pre class="r"><code>ggpredict(fit.9, terms = c(&quot;Time&quot;, &quot;Treatment&quot;)) %&gt;% plot()</code></pre>
-<p><img src="RCT-in-schools_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="rcts_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>hypothesis_test(fit.9, c(&quot;Time [3]&quot;, &quot;Treatment&quot;))</code></pre>
 <pre><code>## # Pairwise comparisons
 ## 
@@ -1705,7 +1691,7 @@ p1 + p2 + p3 + plot_layout(guides = &#39;collect&#39;) &amp;
   labs(y = &quot;&quot;, x = &quot;Year 3 (pre numeracy)&quot;) &amp;
   theme(legend.position = &quot;bottom&quot;,
         axis.title.x = element_text(size = 10, color = &quot;grey30&quot;))</code></pre>
-<p><img src="RCT-in-schools_files/figure-html/rct_prevpost_2-1.png" width="864" /></p>
+<p><img src="rcts_files/figure-html/rct_prevpost_2-1.png" width="864" /></p>
 <p>The distinct slopes for each treatment group are shown in dark blue
 (treatment) and light blue (control). The vertical distance between
 these slopes in each panel indicate the treatment effect for each year.

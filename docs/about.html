@@ -248,20 +248,11 @@ $(document).ready(function () {
 <li>
   <a href="about.html">About</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    R code
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="RCT-in-schools.html">RCT in schools</a>
-    </li>
-    <li>
-      <a href="Mixture-modelling.html">Mixture modelling</a>
-    </li>
-  </ul>
+<li>
+  <a href="rcode.html">R examples</a>
+</li>
+<li>
+  <a href="docs/CV.pdf">CV</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -280,22 +271,83 @@ $(document).ready(function () {
 </div>
 
 
-<p><font size="4"><br />
-</p>
-<p>I am Senior Quantitative Researcher with expertise in statistical
-analysis, research design, and data interpretation. I have over 10 years
-of experience conducting and leading collaborative research projects in
-both corporate and academic settings through all stages of the research
-process, from hypothesis generation, to data analysis and visualization,
-to presentation and recommendation. I specialize in designing and
-executing rigorous research and translating complex data into actionable
-insights, for which I have garnered international recognition. I hold a
-PhD, MSc, BA and BSc with honors from the University of New South
-Wales.</p>
-<p>My brief CV is available <a href="CV.pdf"
-target="_blank">here</a>.</p>
-<p></font></p>
-<p><br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br></p>
+<p><font size="4"></p>
+<p><br></p>
+<p>I have experience across a wide range of models and datasets,
+including experimental data for causal inference (e.g., t-tests, ANOVA,
+ANCOVA), observational data for prediction and inference, including
+survey data, routinely-collected and administrative data (linear
+regression and its generalized forms, structural equation models,
+Bayesian networks), and also longitudinal data, such as panel designs,
+intensive longitudinal designs (multilevel models, additive models,
+vectorized autoregressive models).</p>
+<p>My background is psychology so I tend to work with person-centered
+data, to understand how people change over time, and what is driving
+those changes - including exogenous forces and within-person causes.</p>
+<p>But I’m also generally interested in how to model change over time,
+especially models which allow causal inference.</p>
+<p><br></p>
+<div id="dataviz" class="section level3">
+<h3>Dataviz</h3>
+<p>Communication is a key part of statistics so data visualization
+(dataviz) is a necessary and critical tool. Joe Berkson is credited with
+coining the IOT (Intraocular Trauma Test (<a
+href="https://doi/10.1037/h0044139">Edwards et al 1963</a>), a plot so
+clear that it hits you between the eyes. My PhD supervisor always said
+“a good graph beats statistics”, and I’ve always aimed to design
+interesting and good-looking plots with a clear message. I’m also
+interested in the cognitive biases and processes we bring to data
+vizualization and how people understand graphs and plots. Di Cook’s <a
+href="http://dicook.github.io/nullabor/articles/nullabor.html">Nullabor
+package</a> is a different tack on how to use <em>perceptual
+psychology</em> to understand data. Over time I’ve learned that
+modelling and plotting are often two sides of the same coin. Every plot
+implies a model of the data, and I love working with data, using models
+and plots to understand it.</p>
+<p><br></p>
+<p><br></p>
+<div
+id="moving-bubble-plot-of-primary-stroke-patient-journeys-between-hospitals-in-northern-sydney-and-central-coast-local-health-districts-over-3-months"
+class="section level4">
+<h4>Moving bubble plot of primary stroke patient journeys between
+hospitals in Northern Sydney and Central Coast local health districts
+over 3 months</h4>
+<div id="observablehq-a626d7c4">
+
+</div>
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/@datarichard/moving-bubble-plot-of-hospital-transfers-using-d3-js.js?v=3";
+const inspect = Inspector.into("#observablehq-a626d7c4");
+(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+</script>
+<p><br></p>
+<p><a
+href="https://observablehq.com/@datarichard/moving-bubble-plot-of-hospital-transfers-using-d3-js">source</a></p>
+<p><br></p>
+<p><br></p>
+</div>
+<div
+id="animated-small-multiples-of-monthly-changes-in-life-satisfaction-before-and-after-nine-different-major-life-events-in-the-hilda-survey"
+class="section level4">
+<h4>Animated small multiples of monthly changes in life satisfaction
+before and after nine different major life events in the HILDA
+survey</h4>
+<div id="observablehq-3e10a46a">
+
+</div>
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/@datarichard/d3-animated-line-charts-small-multiples.js?v=3";
+const inspect = Inspector.into("#observablehq-3e10a46a");
+(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+</script>
+<p><br></p>
+<p><a
+href="https://observablehq.com/@datarichard/d3-animated-line-charts-small-multiples">source</a></p>
+<p><br><br></p>
+</div>
+</div>
 
 <!DOCTYPE html>
 
@@ -547,20 +599,11 @@ $(document).ready(function () {
 <li>
   <a href="about.html">About</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    R code
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="RCT-in-schools.html">RCT in schools</a>
-    </li>
-    <li>
-      <a href="Mixture-modelling.html">Mixture modelling</a>
-    </li>
-  </ul>
+<li>
+  <a href="rcode.html">R examples</a>
+</li>
+<li>
+  <a href="docs/CV.pdf">CV</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -578,7 +621,7 @@ $(document).ready(function () {
 </div>
 
 
-<p><font size="2"></p>
+<p><font size="6"></p>
  
 <hr />
 <!--  <p> Copyright &copy; 2025 Richard W. Morris. All rights reserved. </p>   -->
