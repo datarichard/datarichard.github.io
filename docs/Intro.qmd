@@ -1,0 +1,522 @@
+---
+title: "Intro to causal inference"
+format: 
+  revealjs:
+    wdith: 1500
+    fontsize: 30px
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=F}
+compare <- function(.fit1, .fit2) {
+  
+  cmat1 <- coef(summary(.fit1))[2, ]
+  cmat2 <- coef(summary(.fit2))[2, ]
+  cmat <- rbind(cmat1, cmat2)
+  
+  rownames(cmat) <- c("X (+ Z)", "X")
+  
+  cat("Coefficients:\n")
+  printCoefmat(cmat)
+
+}
+```
+
+## Good and bad controls
+
+Introduction: I am Richard Morris.  
+
+[www.sydney.edu.au/medicine-health/about/our-people/academic-staff/richard-morris.html](https://www.sydney.edu.au/medicine-health/about/our-people/academic-staff/richard-morris.html){preview-link="true"}
+
+\ 
+ 
+![...](tweet.png)
+
+
+## Background
+
+::: columns
+::: {.column width="50%"}
+
+```{dot}
+//| fig-cap: "This is a directed acyclic graph (DAG)"
+//| fig-width: 5 
+digraph {
+layout= neato
+{rank = same x y}
+x -> y
+}
+```
+
+:::
+
+::: {.column width="50%"}  
+  
+<br>
+
+<br>
+  
+$$
+\begin{align}
+y =& \ bx \ + \ e \\
+b =& \ cov(x, y) / cov(x, x) \\
+\end{align}
+$$
+<br>
+
+
+$b$ is unbiased when:
+
+$$
+\begin{align}
+cov(x, e) = 0 \\
+\end{align}
+$$
+
+
+:::
+:::
+
+## Background
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "DAGS can represent causal networks"
+//| fig-width: 4 
+digraph {
+layout= neato
+{rank = same x y}
+x -> y
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+# Simulating data:
+N <- 200              # number of obs./subjects
+X <- rnorm(N)            
+Y <- rnorm(N, 1 - X)  # Y is dependent on X
+
+summary(lm(Y ~ X))     
+```
+:::
+:::
+
+## Forks (confounds)
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z causes both x and y"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y}
+x -> y 
+z -> y
+z -> x
+}
+```
+
+:::
+
+::: {.column width="60%"}
+<br>
+
+<br>
+  
+$$
+\begin{align}
+y =& \ b_1x \ + \ b_2z \ + \ e \\
+b_1 =& \ cov(x, y | z) / var(x | z)
+\end{align}
+$$
+:::
+:::
+
+## Forks (confounds)
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z causes both x and y"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y}
+z -> y
+z -> x
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+N <- 200                     # number of obs./subjects
+Z <- rnorm(N)
+X <- rnorm(N, 1 + Z)         # X depends on Z
+Y <- rnorm(N, 1 + 0*X + 2*Z) # Y is dependent on Z, not X
+
+summary(lm(Y ~ X))           # estimate of X should be 0
+```
+:::
+:::
+
+## Forks (confounds)
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z causes both x and y"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y}
+z -> y
+z -> x
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+# 
+# 
+# 
+# Including Z as a predictor
+
+summary(lm(Y ~ X + Z))    # estimate of X should be 0
+```
+:::
+:::
+
+## Problem: Unmeasured confounds 
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "u is an unobserved cause of x and y"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y}
+x -> y [arrowhead=none, style=dashed]
+u -> y
+u -> x
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+N <- 200                 # number of obs./subjects
+U <- rnorm(N)
+X <- rnorm(N, 1*U)       # X depends on U
+Y <- rnorm(N, 1*X + 2*U) # Y depends on X and U
+
+summary(lm(Y ~ X))       # estimate of X should be 1
+```
+
+:::
+:::
+
+
+## Colliders
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z is a collider"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y}
+y -> z
+x -> z
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+X <- rnorm(N)            
+Y <- rnorm(N)            # Y is independent of X
+Z <- rnorm(N, 2*X + 1*Y) # Z depends on X and Y
+
+summary(lm(Y ~ X + Z))   # estimate of X should be 0
+```
+
+:::
+:::
+
+## Problem: Measured confounds
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z is a collider"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y}
+x -> y [arrowhead=none, style=dashed]
+y -> z
+x -> z
+}
+```
+
+:::
+
+::: {.column width="60%"}
+
+<br>
+
+```{r, echo=T}
+X <- rnorm(N)            
+Y <- rnorm(N)            # Y is independent of X
+Z <- rnorm(N, 2*X + 1*Y) # Z depends on X and Y
+
+compare(
+  lm(Y ~ X + Z),
+  lm(Y ~ X)
+  )   
+```
+
+:::
+:::
+
+
+## Prevailing wisdom
+
+1. Condition on all _pre-treatment_ predictors of the treatment assignment (e.g., propensity score logic)
+2. All _post-treatment_ variables are "bad controls"  
+
+
+## Mediators
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z is a post-treatment variable (mediator)"
+//| fig-width: 4
+digraph {
+layout= dot
+{rank = same x y}
+x -> z 
+z -> y
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+X <- rnorm(N)            
+Z <- rnorm(N, 1*X)      # Z depends on X
+Y <- rnorm(N, 1 + 1*Z)  # Y depends on Z
+
+compare(
+  lm(Y ~ X + Z),     # Conditional effect of X = 0   
+  lm(Y ~ X)          # Total effect of X = 1 (via Z)
+)
+```
+
+:::
+:::
+
+
+## Mediators II
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z is a post-treatment variable, m is a mediator"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y}
+{rank = same z m}
+z -> m
+x -> m 
+m -> y
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+set.seed(123)
+
+X <- rnorm(N)      
+Z <- rnorm(N)
+M <- rnorm(N, .5*X + 3*Z)  # M depends on X and Z
+Y <- rnorm(N, 1 + 2*M)     # Y depends on M
+
+compare(
+  lm(Y ~ X + Z),           # Z improves precision
+  lm(Y ~ X)
+)
+```
+
+:::
+:::
+
+
+## Bias Amplification
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z is a pre-treatment variable"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y z}
+x -> y [color="white"]
+u -> y
+u -> x
+z -> x
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+U <- rnorm(N)
+Z <- rnorm(N)
+X <- rnorm(N, 1*Z + 2*U) # X depends on U and Z
+Y <- rnorm(N, 0*X + 2*U) # Y depends on U, not X
+
+compare(
+  lm(Y ~ X + Z),         # True effect of X = 0
+  lm(Y ~ X)
+)   
+```
+
+:::
+:::
+
+
+## Instruments
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "z is an instrument of x"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same x y z}
+x -> y [color="white"]
+u -> y
+u -> x
+z -> x
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+x <- predict(lm(X ~ Z)) # get predicted values of X
+
+summary(lm(Y ~ x))      # matches true effect of X = 0 
+```
+
+:::
+:::
+
+## Example: Intergenerational transfer  
+
+[https://academic.oup.com/esr/article/34/6/603/5094485](https://academic.oup.com/esr/article/34/6/603/5094485?login=true){preview-link="true"}  
+
+![Breen 2018](breen.png){.nostretch fig-align="center" width="1200px"}
+
+## Example: Intergenerational transfer    
+
+```{dot}
+//| fig-cap: "Direct effects grandparent -> child"
+//| fig-width: 9 
+digraph {
+layout= dot
+{rank = same Parent u}
+Grandparent -> Child [color = "blue"]
+Grandparent -> Parent
+Parent -> Child
+u -> Child
+u -> Parent
+}
+```
+
+## Example: Intergenerational transfer    
+
+::: columns
+::: {.column width="40%"}
+
+```{dot}
+//| fig-cap: "Z is a mediator (X -> Y) and a collider (U + X)"
+//| fig-width: 4 
+digraph {
+layout= dot
+{rank = same z u}
+x -> y [color = "blue"]
+x -> z
+z -> y
+u -> y
+u -> z
+}
+```
+
+:::
+
+::: {.column width="60%"}
+```{r, echo=T}
+U <- rnorm(N)                  # Shared parent-child influences
+X <- rnorm(N)                  # Grandparents           
+Z <- rnorm(N, 2*X + 2*U)       # Parents          
+Y <- rnorm(N, 1 + X + Z + 2*U) # Direct effect of X = 1
+
+compare(
+  lm(Y ~ X + Z),         
+  lm(Y ~ X)
+)   
+```
+
+:::
+:::
+
+
+## Conclusions 
+
+In general:  
+
+- Parents of X, which are not necessary for identification (see **Instruments**), are harmful for precision
+- Parents of Y which do not spoil identification are beneficial for precision  
+
+
+[https://www.dagitty.net/dags.html](https://www.dagitty.net/dags.html){preview-link="true"}
+
+<br>
+
+![...](confounding_variables.png)
