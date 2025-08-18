@@ -1078,11 +1078,10 @@ p-value is too low).</p>
 </tbody>
 </table>
 </div>
-<pre class="r"><code>  # est = 9.50118 (), p = .000000862</code></pre>
 <p>The estimate <strong>9.501</strong> from the <em>t</em>-test is an
-unbiased estimate, however the error term (and therefore the p-value)
-does not respect the dependency between students within the same school
-in the data.</p>
+unbiased estimate, however the error term (and therefore the p-value
+.000000862) does not respect the dependency between students within the
+same school in the data.</p>
 <p>To account for the dependency, we can adjust the error term over
 schools rather than students in a nested linear model with blocked error
 terms:</p>
@@ -1114,11 +1113,10 @@ aov.change.school %&gt;%
 </tbody>
 </table>
 </div>
-<pre class="r"><code>  # est = 9.501, p = 0.018, df = 47</code></pre>
 <p>The estimate <strong>9.501</strong> is equivalent to the t-test
 result, but now the degrees of freedom (<strong>df = 47</strong>) is
-consistent with the number of schools (n = 49) and so the p-value is
-correctly adjusted.</p>
+consistent with the number of schools (n = 49) and so the p-value
+(<strong>.018</strong>) is correctly adjusted.</p>
 <p><br></p>
 <p>To account for the dependency we can also estimate a random intercept
 for each school in a linear mixed model (LMM):</p>
@@ -1169,11 +1167,11 @@ fit.2 %&gt;%
 </tbody>
 </table>
 </div>
-<pre class="r"><code># est = 9.88 (3.82), p = .0128, df = 48.1, ICC = 0.076</code></pre>
 <p>The estimate from the LMM of <strong>9.88 (3.82)</strong> is similar
 (but not equivalent) to the t-test result. Nevertheless, the degrees of
-freedom (and therefore the p-value) reflects the unique amount of
-information provided by each school.</p>
+freedom (<strong>48.1</strong>) and therefore the p-value
+(<strong>.0128</strong>) reflects the unique amount of information
+provided by each school (ICC = 0.076).</p>
 <p><br></p>
 <p>We can also estimate gain in a mixed 2 x (2) ANOVA with treatment and
 time (Pre, Post) as factors, where the interaction term
@@ -1218,7 +1216,9 @@ emmeans::emmeans(aov.interact.school,  ~ Time|Treatment) %&gt;%
 </tbody>
 </table>
 </div>
-<pre class="r"><code># est = 9.501, p = .018, df = 47</code></pre>
+<p>The estimate (<strong>9.501</strong>), degrees of freedom
+(<strong>47</strong>) and p-value (<strong>.018</strong>) exactly match
+the nested linear model of change scores above.</p>
 <p><br></p>
 <p>Testing the same estimate in a linear mixed model setting, where the
 interaction term (<code>Time:Treatment</code>) represents the gain of
@@ -1274,7 +1274,6 @@ fit.3 %&gt;%
 </tbody>
 </table>
 </div>
-<pre class="r"><code># est = 9.51 (4.01), p = .0213, df = 52.2</code></pre>
 <p>The LMM with nested groups for school and time produces an estimate
 similar to the t-test and RM ANOVA on gain scores: <strong>9.51
 (±4.01)</strong>. Compared to the LMM on gain scores, this estimate has
@@ -1467,59 +1466,7 @@ fit.9 &lt;- df %&gt;%
        random = ~1 | School_ID,
        weights = varIdent(form = ~ 1 | Time),
        correlation = corSymm(form = ~ 1 | School_ID/Student_ID),
-       data = ., control = lmeControl(maxIter=10000, msMaxIter = 10000))
-
-summary(fit.9)</code></pre>
-<pre><code>## Linear mixed-effects model fit by REML
-##   Data: . 
-##     AIC   BIC logLik
-##   78891 79023 -39427
-## 
-## Random effects:
-##  Formula: ~1 | School_ID
-##         (Intercept) Residual
-## StdDev:       25.94    62.67
-## 
-## Correlation Structure: General
-##  Formula: ~1 | School_ID/Student_ID 
-##  Parameter estimate(s):
-##  Correlation: 
-##   1     2     3    
-## 2 0.771            
-## 3 0.746 0.805      
-## 4 0.681 0.726 0.795
-## Variance function:
-##  Structure: Different standard deviations per stratum
-##  Formula: ~1 | Time 
-##  Parameter estimates:
-##      0      1      2      3 
-## 1.0000 0.9911 0.9408 0.8414 
-## Fixed effects:  Numeracy ~ 1 + Time * Treatment 
-##                  Value Std.Error   DF t-value p-value
-## (Intercept)      421.4     5.672 7661   74.30  0.0000
-## Time1             80.8     1.363 7661   59.26  0.0000
-## Time2            129.3     1.403 7661   92.18  0.0000
-## Time3            173.6     1.514 7661  114.67  0.0000
-## Treatment1       -29.7     7.951   47   -3.73  0.0005
-## Time1:Treatment1   9.5     1.925 7661    4.94  0.0000
-## Time2:Treatment1  19.8     1.981 7661    9.99  0.0000
-## Time3:Treatment1  24.8     2.138 7661   11.62  0.0000
-##  Correlation: 
-##                  (Intr) Time1  Time2  Time3  Trtmn1 Tm1:T1 Tm2:T1
-## Time1            -0.125                                          
-## Time2            -0.153  0.608                                   
-## Time3            -0.203  0.531  0.681                            
-## Treatment1       -0.713  0.089  0.109  0.145                     
-## Time1:Treatment1  0.088 -0.708 -0.431 -0.376 -0.126              
-## Time2:Treatment1  0.108 -0.431 -0.708 -0.482 -0.154  0.608       
-## Time3:Treatment1  0.144 -0.376 -0.482 -0.708 -0.204  0.531  0.681
-## 
-## Standardized Within-Group Residuals:
-##     Min      Q1     Med      Q3     Max 
-## -3.6256 -0.7022 -0.0450  0.6206  3.4371 
-## 
-## Number of Observations: 7716
-## Number of Groups: 49</code></pre>
+       data = ., control = lmeControl(maxIter=10000, msMaxIter = 10000))</code></pre>
 <pre class="r"><code>ggpredict(fit.9, terms = c(&quot;Time&quot;, &quot;Treatment&quot;)) %&gt;% 
   plot()</code></pre>
 <p><img src="rcts_files/figure-html/mmrm_plot-1.png" width="672" /></p>
@@ -1549,11 +1496,15 @@ summary(fit.9)</code></pre>
 </tbody>
 </table>
 </div>
+<p>The estimate of the difference between treatment arms in the fourth
+year (Time 3), after adjusting for pre-existing differences at Time 0
+was <strong>4.83 [-10.86, 20.52]</strong>, <em>p</em> = .5.</p>
 <p><br></p>
 <p>However if we relax the RCT assumption, we can compare the total
 long-term gain in numeracy between program and non-program schools:</p>
 <pre class="r"><code>predict_response(fit.9, terms = c(&quot;Time&quot;, &quot;Treatment&quot;)) %&gt;%
-  test_predictions(test = &quot;interaction&quot;)</code></pre>
+  test_predictions(test = &quot;interaction&quot;) |&gt; 
+  slice(3)</code></pre>
 <div class="kable-table">
 <table>
 <thead>
@@ -1568,77 +1519,42 @@ long-term gain in numeracy between program and non-program schools:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">0-1</td>
-<td align="left">0 and 1</td>
-<td align="right">9.501</td>
-<td align="right">5.629</td>
-<td align="right">13.373</td>
-<td align="right">0.0000</td>
-</tr>
-<tr class="even">
-<td align="left">0-2</td>
-<td align="left">0 and 1</td>
-<td align="right">19.798</td>
-<td align="right">15.813</td>
-<td align="right">23.783</td>
-<td align="right">0.0000</td>
-</tr>
-<tr class="odd">
 <td align="left">0-3</td>
 <td align="left">0 and 1</td>
-<td align="right">24.840</td>
-<td align="right">20.539</td>
-<td align="right">29.141</td>
-<td align="right">0.0000</td>
-</tr>
-<tr class="even">
-<td align="left">1-2</td>
-<td align="left">0 and 1</td>
-<td align="right">10.297</td>
-<td align="right">6.818</td>
-<td align="right">13.775</td>
-<td align="right">0.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">1-3</td>
-<td align="left">0 and 1</td>
-<td align="right">15.338</td>
-<td align="right">11.363</td>
-<td align="right">19.314</td>
-<td align="right">0.0000</td>
-</tr>
-<tr class="even">
-<td align="left">2-3</td>
-<td align="left">0 and 1</td>
-<td align="right">5.042</td>
-<td align="right">1.721</td>
-<td align="right">8.363</td>
-<td align="right">0.0037</td>
+<td align="right">24.84</td>
+<td align="right">20.54</td>
+<td align="right">29.14</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>The estimate of the difference in total growth among program schools
+over non-program schools in the fourth year is <strong>24.84 [20.54,
+29.14]</strong>, <em>p</em> &lt; .001.</p>
 <p><br></p>
 <p><br></p>
 <p>Beyond the MMRM, a linear mixed model with a linear effect of time
-can test an interaction model, as suggested in Task 1, which will
-determine the (average) gain per year among program schools relative to
-other schools, over Years 3 to 6:</p>
+can test an interaction model, similar to the two-way ANOVA in Task 1,
+which will determine the (average) gain per year among program schools
+relative to other schools, over Years 3 to 6:</p>
 <pre class="r"><code>fit.5 &lt;- lmer(Numeracy ~ Treatment*Year_level + (1|School_ID/Year_level),
               data = df)
 
-tidy(fit.5, effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Treatment1:Year_level&quot;) # 8.38 (1.85)</code></pre>
+tidy(fit.5, effects = &quot;fixed&quot;, conf.int=T) %&gt;%
+  filter(term == &quot;Treatment1:Year_level&quot;)</code></pre>
 <div class="kable-table">
 <table>
 <colgroup>
+<col width="7%" />
+<col width="24%" />
 <col width="9%" />
-<col width="30%" />
-<col width="12%" />
-<col width="13%" />
-<col width="13%" />
+<col width="10%" />
+<col width="10%" />
+<col width="6%" />
 <col width="8%" />
-<col width="11%" />
+<col width="9%" />
+<col width="10%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1649,6 +1565,8 @@ tidy(fit.5, effects = &quot;fixed&quot;) %&gt;%
 <th align="right">statistic</th>
 <th align="right">df</th>
 <th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
 </tr>
 </thead>
 <tbody>
@@ -1660,21 +1578,26 @@ tidy(fit.5, effects = &quot;fixed&quot;) %&gt;%
 <td align="right">4.53</td>
 <td align="right">146.5</td>
 <td align="right">0</td>
+<td align="right">4.726</td>
+<td align="right">12.04</td>
 </tr>
 </tbody>
 </table>
 </div>
-<pre class="r"><code># adding covariates does not change this estimate 
+<pre class="r"><code># adding covariates does not change this estimate (8.38±1.85 vs 8.38±1.85)
 
 lmer(Numeracy ~ Treatment*Year_level + SES + Gender + First_Nations + 
        Language_background + (1|School_ID/Year_level),
      data = df) %&gt;%
   tidy(effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Treatment1:Year_level&quot;) # 8.38 (1.85)</code></pre>
+  filter(term == &quot;Treatment1:Year_level&quot;) </code></pre>
 <p>The interaction between <code>Treatment</code> and
 <code>Year_level</code> indicates the long-term impact of the program
 over other schools. The average relative gain of program schools from
-Year 3 to Year 6 is 8.5 points over other schools.</p>
+Year 3 to Year 6 is <strong>8.38 [4.73, 12.0]</strong> points over other
+schools. We can multiply this estimate by 3 to obtain the total growth
+in the final year (26.52).</p>
+<p><br></p>
 <p><br></p>
 <p>To determine the long-term effect of the program over any short-term
 effect, we can omit Year 3 from the interaction and estimate the
@@ -1690,17 +1613,19 @@ reintroduce RTM effects).</p>
        data = .) -&gt; fit.6</code></pre>
 <pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
 <pre><code>## Warning: Model failed to converge with 1 negative eigenvalue: -3.0e+02</code></pre>
-<pre class="r"><code>tidy(fit.6, effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Treatment1:Year_level&quot;) # 7.44 (1.72)</code></pre>
+<pre class="r"><code>tidy(fit.6, effects = &quot;fixed&quot;, conf.int = T) %&gt;%
+  filter(term == &quot;Treatment1:Year_level&quot;) </code></pre>
 <div class="kable-table">
 <table>
 <colgroup>
-<col width="9%" />
-<col width="30%" />
-<col width="12%" />
-<col width="14%" />
-<col width="14%" />
 <col width="7%" />
+<col width="24%" />
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="5%" />
+<col width="8%" />
+<col width="10%" />
 <col width="11%" />
 </colgroup>
 <thead>
@@ -1712,6 +1637,8 @@ reintroduce RTM effects).</p>
 <th align="right">statistic</th>
 <th align="right">df</th>
 <th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
 </tr>
 </thead>
 <tbody>
@@ -1723,13 +1650,15 @@ reintroduce RTM effects).</p>
 <td align="right">4.149</td>
 <td align="right">5736</td>
 <td align="right">0</td>
+<td align="right">4.046</td>
+<td align="right">11.29</td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>After realising the short-term gains, the average long-term gain of
-program schools in Year 4 to Year 6 was 7.67 points year-to-year over
-other schools.</p>
+program schools in Year 4 to Year 6 was <strong>7.67 [4.05,
+11.3]</strong> points year-to-year over other schools.</p>
 <p><br></p>
 <p>The long-term gain could also be represented by the total relative
 gain between Year 3 to Year 6 for the program schools over the other
@@ -1740,8 +1669,8 @@ rather than as a linear term.</p>
        data = .) -&gt; fit.8</code></pre>
 <pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
 <pre class="r"><code>tidy(fit.8, effects = &quot;fixed&quot;, conf.int = T) %&gt;%
-  filter(str_detect(term, &quot;Treatment1:&quot;)) %&gt;%
-  select(-effect) # 24.8 (3.77)</code></pre>
+  filter(str_detect(term, &quot;Treatment1:Year_level6&quot;)) %&gt;%
+  select(-effect) </code></pre>
 <div class="kable-table">
 <table>
 <colgroup>
@@ -1768,38 +1697,20 @@ rather than as a linear term.</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Treatment1:Year_level4</td>
-<td align="right">9.501</td>
-<td align="right">3.774</td>
-<td align="right">2.517</td>
-<td align="right">7661</td>
-<td align="right">0.0118</td>
-<td align="right">2.102</td>
-<td align="right">16.90</td>
-</tr>
-<tr class="even">
-<td align="left">Treatment1:Year_level5</td>
-<td align="right">19.798</td>
-<td align="right">3.774</td>
-<td align="right">5.245</td>
-<td align="right">7661</td>
-<td align="right">0.0000</td>
-<td align="right">12.399</td>
-<td align="right">27.20</td>
-</tr>
-<tr class="odd">
 <td align="left">Treatment1:Year_level6</td>
-<td align="right">24.840</td>
+<td align="right">24.84</td>
 <td align="right">3.774</td>
 <td align="right">6.581</td>
 <td align="right">7661</td>
-<td align="right">0.0000</td>
-<td align="right">17.441</td>
+<td align="right">0</td>
+<td align="right">17.44</td>
 <td align="right">32.24</td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>This gives us the same estimate as the MMRM but with wider 95%CIs:
+<strong>24.8 [17.5, 32.2]</strong>.</p>
 <p><br></p>
 <p><br></p>
 </div>
