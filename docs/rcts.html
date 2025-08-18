@@ -11,7 +11,7 @@
 
 
 
-<title>RCT in schools</title>
+<title>Practical exam</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -342,14 +342,15 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">RCT in schools</h1>
+<h1 class="title toc-ignore">Practical exam</h1>
 
 </div>
 
 
 <p><font size="3"></p>
-<div id="practical-exam" class="section level1">
-<h1>Practical exam</h1>
+<hr />
+<div id="task" class="section level1">
+<h1>Task</h1>
 <p>You have been asked to evaluate a numeracy program that is provided
 to Year 3 students in NSW government schools. You are required to:</p>
 <ul>
@@ -403,41 +404,131 @@ value 1 when a student had a language background other than English and
 <p><br></p>
 <div
 id="table-1-results-of-hlm-analysis-with-year-4-numeracy-score-as-dependent-variable"
-class="section level6">
-<h6>Table 1: Results of HLM analysis, with Year 4 Numeracy score as
-dependent variable</h6>
-<pre><code>## # A tibble: 8 × 6
-##   Model                  `Coefficient (B)` `Std Error`   Beta      t `p-value`
-##   &lt;chr&gt;                              &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
-## 1 Constant                          92.0        28.8    1      3.19      0.001
-## 2 Relative school growth             0.884       0.069  0.246 12.8       0    
-## 3 Year 3 Numeracy                    0.741       0.02   0.711 36.8       0    
-## 4 SES                                0.065       0.022  0.066  3.00      0.003
-## 5 Gender                             5.22        2.70   0.035  1.93      0.054
-## 6 First Nations status             -17.0         6.11  -0.053 -2.78      0.005
-## 7 Language Background                0.107       1.65   0.001  0.065     0.948
-## 8 Treatment                          4.13        3.07   0.256  1.34      0.179</code></pre>
+class="section level3">
+<h3>Table 1: Results of HLM analysis, with Year 4 Numeracy score as
+dependent variable</h3>
+<div class="kable-table">
+<table>
+<colgroup>
+<col width="32%" />
+<col width="22%" />
+<col width="14%" />
+<col width="9%" />
+<col width="9%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="right">Coefficient (B)</th>
+<th align="right">Std Error</th>
+<th align="right">Beta</th>
+<th align="right">t</th>
+<th align="right">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Constant</td>
+<td align="right">92.011</td>
+<td align="right">28.832</td>
+<td align="right">1.000</td>
+<td align="right">3.191</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="even">
+<td align="left">Relative school growth</td>
+<td align="right">0.884</td>
+<td align="right">0.069</td>
+<td align="right">0.246</td>
+<td align="right">12.757</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">Year 3 Numeracy</td>
+<td align="right">0.741</td>
+<td align="right">0.020</td>
+<td align="right">0.711</td>
+<td align="right">36.756</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">SES</td>
+<td align="right">0.065</td>
+<td align="right">0.022</td>
+<td align="right">0.066</td>
+<td align="right">3.003</td>
+<td align="right">0.003</td>
+</tr>
+<tr class="odd">
+<td align="left">Gender</td>
+<td align="right">5.216</td>
+<td align="right">2.703</td>
+<td align="right">0.035</td>
+<td align="right">1.930</td>
+<td align="right">0.054</td>
+</tr>
+<tr class="even">
+<td align="left">First Nations status</td>
+<td align="right">-17.001</td>
+<td align="right">6.108</td>
+<td align="right">-0.053</td>
+<td align="right">-2.783</td>
+<td align="right">0.005</td>
+</tr>
+<tr class="odd">
+<td align="left">Language Background</td>
+<td align="right">0.107</td>
+<td align="right">1.649</td>
+<td align="right">0.001</td>
+<td align="right">0.065</td>
+<td align="right">0.948</td>
+</tr>
+<tr class="even">
+<td align="left">Treatment</td>
+<td align="right">4.126</td>
+<td align="right">3.070</td>
+<td align="right">0.256</td>
+<td align="right">1.344</td>
+<td align="right">0.179</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><br></p>
 </div>
 <div id="what-are-the-assumptions-of-the-model-described-above"
-class="section level4">
-<h4>What are the assumptions of the model described above?</h4>
-<p>The model above represents an ANCOVA analysis of treatment
-differences at the post test, where the Year 3 numeracy scores are
-included as a pre score covariate in the model (ANCOVA-post). The <span
-class="math inline">\(\beta\)</span> estimate for Treatment determines
-whether students with the same initial Year 3 numeracy score are
-expected to have the same final Year 4 numeracy score (irrespective of
-treatment). However this requires that any pre-existing differences
-between program schools relative to schools not in the program are due
-to random variation and not some systematic variation (random allocation
-will remove any systematic pre-existing differences and so the only
-differences remaining will be <em>random</em>). Unfortunately we are not
-told whether schools were randomly allocated to treatment groups, and so
-we cannot infer this assumption is met.</p>
-<p>When random allocation is not present, then intepreting the <span
-class="math inline">\(\beta\)</span> for Treatment is not straightfoward
-due to potential RTM effects (see below).</p>
+class="section level3">
+<h3>What are the assumptions of the model described above?</h3>
+<p>The aim of the model was to evaluate the (short-term) impact of the
+program. The most important assumption of the model is there were no
+pre-existing differences between the program and non-program schools.
+I.e., any differences were random (which can be assumed when schools
+were randomly allocated to treatment arms).</p>
+<p>When pre-existing differences exist, interpreting the impact of the
+program (Treatment <span class="math inline">\(\beta\)</span>) on Year 4
+scores is not straightfoward. This model adjusted for pre-existing
+differences by including Year 3 scores, which produces an estimate of
+the Year 4 differences among children <em>with the same Year 3 numeracy
+levels</em>. However if (as is likely) schools with low numeracy
+students were more likely to be allocated to the program then this
+assumption is not warranted, and the treatment <span
+class="math inline">\(\beta\)</span> will underestimate the total impact
+of the program on numeracy levels at Year 4, due to
+regression-to-the-mean effects (RTM). The RTM effects occur because
+equating Year 3 scores is similar to selecting <em>above average</em>
+students in poor schools for treatment and <em>below average</em>
+students in good schools as comparisons, which will result in smaller
+than expected <em>Year 4 differences</em> after each group regresses to
+their respective group means. In this way, conditional treatment effects
+can be biased and in some cases underestimate the true effect.</p>
+<p>However after random allocation, interpreting the Treatment <span
+class="math inline">\(\beta\)</span> in the presence of pre-existing
+differences is straightforward, as all differences between schools
+<strong>not due to treatment</strong> are random: Adjusting for
+pre-existing differences is warranted and the adjusted Treatment <span
+class="math inline">\(\beta\)</span> will not be biased (and be more
+precise).</p>
 <p><em>Nb.</em> The <em>Relative school growth</em> score represents the
 relative change for each school, and so adjusts for differences in
 growth between each school - that is the clustered changes (among
@@ -450,59 +541,177 @@ provided).</p>
 </div>
 <div
 id="what-diagnostics-could-you-use-to-check-the-fit-of-the-model-and-whether-the-assumptions-of-the-model-are-valid"
-class="section level4">
-<h4>What diagnostics could you use to check the fit of the model and
-whether the assumptions of the model are valid?</h4>
-<p>The most important assumption of the model above is that pre-existing
-differences between groups are random (i.e., random allocation to
-treatment). There is no way to test this assumption; testing for
-significant differences in Year 3 numeracy between the treatment groups
-can tell us if pre-existing differances are present but will not help us
-determine whether those differences are due to a systematic effect or
-random variation (sometimes random allocation results in significant
-differences between groups).</p>
+class="section level3">
+<h3>What diagnostics could you use to check the fit of the model and
+whether the assumptions of the model are valid?</h3>
+<p>There is no way to test whether allocation to the program was random;
+testing for significant differences in Year 3 numeracy between the
+treatment groups can tell us if pre-existing differences were present
+but will not help us determine whether those differences were due to a
+systematic effect or random variation (sometimes random allocation
+results in significant differences between groups - in which case the
+average treatment effect is unbiased <em>in the long run</em>).</p>
+<p>However we can assess whether pre-existing differences in Year 3
+numeracy are present, which will indicate how well-matched the treatment
+groups were, and may also reveal whether RTM effects were likely.</p>
 <p>Let’s take a look at the data</p>
-<pre><code>## # A tibble: 20 × 9
-##    School_ID Student_ID Year_level Numeracy Gender First_Nations Language_background   SES Treatment
-##    &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;               &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    
-##  1 1100067            1          3     464.      0             0                   0  1159 0        
-##  2 1100067            1          4     543.      0             0                   0  1159 0        
-##  3 1100067            1          5     531.      0             0                   0  1159 0        
-##  4 1100067            1          6     555.      0             0                   0  1159 0        
-##  5 1100044            2          3     258.      1             0                   1  1064 1        
-##  6 1100044            2          4     387.      1             0                   1  1064 1        
-##  7 1100044            2          5     428.      1             0                   1  1064 1        
-##  8 1100044            2          6     542.      1             0                   1  1064 1        
-##  9 1100044            3          3     352.      0             0                   1  1064 1        
-## 10 1100044            3          4     457.      0             0                   1  1064 1        
-## 11 1100044            3          5     534.      0             0                   1  1064 1        
-## 12 1100044            3          6     617.      0             0                   1  1064 1        
-## 13 1100045            4          3     449.      1             0                   0  1124 0        
-## 14 1100045            4          4     510.      1             0                   0  1124 0        
-## 15 1100045            4          5     606.      1             0                   0  1124 0        
-## 16 1100045            4          6     655.      1             0                   0  1124 0        
-## 17 1100100            5          3     349.      0             0                   0  1163 0        
-## 18 1100100            5          4     403.      0             0                   0  1163 0        
-## 19 1100100            5          5     450.      0             0                   0  1163 0        
-## 20 1100100            5          6     520.      0             0                   0  1163 0</code></pre>
+<div class="kable-table">
+<table style="width:100%;">
+<colgroup>
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="9%" />
+<col width="7%" />
+<col width="14%" />
+<col width="20%" />
+<col width="5%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">School_ID</th>
+<th align="right">Student_ID</th>
+<th align="right">Year_level</th>
+<th align="right">Numeracy</th>
+<th align="right">Gender</th>
+<th align="right">First_Nations</th>
+<th align="right">Language_background</th>
+<th align="right">SES</th>
+<th align="left">Treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1100067</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">464.3</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1159</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">1100067</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">542.7</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1159</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1100067</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">531.1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1159</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">1100067</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">554.9</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1159</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1100044</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">258.1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1064</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">1100044</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">387.2</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1064</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">1100044</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">428.1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1064</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">1100044</td>
+<td align="right">2</td>
+<td align="right">6</td>
+<td align="right">542.3</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1064</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">1100044</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">352.5</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1064</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">1100044</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">456.7</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1064</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>The records are arranged in long format with rows arranged by school,
 student and year; and each row representing a student-year
 observation.</p>
 <p>For Task 1, we will select the data from Years 3 and 4, and rearrange
 it into wide format with <code>Pre</code> and <code>Post</code>
 scores.</p>
-<table>
+<div class="kable-table">
+<table style="width:100%;">
 <colgroup>
-<col width="9%" />
-<col width="10%" />
-<col width="6%" />
-<col width="13%" />
-<col width="19%" />
-<col width="4%" />
-<col width="9%" />
-<col width="5%" />
-<col width="5%" />
+<col width="11%" />
+<col width="12%" />
 <col width="7%" />
+<col width="15%" />
+<col width="22%" />
+<col width="5%" />
+<col width="11%" />
+<col width="6%" />
 <col width="6%" />
 </colgroup>
 <thead>
@@ -516,8 +725,6 @@ scores.</p>
 <th align="left">Treatment</th>
 <th align="right">Pre</th>
 <th align="right">Post</th>
-<th align="right">cPre</th>
-<th align="right">Change</th>
 </tr>
 </thead>
 <tbody>
@@ -531,8 +738,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">358.9</td>
 <td align="right">507.9</td>
-<td align="right">-48.194</td>
-<td align="right">148.98</td>
 </tr>
 <tr class="even">
 <td align="left">1100021</td>
@@ -544,8 +749,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">467.0</td>
 <td align="right">571.2</td>
-<td align="right">59.926</td>
-<td align="right">104.18</td>
 </tr>
 <tr class="odd">
 <td align="left">1100021</td>
@@ -557,8 +760,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">493.2</td>
 <td align="right">529.4</td>
-<td align="right">86.146</td>
-<td align="right">36.22</td>
 </tr>
 <tr class="even">
 <td align="left">1100021</td>
@@ -570,8 +771,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">361.1</td>
 <td align="right">421.1</td>
-<td align="right">-45.974</td>
-<td align="right">59.96</td>
 </tr>
 <tr class="odd">
 <td align="left">1100021</td>
@@ -583,8 +782,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">413.1</td>
 <td align="right">523.9</td>
-<td align="right">5.986</td>
-<td align="right">110.89</td>
 </tr>
 <tr class="even">
 <td align="left">1100021</td>
@@ -596,8 +793,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">378.6</td>
 <td align="right">435.1</td>
-<td align="right">-28.514</td>
-<td align="right">56.54</td>
 </tr>
 <tr class="odd">
 <td align="left">1100021</td>
@@ -609,8 +804,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">405.7</td>
 <td align="right">420.7</td>
-<td align="right">-1.334</td>
-<td align="right">14.94</td>
 </tr>
 <tr class="even">
 <td align="left">1100021</td>
@@ -622,8 +815,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">359.0</td>
 <td align="right">416.7</td>
-<td align="right">-48.074</td>
-<td align="right">57.72</td>
 </tr>
 <tr class="odd">
 <td align="left">1100021</td>
@@ -635,8 +826,6 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">429.1</td>
 <td align="right">502.5</td>
-<td align="right">22.066</td>
-<td align="right">73.36</td>
 </tr>
 <tr class="even">
 <td align="left">1100021</td>
@@ -648,161 +837,91 @@ scores.</p>
 <td align="left">1</td>
 <td align="right">563.5</td>
 <td align="right">599.3</td>
-<td align="right">156.426</td>
-<td align="right">35.76</td>
-</tr>
-<tr class="odd">
-<td align="left">1100021</td>
-<td align="right">77</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">375.6</td>
-<td align="right">475.1</td>
-<td align="right">-31.494</td>
-<td align="right">99.48</td>
-</tr>
-<tr class="even">
-<td align="left">1100021</td>
-<td align="right">78</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">522.4</td>
-<td align="right">616.5</td>
-<td align="right">115.366</td>
-<td align="right">94.05</td>
-</tr>
-<tr class="odd">
-<td align="left">1100021</td>
-<td align="right">81</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">450.0</td>
-<td align="right">556.9</td>
-<td align="right">42.966</td>
-<td align="right">106.84</td>
-</tr>
-<tr class="even">
-<td align="left">1100021</td>
-<td align="right">82</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">481.0</td>
-<td align="right">540.9</td>
-<td align="right">73.906</td>
-<td align="right">59.94</td>
-</tr>
-<tr class="odd">
-<td align="left">1100021</td>
-<td align="right">85</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">479.7</td>
-<td align="right">586.0</td>
-<td align="right">72.666</td>
-<td align="right">106.24</td>
-</tr>
-<tr class="even">
-<td align="left">1100021</td>
-<td align="right">88</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">462.5</td>
-<td align="right">473.0</td>
-<td align="right">55.466</td>
-<td align="right">10.48</td>
-</tr>
-<tr class="odd">
-<td align="left">1100021</td>
-<td align="right">91</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">421.6</td>
-<td align="right">501.4</td>
-<td align="right">14.526</td>
-<td align="right">79.75</td>
-</tr>
-<tr class="even">
-<td align="left">1100021</td>
-<td align="right">92</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">469.8</td>
-<td align="right">599.0</td>
-<td align="right">62.766</td>
-<td align="right">129.16</td>
-</tr>
-<tr class="odd">
-<td align="left">1100021</td>
-<td align="right">94</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">505.5</td>
-<td align="right">602.6</td>
-<td align="right">98.406</td>
-<td align="right">97.10</td>
-</tr>
-<tr class="even">
-<td align="left">1100021</td>
-<td align="right">96</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1180</td>
-<td align="left">1</td>
-<td align="right">459.7</td>
-<td align="right">582.8</td>
-<td align="right">52.626</td>
-<td align="right">123.09</td>
 </tr>
 </tbody>
 </table>
-<p>Note that pre-existing numeracy differences between treatment groups
-are present:</p>
+</div>
+<p><br></p>
+<p>Pre-existing numeracy differences between groups were present,
+indicating the groups were not well-matched and consistent with the
+likely presence of RTM effects:</p>
 <pre class="r"><code>df %&gt;%
   filter(Year_level == 3) %&gt;%
-  lm(Numeracy ~ 1 + Treatment,
-       data = .) %&gt;%
+  lm(Numeracy ~ 1 + Treatment, 
+     data = .) %&gt;%
   tidy()</code></pre>
-<pre><code>## # A tibble: 2 × 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)    423.       2.20     192.  0       
-## 2 Treatment1     -31.2      3.11     -10.0 4.73e-23</code></pre>
-<p>The intercept is the mean numeracy level among the non-program
-schools in Year 3, while the parameter for the treatment effect
-represents a pre-existing deficit in numeracy scores among the program
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">422.70</td>
+<td align="right">2.204</td>
+<td align="right">191.76</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Treatment1</td>
+<td align="right">-31.18</td>
+<td align="right">3.113</td>
+<td align="right">-10.02</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The intercept of <strong>423</strong> is the mean numeracy level
+among the non-program schools in Year 3, while the estimate for the
+treatment effect of <strong>-31.2 (p &lt; .001)</strong> represents a
+significant pre-existing deficit in numeracy scores among the program
 schools.</p>
-<p>Also note the demographic representation of minorities, lower SES
-regions and males is higher in the program schools, consistent with
-enrolment of schools with poor educational resources into the
-program</p>
+<pre class="r"><code># Adding further controls does not remove the pre-existing difference:
+
+df %&gt;%
+  filter(Year_level == 3) %&gt;%
+  lm(Numeracy ~ 1 + Treatment + 
+       First_Nations + Language_background + SES + Gender, 
+     data = .) %&gt;%
+  tidy() |&gt; 
+  filter(str_detect(term, &quot;Treatment&quot;))</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Treatment1</td>
+<td align="right">-24.69</td>
+<td align="right">3.033</td>
+<td align="right">-8.139</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Including predictors of poor numeracy (e.g., SES, First_Nations,
+Gender) reduces but does not remove the pre-existing difference between
+treatment groups, consistent with enrolment of schools with poor
+numeracy into the program.</p>
+<p>Also note the higher proportion of minorities, lower SES regions and
+males in the program schools, consistent with enrolment of schools with
+poor numeracy into the program.</p>
 <pre class="r"><code>df %&gt;%
   filter(Year_level == 3) %&gt;%
   group_by(Treatment) %&gt;%
@@ -812,31 +931,71 @@ program</p>
     Language = mean(Language_background),
     SES = mean(SES),
     Females = mean(Gender))</code></pre>
-<pre><code>## # A tibble: 2 × 6
-##   Treatment Numeracy First_Nations Language   SES Females
-##   &lt;fct&gt;        &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-## 1 0             423.        0.0291    0.181 1042.   0.488
-## 2 1             392.        0.0993    0.322 1038.   0.516</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Treatment</th>
+<th align="right">Numeracy</th>
+<th align="right">First_Nations</th>
+<th align="right">Language</th>
+<th align="right">SES</th>
+<th align="right">Females</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">422.7</td>
+<td align="right">0.0291</td>
+<td align="right">0.1809</td>
+<td align="right">1042</td>
+<td align="right">0.4875</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">391.5</td>
+<td align="right">0.0993</td>
+<td align="right">0.3216</td>
+<td align="right">1038</td>
+<td align="right">0.5160</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><br></p>
-<p>Other assumptions of HLMs are straightforward to check as a measure
-of model fit. For instance the residual distributions in the model
-should be normally distributed around zero, which can be checked by
-visual inspection.</p>
-<pre><code># check whether residuals are normally distributed around 0
-plot(fit)  </code></pre>
+<p>Given the pre-existing differences in numeracy between groups, a
+second important assumption of the model is the impact of the program is
+homogenous across levels of numeracy. That is, the model assumes there
+are no heterogenous treatment effects between low and high levels of
+numeracy. This can be tested by plotting Year 3 numeracy levels against
+Year 4 numeracy levels for each student <a
+href="https://www.researchgate.net/publication/10854793_Making_friends_with_your_data_Improving_how_statistics_are_conducted_and_reported">Wright
+(2003)</a>. The vertical distance between these slopes in each panel
+indicates the treatment effect. Where the slopes are not parallel
+indicates the program may have a <em>heterogenous treatment effect</em>
+across Year 3 numeracy levels.</p>
+<div
+id="figure-1.-association-between-year-3-pre-and-year-4-post-numeracy-for-program-and-non-program-groups"
+class="section level4">
+<h4>Figure 1. Association between Year 3 (pre) and Year 4 (post)
+numeracy for program and non-program groups</h4>
+<pre class="r"><code>wdf %&gt;%
+  ggplot(aes(x = Pre, y = Post, color = Treatment, fill = Treatment)) +
+    # geom_point(alpha = 0.6) +
+    geom_smooth(method = &quot;lm&quot;, formula = y ~ x, se=T) +
+    # scale_color_manual(values = c(blues9[5], blues9[9])) +
+    scale_color_manual(aesthetics = c(&quot;fill&quot;, &quot;color&quot;), 
+                       values = c(&quot;#377EB8&quot;, &quot;#E41A1C&quot;)) +
+    labs(subtitle = &quot;Year 4 numeracy (red = program)&quot;,
+         y = &quot;&quot;, x = &quot;Year 3 numeracy&quot;) +
+    theme_minimal()</code></pre>
+<p><img src="rcts_files/figure-html/wright_plot-1.png" width="672" /></p>
 <p><br></p>
-<p>The specification of the random effect distribution should also be
-assessed in a HLM. Variance among different levels of the random effects
-should be similar. An ANOVA can be used to test for an overall
-difference in the squared residuals (<span
-class="math inline">\(r_{ij}^2\)</span>) between levels. Or residuals
-can be plotted stratified by grouping level, inspecting for similar
-spread between levels and no correlations or patterns over levels.</p>
-<pre><code># check there is no heteroscedasticity among different levels of the random effects 
-plot(fit, as.factor(school) ~ resid(., scaled=TRUE), 
-     abline=0, pch=16,
-     xlab=&quot;Standardised residuals&quot;, 
-     ylab=&quot;School&quot;)</code></pre>
+<p>The association between Year 3 and Year 4 numeracy is steeper for
+program schools (in red) indicating heterogenous treatment effects may
+be present, perhaps due to the program improving above average students
+more than below average students.</p>
 <p><br></p>
 <p><br></p>
 </div>
@@ -845,183 +1004,176 @@ id="what-are-some-limitations-andor-caveats-of-the-analysis-how-could-the-model-
 class="section level4">
 <h4>What are some limitations and/or caveats of the analysis? How could
 the model be improved to overcome some of these limitations?</h4>
-<p>The coefficient for <em>Treatment</em> represents the average
-treatment effect (<span class="math inline">\(\tau\)</span>) on post
-(Year 4) scores, but <strong>if and only if</strong> the assignment to
-treatment was random (i.e., RCT). However randomization is often
-considered impractical when evaluating school programs in disadvantaged
-communities. Instead comparisons are often made with schools not in the
-program, and who are also not (as) disadvantaged/deprived. Consequently
-the post scores will tend to regress towards their respective population
-means and spuriously cause the program to appear ineffective or even
-harmful. An ANCOVA assessing post score differences <strong>without
-randomization</strong> will be misleading, even after adjusting for
-pre-existing differences, due to the potential presence of such
-regression-to-the-mean effects.</p>
-<p>In such cases it is still possible to determine whether program
-schools <em>gain</em> more numeracy on average than schools not in the
-program by the estimand of a change/gain score analysis. It is important
-to note that a change/gain score analysis answers a distinctly different
-question from the post score ANCOVA, namely whether program schools gain
-the same amount of numeracy on average as the other schools (by contrast
-the ANCOVA assesses the difference in post means after equating for pre
-differences). According to <a
-href="https://www.researchgate.net/publication/10854793_Making_friends_with_your_data_Improving_how_statistics_are_conducted_and_reported">Wright
-(2003)</a>, the only procedure that is always correct in this situation
-is a scatterplot comparing the scores at time 2 with those at time 1 for
-the different groups.</p>
-<pre class="r"><code>p1 &lt;- pdf %&gt;%
-  ggplot(aes(x = Pre, y = Post, color = Treatment)) +
-    geom_point(alpha = 0.6) +
-    geom_smooth(method = &quot;lm&quot;, formula = y ~ x, se=F) +
-    scale_color_manual(values = c(blues9[5], blues9[9])) +# c(&quot;#377EB8&quot;, &quot;#E41A1C&quot;)
-    labs(subtitle = &quot;Year 4 numeracy (dark blue = program)&quot;,
-         y = &quot;&quot;, x = &quot;Year 3 numeracy&quot;)
-
-p2 &lt;- pdf %&gt;%
-  ggplot(aes(x = Pre, y = Change, color = Treatment)) +
-    geom_point(alpha = 0.6) +
-    geom_smooth(method = &quot;lm&quot;, formula = y ~ x, se=F) +
-    scale_color_manual(values = c(blues9[5], blues9[9])) +# c(&quot;#377EB8&quot;, &quot;#E41A1C&quot;)
-    labs(subtitle = &quot;Change scores&quot;,
-         y = &quot;&quot;, x = &quot;Year 3 numeracy&quot;)
-
-p1 + p2 + plot_layout(guides = &#39;collect&#39;) &amp;
-  theme_minimal() + 
-  theme(legend.position = &quot;bottom&quot;,
-        axis.title.x = element_text(size = 10, color = &quot;grey30&quot;))</code></pre>
-<p><img src="rcts_files/figure-html/rct_prevpost_1-1.png" width="672" /></p>
-<p>The distinct slopes for each treatment group are shown in dark blue
-(program) and light blue (non-program). The vertical distance between
-these slopes in each panel indicate the treatment effect. Where the
-slopes are not parallel indicates the program may have a
-<em>heterogenous treatment effect</em> across Year 3 numeracy levels. In
-addition, the negative slope in the right panel shows scores from all
-schools tend to regress to the mean - high Year 3 scores produce smaller
-gains (change scores) than low Year 3 scores. So the difference in slope
-in the right panel shows the program improves high scoring students more
-than low scoring students, thus reducing regression-to-the-mean effects
-in these schools relative to other schools.</p>
-<p><br></p>
-<p>Below we compare the estimates from a post score ANCOVA and a change
-score analysis.</p>
-<p>An ANCOVA on the post scores produces an estimate which is similar to
-that provided in the question material above</p>
-<pre class="r"><code>fit.1 &lt;- lmer(Post ~ 1 + Treatment + cPre + (1|School_ID),
-              data = as.data.frame(pdf)) 
-
-tidy(fit.1, effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Treatment1&quot;) # 3.29 (4.88) vs 4.126 (3.070)</code></pre>
-<pre><code>## # A tibble: 1 × 7
-##   effect term       estimate std.error statistic    df p.value
-##   &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-## 1 fixed  Treatment1     3.29      4.88     0.675  47.4   0.503</code></pre>
-<p>The estimated effect of the program on Year 4 numeracy scores from
-the ANCOVA equating Year 3 numeracy level was <strong>3.29
-(±4.88)</strong> points (compare to Table 1 above).</p>
-<p>However without randomization, equating for Year 3 numeracy is likely
-to make the program look ineffective due to regression-to-the-mean in
-each respective group. Instead if we estimate the <em>relative gain</em>
-of program schools over other schools then we may still determine
-whether any benefit accrued to the program schools after treatment.</p>
-<pre class="r"><code># Adding covariates wiil improve the precision but not change the estimand
-pdf %&gt;%
-  lmer(
-    Post ~ 1 + Treatment + cPre + First_Nations + SES + Gender + Language_background +
-      (1|School_ID),
-    data = .) %&gt;%
-  tidy(effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Treatment1&quot;) # 4.07 (4.47) vs 4.126 (3.070)</code></pre>
-<p><br></p>
-<p><br></p>
-<p>The simplest change score analysis is done with a t-test/OLS. The
+<p>In the presence of pre-existing differences (without randomization),
+it is not possible to conclude the program was effective on the basis of
+comparisons between Year 4 scores of the program and non-program
+schools. This is because of two reasons: 1) some of the difference in
+Year 4 numeracy may have been due to the pre-existing differences in
+Year 3 (the association between Year 3 and Year 4 numeracy scores was
+<span class="math inline">\(\beta = 0.741\)</span>, <span
+class="math inline">\(p &lt; .001\)</span> in Table 1 above); 2)
+equating groups on Year 3 numeracy scores either by matching or
+regression control will induce RTM effects (see above).</p>
+<p>However it is still possible to determine whether program schools
+<em>gain</em> more numeracy on average than schools not in the program
+by the estimand of a gain score analysis. It is important to note that a
+gain score analysis answers a distinctly different question from the
+post score ANCOVA, namely whether program schools gain the same amount
+of numeracy on average as the other schools. By contrast the ANCOVA
+assesses the difference in post means after equating for pre
+differences).</p>
+<p>Below we estimate the relative gain of program schools over other
+schools to determine whether more benefit accrued to the program schools
+after treatment.</p>
+<pre class="r"><code>cwdf &lt;- wdf |&gt; 
+  mutate(Change = Post - Pre)</code></pre>
+<p>The simplest gain score analysis is done with a t-test/OLS. The
 unadjusted estimate is the difference between the mean differences, and
 shows a much more profound improvement among program schools. This
 produces an unbiased estimate however it does not account for the
 expected dependency between students from the same school, and so does
 not control the type-I error rate at the nominal level (i.e., the
-p-value is too low)</p>
-<pre class="r"><code>pdf %&gt;%
-  mutate(Treatment = fct_rev(Treatment)) %&gt;% # recode so gain is over non-program schools
+p-value is too low).</p>
+<pre class="r"><code>cwdf %&gt;%
+  # recode so gain is over non-program schools:
+  mutate(Treatment = fct_rev(Treatment)) %&gt;%
   t.test(Change ~ Treatment, data = .) %&gt;% 
   tidy() %&gt;%
-  select(`0` = estimate2, `1` = estimate1, estimate:conf.high) # 9.50118, p = .000000862</code></pre>
-<pre><code>## # A tibble: 1 × 8
-##     `0`   `1` estimate statistic     p.value parameter conf.low conf.high
-##   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-## 1  80.8  90.3     9.50      4.94 0.000000862     1920.     5.73      13.3</code></pre>
+  select(`0` = estimate2, `1` = estimate1, estimate:conf.high) </code></pre>
+<div class="kable-table">
+<table>
+<colgroup>
+<col width="8%" />
+<col width="8%" />
+<col width="13%" />
+<col width="14%" />
+<col width="11%" />
+<col width="14%" />
+<col width="13%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">estimate</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">parameter</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">80.76</td>
+<td align="right">90.26</td>
+<td align="right">9.501</td>
+<td align="right">4.937</td>
+<td align="right">0</td>
+<td align="right">1920</td>
+<td align="right">5.727</td>
+<td align="right">13.28</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>  # est = 9.50118 (), p = .000000862</code></pre>
 <p>The estimate <strong>9.501</strong> from the <em>t</em>-test is an
-unbiased estimate, however the error term does not respect the
-dependency within schools in the data.</p>
-<p>To account for the dependency between students from the same school,
-an error term for each school can be added (i.e., random intercept) in
-an RM ANOVA. However the estimate will be biased using an RM ANOVA in
-this unbalanced dataset</p>
-<pre class="r"><code>aov(Change ~ 1 + Treatment + Error(School_ID), # add cPre to reduce bias?
-    data = pdf) -&gt; aov.change.school 
+unbiased estimate, however the error term (and therefore the p-value)
+does not respect the dependency between students within the same school
+in the data.</p>
+<p>To account for the dependency, we can adjust the error term over
+schools rather than students in a nested linear model with blocked error
+terms:</p>
+<pre class="r"><code>aov(Change ~ 1 + Treatment + Error(School_ID), 
+    data = cwdf) -&gt; aov.change.school 
 
 aov.change.school %&gt;% 
   emmeans::emmeans(&quot;Treatment&quot;) %&gt;%
   as.data.frame() %&gt;%
   select(Treatment, emmean) %&gt;%
   spread(Treatment, emmean) %&gt;%
-  mutate(estimate = `1` - `0`) # 10.52004, p = .00000119</code></pre>
+  mutate(estimate = `1` - `0`) </code></pre>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<pre><code>##       0     1 estimate
-## 1 80.77 90.28    9.501</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">80.77</td>
+<td align="right">90.28</td>
+<td align="right">9.501</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>  # est = 9.501, p = 0.018, df = 47</code></pre>
+<p>The estimate <strong>9.501</strong> is equivalent to the t-test
+result, but now the degrees of freedom (<strong>df = 47</strong>) is
+consistent with the number of schools (n = 49) and so the p-value is
+correctly adjusted.</p>
 <p><br></p>
-<p>To account for the dependency in an unbalanced dataset and so produce
-an unbiased estimate, we need a linear mixed model with a random
-intercept for each school</p>
+<p>To account for the dependency we can also estimate a random intercept
+for each school in a linear mixed model (LMM):</p>
 <pre class="r"><code>fit.2 &lt;- lmer(Change ~ 1 + Treatment + (1|School_ID),
-     data = as.data.frame(pdf))
+     data = as.data.frame(cwdf))
 
 fit.2 %&gt;%
-  tidy(effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Treatment1&quot;) # 9.88 (3.82), p = .0128</code></pre>
-<pre><code>## # A tibble: 1 × 7
-##   effect term       estimate std.error statistic    df p.value
-##   &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-## 1 fixed  Treatment1     9.88      3.82      2.59  48.1  0.0128</code></pre>
+  tidy(effects = &quot;fixed&quot;, conf.int=T) %&gt;%
+  filter(term == &quot;Treatment1&quot;) </code></pre>
+<div class="kable-table">
+<table>
+<colgroup>
+<col width="8%" />
+<col width="13%" />
+<col width="11%" />
+<col width="12%" />
+<col width="12%" />
+<col width="7%" />
+<col width="10%" />
+<col width="11%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">effect</th>
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">df</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">fixed</td>
+<td align="left">Treatment1</td>
+<td align="right">9.881</td>
+<td align="right">3.822</td>
+<td align="right">2.586</td>
+<td align="right">48.12</td>
+<td align="right">0.0128</td>
+<td align="right">2.198</td>
+<td align="right">17.56</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code># est = 9.88 (3.82), p = .0128, df = 48.1, ICC = 0.076</code></pre>
 <p>The estimate from the LMM of <strong>9.88 (3.82)</strong> is similar
 (but not equivalent) to the t-test result. Nevertheless, the degrees of
-freedom (and therefore the error) now better reflects the dependency
-among students from the same school.</p>
-<p>When considering this result, the question arises whether we should
-adjust for pre-existing differences in Year 3 numeracy (and/or other
-pre-existing differences in demographics). As far as I can tell, in the
-context of a pseudoexperimental design such as this, the experts
-consensus appears to be that covariates for pre-existing differences
-should not be included in a change score analysis, as these real
-differences are likely to mask the total effects of the program (Twisk
-et al, 2018; Dallal 2020). According to Pearl (2016), the decision rests
-on where the Year 3 numeracy levels stand with respect to the program
-allocation in a causal DAG. If the schools were allocated to the program
-<em>because</em> of their low numeracy levels then equating for numeracy
-levels and including them as a covariate is warranted as we might be
-interested in the direct effect of the program. However if low numeracy
-levels are merely a mediator of the program effect on numeracy then we
-should not adjust and so estimate the total effect of the program. We
-aren’t told in this example how allocation to the program was performed,
-so the only reasonable justification I can provide is that we should be
-interested in how much the program improved numeracy among the
-disadvantaged schools, rather than whether the program will improve
-numeracy among all schools on average.</p>
-<pre class="r"><code># The effect of equating Year 3 numeracy scores on predicted gain
-p1 &lt;- ggpredict(fit.2, terms = &quot;Treatment&quot;) %&gt;% plot() +
-  coord_cartesian(ylim = c(75, 95)) +
-  labs(subtitle = &quot;without equating Year 3 numeracy&quot;)
-
-# Nb. Adding cPre turns this model into the post scores ANCOVA
-fit.2b &lt;- lmer(Change ~ 1 + Treatment + cPre + (1|School_ID),
-     data = as.data.frame(pdf)) # 3.29 (4.88)
-
-p2 &lt;- ggpredict(fit.2b, terms = &quot;Treatment&quot;) %&gt;% plot() +
-  coord_cartesian(ylim = c(75, 95)) +
-  labs(subtitle = &quot;after equating Year 3 numeracy&quot;)
-
-p1 + p2</code></pre>
-<p><br></p>
+freedom (and therefore the p-value) reflects the unique amount of
+information provided by each school.</p>
 <p><br></p>
 <p>We can also estimate gain in a mixed 2 x (2) ANOVA with treatment and
 time (Pre, Post) as factors, where the interaction term
@@ -1029,16 +1181,9 @@ time (Pre, Post) as factors, where the interaction term
 schools over the other schools.</p>
 <p>In a RM ANOVA, <code>Time</code> is nested within <code>School</code>
 and this must be entered into the error term. Note the result matches
-the RM ANOVA on the change scores (which was biased because of
-unbalanced cells and is biased here too)</p>
+the nested ANOVA on the change scores:</p>
 <pre class="r"><code>lpdf &lt;- df %&gt;%
   filter(Year_level %in% 3:4) %&gt;%
-  left_join(
-    filter(df, Year_level == 3) %&gt;%
-      select(School_ID, Student_ID, Pre = Numeracy) %&gt;%
-      mutate(cPre = c(scale(Pre, scale=F))),
-    by = join_by(School_ID, Student_ID)
-  ) %&gt;%
   mutate(Time = Year_level - 3) 
 
 aov.interact.school &lt;- aov(Numeracy ~ Treatment*Time + Error(School_ID/Time),
@@ -1051,18 +1196,33 @@ emmeans::emmeans(aov.interact.school,  ~ Time|Treatment) %&gt;%
   mutate(delta = `1` - `0`) %&gt;%
   select(Treatment, delta) %&gt;%
   spread(Treatment, delta) %&gt;%
-  mutate(estimate = `1` - `0`) # 10.52004, p = .0335</code></pre>
+  mutate(estimate = `1` - `0`) </code></pre>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<pre><code>## Warning in (mth$objs[[1]])(object, trms, xlev, grid, ...): Some predictors are correlated with the intercept - results may be very
-## biased</code></pre>
-<pre><code>##       0     1 estimate
-## 1 80.76 90.26    9.501</code></pre>
-<pre class="r"><code># Nb. If we don&#39;t add Time as a nested variable here, we get the same result as 
-# the t-test on the change scores above (est. = 9.501182)  </code></pre>
+<pre><code>## Warning in (mth$objs[[1]])(object, trms, xlev, grid, ...): Some predictors are correlated
+## with the intercept - results may be very biased</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">80.76</td>
+<td align="right">90.26</td>
+<td align="right">9.501</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code># est = 9.501, p = .018, df = 47</code></pre>
 <p><br></p>
-<p>Testing the same model in a linear mixed model setting, where the
+<p>Testing the same estimate in a linear mixed model setting, where the
 interaction term (<code>Time:Treatment</code>) represents the gain of
-program schools over other schools</p>
+program schools over other schools:</p>
 <pre class="r"><code>fit.3 &lt;- df %&gt;%
   filter(Year_level %in% 3:4) %&gt;%
   mutate(Time = Year_level - 3) %&gt;%
@@ -1071,80 +1231,111 @@ program schools over other schools</p>
        data = .) 
 
 fit.3 %&gt;%
-  tidy(effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Time:Treatment&quot;) # 9.51 (4.01), p = .0213</code></pre>
-<pre><code>## # A tibble: 0 × 7
-## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;, statistic &lt;dbl&gt;, df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
-<pre class="r"><code># Nb. Adding Pre as a covariate on the RHS is invalid since Pre is already 
-# included on the LHS in the first level of Time
-fit.3b &lt;- df %&gt;%
-  filter(Year_level %in% 3:4) %&gt;%
-  mutate(Time = Year_level - 3) %&gt;%
-  left_join(
-    filter(df, Year_level == 3) %&gt;%
-      select(School_ID, Student_ID, Pre = Numeracy) %&gt;%
-      mutate(cPre = c(scale(Pre, scale=F))),
-    by = join_by(School_ID, Student_ID)
-  ) %&gt;%
-  as.data.frame() %&gt;%
-  lmer(Numeracy ~ 1 + Time*Treatment + cPre + (1|School_ID/Time),
-       data = .) # 9.89 (3.82), p = .0127
-
-p1 &lt;- ggpredict(fit.3, terms = c(&quot;Time&quot;, &quot;Treatment&quot;)) %&gt;% plot() +
-  coord_cartesian(ylim = c(380, 520)) +
+  tidy(effects = &quot;fixed&quot;, conf.int = T) %&gt;%
+  filter(term == &quot;Time:Treatment1&quot;) </code></pre>
+<div class="kable-table">
+<table>
+<colgroup>
+<col width="8%" />
+<col width="18%" />
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="7%" />
+<col width="9%" />
+<col width="10%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">effect</th>
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">df</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">fixed</td>
+<td align="left">Time:Treatment1</td>
+<td align="right">9.512</td>
+<td align="right">4.006</td>
+<td align="right">2.374</td>
+<td align="right">52.23</td>
+<td align="right">0.0213</td>
+<td align="right">1.474</td>
+<td align="right">17.55</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code># est = 9.51 (4.01), p = .0213, df = 52.2</code></pre>
+<p>The LMM with nested groups for school and time produces an estimate
+similar to the t-test and RM ANOVA on gain scores: <strong>9.51
+(±4.01)</strong>. Compared to the LMM on gain scores, this estimate has
+more degrees of freedom (52.2 vs 48.1) and more residual random variance
+(3780 vs 1650), because it is trying to explain two time points rather
+than a single difference score.</p>
+<p><br></p>
+<p>Note that adding further controls (e.g., Year 3 numeracy scores) to
+the gain score models will reintroduce RTM effects, as the model will
+now be comparing gains among students from each group with the same Year
+3 numeracy score, which will be above average for the treatment group
+and below average for the control group.</p>
+<pre class="r"><code># The effect of equating Year 3 numeracy scores on predicted gain
+p1 &lt;- ggpredict(fit.2, terms = &quot;Treatment&quot;) %&gt;% plot() +
+  coord_cartesian(ylim = c(75, 95)) +
   labs(subtitle = &quot;without equating Year 3 numeracy&quot;)
 
-p2 &lt;- ggpredict(fit.3b, terms = c(&quot;Time&quot;, &quot;Treatment&quot;)) %&gt;% plot() +
-  coord_cartesian(ylim = c(380, 520)) +
+# Nb. Adding cPre turns this model into the post scores ANCOVA
+fit.2b &lt;- lmer(Change ~ 1 + Treatment + Pre + (1|School_ID),
+     data = as.data.frame(cwdf)) # 3.29 (4.88)
+
+p2 &lt;- ggpredict(fit.2b, terms = &quot;Treatment&quot;) %&gt;% plot() +
+  coord_cartesian(ylim = c(75, 95)) +
   labs(subtitle = &quot;after equating Year 3 numeracy&quot;)
 
-p1 + p2 + plot_layout(guides = &#39;collect&#39;) &amp;
-  theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p>The LMM with nested groups for school and time produces the best
-unbiased estimate of <strong>9.51 (±4.01)</strong> with the correct
-error-term.</p>
-<p>I’m not sure why this produces a different estimate from the LMM on
-change scores above (to be considered later?), but this estimate is
-closer to the t-test estimate and so I’m guessing this model produces
-the most unbiased estimate with the correct error rate.</p>
+p1 + p2</code></pre>
+<p><img src="rcts_files/figure-html/gains_controlled-1.png" width="672" /></p>
 <p><br></p>
-<p>We can also relax the parallel slopes assumption (aka
-sphericity/compound symmetry), but unless there is a good reason to
-believe different schools will show different gains over time then this
-might not be justified…</p>
-<pre class="r"><code>fit.4 &lt;- df %&gt;%
-  filter(Year_level %in% 3:4) %&gt;%
-  mutate(Time = Year_level - 3) %&gt;%
-  as.data.frame() %&gt;%
-  lmer(Numeracy ~ 1 + Time*Treatment + (1 + Time|School_ID/Time),
-       data = .) </code></pre>
-<pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
-<pre class="r"><code>fit.4 %&gt;% 
-  tidy(effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Time:Treatment&quot;) # 9.98 (4.48), p = .0277</code></pre>
-<pre><code>## # A tibble: 0 × 7
-## # ℹ 7 variables: effect &lt;chr&gt;, term &lt;chr&gt;, estimate &lt;dbl&gt;, std.error &lt;dbl&gt;, statistic &lt;dbl&gt;, df &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
-<p>This gives us a similar estimate (with less precision) to the LMM
-with change scores above.</p>
-<p>To answer the question, the post scores ANCOVA relies on random
-allocation to the program in order to provide an unbiased average
-treatment effect (<span class="math inline">\(\tau\)</span>). Without
-random allocation, we cannot assume the pre-existing differences are
-random and not real. In the presence of real pre-existing differences,
-we can still determine whether the program improved numeracy among the
-disadvantaged schools by defining a model of gain. In this unbalanced
-dataset, the best (unbiased) model is a LMM with nested effects of
-school and time.</p>
-<p>Wihtout random allocation to groups, any estimated differences may be
-due to pre-existing differences between the program schools and the
-other schools rather than the program, or even due to an interaction
-between the program and the schools (i.e., if the program only works in
-the <em>kind</em> of schools in the program); and so the estimand does
-not represent the <em>average</em> treatment effect (<span
-class="math inline">\(\tau\)</span>). Nevertheless, an estimate of the
-difference in slope may be an informative of the success of the program
-(i.e., in <em>those</em> schools), especially when we have no reason to
-expect program schools to gain on other schools without treatment.</p>
+<p>Likewise, adding the Year 3 numeracy scores (<code>Pre</code>) as a
+covariate on the RHS of the two-way ANOVAs is invalid since Pre is
+already included on the LHS in the first level of Time.</p>
+<p>In the context of a pseudoexperimental design such as this, the
+consensus appears to be that covariates for pre-existing differences
+should not be included in a gain score analysis, as equating these real
+differences is likely to mask the total effects of the program (Twisk et
+al, 2018; Dallal 2020). According to Pearl (2016), the decision rests on
+where the Year 3 numeracy levels stand with respect to the program
+allocation in a causal DAG. If the schools were allocated to the program
+<em>because</em> of their low numeracy levels then equating for numeracy
+levels and including them as a covariate may be warranted if we are
+interested in the direct effect of the program. However if we are
+interested in the total compensatory effect of the program among low
+numeracy students (so poor numeracy stands as a mediator of the program
+effect), then we should estimate the total effect of the program and not
+adjust for pre-existing differences. We aren’t told in this example how
+allocation to the program was performed, so the only reasonable
+justification I can provide is that we should be interested in how much
+the program improved numeracy among the disadvantaged schools, rather
+than whether the program will improve numeracy among all schools on
+average.</p>
+<p>Also note that without random allocation to groups, any estimated
+differences in gain may be due to pre-existing differences between the
+program schools and the other schools rather than the program, or even
+due to an interaction between the program and the schools (i.e., if the
+program only works in the <em>kind</em> of schools in the program); and
+so the estimand does not represent the <em>average</em> treatment effect
+(<span class="math inline">\(\tau\)</span>). Nevertheless, an estimate
+of the difference in slope may be an informative of the success of the
+program (i.e., in <em>those</em> schools), especially when we have no
+reason to expect program schools to gain on other schools without
+treatment.</p>
 <p><br></p>
 <p><br></p>
 </div>
@@ -1153,17 +1344,14 @@ id="what-can-you-conclude-from-this-model-about-the-short-term-impact-of-the-pro
 class="section level4">
 <h4>What can you conclude from this model about the short-term impact of
 the program on student numeracy proficiency after one year?</h4>
-<p>If allocation to the program was not random AND schools were placed
-in the program <em>because</em> they had lower numeracy levels, then the
-post score ANCOVA treatment estimate above may include RTM effects and
-produce a biased estimate. Accordingly, low scoring program schools are
-equated with high scoring non-program schools, so the best performing
-program schools are likely to improve least in numeracy while the worst
-performing non-program schools are likely to improve the most. This
-would result in underestimating the effect of the program, and making
-interpretation of the non-signifcant positive effect (<span
-class="math inline">\(\beta = 4.126\)</span>, <span
-class="math inline">\(p &gt; .05\)</span>) difficult.</p>
+<p>If schools were placed in the program <em>because</em> they had lower
+numeracy levels, then we cannot conclude anything about the average
+treatment effect of the program. The post score ANCOVA treatment
+estimate above may include RTM effects and produce a biased estimate.
+However the gain score analyses and the two-way ANOVAs indicate the
+program moderately improved numeracy among poor performing schools, with
+the potential average improvement ranging between 1 or 2 points to more
+than 17 points.</p>
 <p>If allocation to the program was random, then the average treatment
 effect of the program on Year 4 numeracy is small (4.126) but everything
 from moderate positive effects (10.1432) to small negative effects
@@ -1178,6 +1366,7 @@ treatment works, which may help when planning wider implementation or
 policy.</p>
 <p><br></p>
 <p><br></p>
+</div>
 </div>
 </div>
 <div id="task-2-investigation-of-long-term-impact-of-treatment"
@@ -1221,13 +1410,13 @@ summary(Model1)
 # of freedom which is not implemented in nlme.
 
 contrast(Model1, list(time = &#39;3&#39;, treat = &#39;1&#39;), list(time = &#39;3&#39;, treat = &#39;0&#39;))</code></pre>
-<p>This mixed model for repeated measures (MMRM) uses an unstructured
-time and covariance structure. Unstructured time means that time is
-modeled categorically, rather than continuously as a linear or
-polynomial function, and allows for an arbitrary trajectory over time.
-While the continuous time models may use fewer degrees of freedom and
-may, therefore, be more powerful, it can be difficult to anticipate the
-outcome’s time trajectory in advance. Since clinical trials often
+<p>This <strong>mixed model for repeated measures</strong> (MMRM) uses
+an unstructured time and covariance structure. Unstructured time means
+that time is modeled categorically, rather than continuously as a linear
+or polynomial function, and allows for an arbitrary trajectory over
+time. While the continuous time models may use fewer degrees of freedom
+and may, therefore, be more powerful, it can be difficult to anticipate
+the outcome’s time trajectory in advance. Since clinical trials often
 require a pre-specified analysis plan, unstructured time can be
 appealing. In the context of randomized controlled trials, fixed effects
 of time, treatment and their interaction are included in the MMRM model.
@@ -1271,6 +1460,7 @@ library(ggeffects)
 
 fit.9 &lt;- df %&gt;% 
   mutate(Time = as.factor(Year_level - 3),
+         # Treatment = fct_rev(Treatment),
          Student_ID = as.factor(Student_ID)) %&gt;%
   as.data.frame() %&gt;%
   lme(Numeracy ~ 1 + Time*Treatment,
@@ -1330,70 +1520,150 @@ summary(fit.9)</code></pre>
 ## 
 ## Number of Observations: 7716
 ## Number of Groups: 49</code></pre>
-<pre class="r"><code>ggpredict(fit.9, terms = c(&quot;Time&quot;, &quot;Treatment&quot;)) %&gt;% plot()</code></pre>
-<p><img src="rcts_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<pre class="r"><code>hypothesis_test(fit.9, c(&quot;Time [3]&quot;, &quot;Treatment&quot;))</code></pre>
-<pre><code>## # Pairwise comparisons
-## 
-## Time | Treatment | Contrast |        95% CI |     p
-## ---------------------------------------------------
-## 3-3  |       0-1 |     4.83 | -10.86, 20.52 | 0.539</code></pre>
-<p>First plot the scatterplot between every post year and the pre
-year.</p>
-<pre class="r"><code>p1 &lt;- df %&gt;%
-  select(School_ID, Student_ID, Year_level, Numeracy, Treatment) %&gt;%
-  spread(Year_level, Numeracy) %&gt;%
-  ggplot(aes(x = `3`, color = Treatment)) +
-    geom_point(aes(y = `4`), alpha = 0.2) +
-    geom_smooth(aes(y = `4`), formula = &#39;y ~ x&#39;, method = &quot;lm&quot;, se = F) +
-    labs(subtitle = &quot;Year 4&quot;)
-    
-
-p2 &lt;- df %&gt;%
-  select(School_ID, Student_ID, Year_level, Numeracy, Treatment) %&gt;%
-  spread(Year_level, Numeracy) %&gt;%
-  ggplot(aes(x = `3`, color = Treatment)) +
-    geom_point(aes(y = `5`), alpha = 0.2) +
-    geom_smooth(aes(y = `5`), formula = &#39;y ~ x&#39;, method = &quot;lm&quot;, se = F) +
-  labs(subtitle = &quot;Year 5&quot;)
-    
-
-p3 &lt;- df %&gt;%
-  select(School_ID, Student_ID, Year_level, Numeracy, Treatment) %&gt;%
-  spread(Year_level, Numeracy) %&gt;%
-  ggplot(aes(x = `3`, color = Treatment)) +
-    geom_point(aes(y = `6`), alpha = 0.2) +
-    geom_smooth(aes(y = `6`), formula = &#39;y ~ x&#39;, method = &quot;lm&quot;, se = F) +
-    labs(subtitle = &quot;Year 6&quot;)
-    
-
-p1 + p2 + p3 + plot_layout(guides = &#39;collect&#39;) &amp; 
-  coord_cartesian(ylim = c(300, 750)) &amp;
-  scale_color_manual(values = c(blues9[5], blues9[9])) &amp;# c(&quot;#377EB8&quot;, &quot;#E41A1C&quot;)
-  theme_minimal() &amp; 
-  labs(y = &quot;&quot;, x = &quot;Year 3 (pre numeracy)&quot;) &amp;
-  theme(legend.position = &quot;bottom&quot;,
-        axis.title.x = element_text(size = 10, color = &quot;grey30&quot;))</code></pre>
-<p><img src="rcts_files/figure-html/rct_prevpost_2-1.png" width="864" /></p>
-<p>The distinct slopes for each treatment group are shown in dark blue
-(treatment) and light blue (control). The vertical distance between
-these slopes in each panel indicate the treatment effect for each year.
-Where the slopes are not parallel indicates the treatment may have a
-heterogenous effect across Year 3 numeracy levels.</p>
+<pre class="r"><code>ggpredict(fit.9, terms = c(&quot;Time&quot;, &quot;Treatment&quot;)) %&gt;% 
+  plot()</code></pre>
+<p><img src="rcts_files/figure-html/mmrm_plot-1.png" width="672" /></p>
 <p><br></p>
-<p>Assuming a linear effect of time, we can test a similar interaction
-model as suggested in Task 1, which will determine the (average) gain
-per year among program schools relative to other schools, over Years 3
-to 6.</p>
+<pre class="r"><code>hypothesis_test(fit.9, c(&quot;Time [3]&quot;, &quot;Treatment&quot;))</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Time</th>
+<th align="left">Treatment</th>
+<th align="right">Contrast</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3-3</td>
+<td align="left">0-1</td>
+<td align="right">4.827</td>
+<td align="right">-10.86</td>
+<td align="right">20.52</td>
+<td align="right">0.5389</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+<p>However if we relax the RCT assumption, we can compare the total
+long-term gain in numeracy between program and non-program schools:</p>
+<pre class="r"><code>predict_response(fit.9, terms = c(&quot;Time&quot;, &quot;Treatment&quot;)) %&gt;%
+  test_predictions(test = &quot;interaction&quot;)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Time</th>
+<th align="left">Treatment</th>
+<th align="right">Contrast</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0-1</td>
+<td align="left">0 and 1</td>
+<td align="right">9.501</td>
+<td align="right">5.629</td>
+<td align="right">13.373</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">0-2</td>
+<td align="left">0 and 1</td>
+<td align="right">19.798</td>
+<td align="right">15.813</td>
+<td align="right">23.783</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">0-3</td>
+<td align="left">0 and 1</td>
+<td align="right">24.840</td>
+<td align="right">20.539</td>
+<td align="right">29.141</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">0 and 1</td>
+<td align="right">10.297</td>
+<td align="right">6.818</td>
+<td align="right">13.775</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">1-3</td>
+<td align="left">0 and 1</td>
+<td align="right">15.338</td>
+<td align="right">11.363</td>
+<td align="right">19.314</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">2-3</td>
+<td align="left">0 and 1</td>
+<td align="right">5.042</td>
+<td align="right">1.721</td>
+<td align="right">8.363</td>
+<td align="right">0.0037</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+<p><br></p>
+<p>Beyond the MMRM, a linear mixed model with a linear effect of time
+can test an interaction model, as suggested in Task 1, which will
+determine the (average) gain per year among program schools relative to
+other schools, over Years 3 to 6:</p>
 <pre class="r"><code>fit.5 &lt;- lmer(Numeracy ~ Treatment*Year_level + (1|School_ID/Year_level),
               data = df)
 
 tidy(fit.5, effects = &quot;fixed&quot;) %&gt;%
   filter(term == &quot;Treatment1:Year_level&quot;) # 8.38 (1.85)</code></pre>
-<pre><code>## # A tibble: 1 × 7
-##   effect term                  estimate std.error statistic    df   p.value
-##   &lt;chr&gt;  &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1 fixed  Treatment1:Year_level     8.38      1.85      4.53  146. 0.0000121</code></pre>
+<div class="kable-table">
+<table>
+<colgroup>
+<col width="9%" />
+<col width="30%" />
+<col width="12%" />
+<col width="13%" />
+<col width="13%" />
+<col width="8%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">effect</th>
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">df</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">fixed</td>
+<td align="left">Treatment1:Year_level</td>
+<td align="right">8.383</td>
+<td align="right">1.85</td>
+<td align="right">4.53</td>
+<td align="right">146.5</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
 <pre class="r"><code># adding covariates does not change this estimate 
 
 lmer(Numeracy ~ Treatment*Year_level + SES + Gender + First_Nations + 
@@ -1409,41 +1679,56 @@ Year 3 to Year 6 is 8.5 points over other schools.</p>
 <p>To determine the long-term effect of the program over any short-term
 effect, we can omit Year 3 from the interaction and estimate the
 relative gain from Year 4. Including the Year 3 scores as a (centered)
-covariate will equate pre-existing differences in this model.</p>
+covariate will equate pre-existing differences in this model (and so
+reintroduce RTM effects).</p>
 <pre class="r"><code>left_join(df, 
           filter(df, Year_level==3) %&gt;% 
-            select(School_ID, Student_ID, Pre = Numeracy) %&gt;%
-            mutate(cPre = c(scale(Pre, scale=F))),
+            select(School_ID, Student_ID, Pre = Numeracy),
           by = join_by(School_ID, Student_ID)) %&gt;%
   filter(Year_level &gt; 3) %&gt;%
-  lmer(Numeracy ~ Treatment*Year_level + cPre + (1|School_ID/Year_level),
-       data = .) -&gt; fit.6
-
-tidy(fit.6, effects = &quot;fixed&quot;) %&gt;%
+  lmer(Numeracy ~ Treatment*Year_level + (1|School_ID/Year_level),
+       data = .) -&gt; fit.6</code></pre>
+<pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+<pre><code>## Warning: Model failed to converge with 1 negative eigenvalue: -3.0e+02</code></pre>
+<pre class="r"><code>tidy(fit.6, effects = &quot;fixed&quot;) %&gt;%
   filter(term == &quot;Treatment1:Year_level&quot;) # 7.44 (1.72)</code></pre>
-<pre><code>## # A tibble: 1 × 7
-##   effect term                  estimate std.error statistic    df   p.value
-##   &lt;chr&gt;  &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1 fixed  Treatment1:Year_level     7.44      1.72      4.33  102. 0.0000350</code></pre>
-<pre class="r"><code># adding covariates does not change the estimate
-left_join(df, 
-          filter(df, Year_level==3) %&gt;% 
-            select(School_ID, Student_ID, Pre = Numeracy) %&gt;%
-            mutate(cPre = c(scale(Pre, scale=F))),
-          by = join_by(School_ID, Student_ID)) %&gt;%
-  filter(Year_level &gt; 3) %&gt;%
-  lmer(Numeracy ~ Treatment*Year_level + cPre + SES + Gender + First_Nations + 
-         Language_background + (1|School_ID/Year_level),
-       data = .) -&gt; fit.7
-
-tidy(fit.7, effects = &quot;fixed&quot;) %&gt;%
-  filter(term == &quot;Treatment1:Year_level&quot;) # 7.44 (1.72)</code></pre>
-<pre><code>## # A tibble: 1 × 7
-##   effect term                  estimate std.error statistic    df   p.value
-##   &lt;chr&gt;  &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1 fixed  Treatment1:Year_level     7.44      1.72      4.33  102. 0.0000350</code></pre>
+<div class="kable-table">
+<table>
+<colgroup>
+<col width="9%" />
+<col width="30%" />
+<col width="12%" />
+<col width="14%" />
+<col width="14%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">effect</th>
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">df</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">fixed</td>
+<td align="left">Treatment1:Year_level</td>
+<td align="right">7.669</td>
+<td align="right">1.848</td>
+<td align="right">4.149</td>
+<td align="right">5736</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>After realising the short-term gains, the average long-term gain of
-program schools in Year 4 to Year 6 was 7.4 points year-to-year over
+program schools in Year 4 to Year 6 was 7.67 points year-to-year over
 other schools.</p>
 <p><br></p>
 <p>The long-term gain could also be represented by the total relative
@@ -1454,15 +1739,67 @@ rather than as a linear term.</p>
   lmer(Numeracy ~ Treatment*Year_level + (1|School_ID/Year_level),
        data = .) -&gt; fit.8</code></pre>
 <pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
-<pre class="r"><code>tidy(fit.8, effects = &quot;fixed&quot;) %&gt;%
+<pre class="r"><code>tidy(fit.8, effects = &quot;fixed&quot;, conf.int = T) %&gt;%
   filter(str_detect(term, &quot;Treatment1:&quot;)) %&gt;%
   select(-effect) # 24.8 (3.77)</code></pre>
-<pre><code>## # A tibble: 3 × 6
-##   term                   estimate std.error statistic    df  p.value
-##   &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Treatment1:Year_level4     9.50      3.77      2.52 7661. 1.18e- 2
-## 2 Treatment1:Year_level5    19.8       3.77      5.25 7661. 1.60e- 7
-## 3 Treatment1:Year_level6    24.8       3.77      6.58 7661. 4.98e-11</code></pre>
+<div class="kable-table">
+<table>
+<colgroup>
+<col width="27%" />
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="5%" />
+<col width="9%" />
+<col width="10%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">df</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Treatment1:Year_level4</td>
+<td align="right">9.501</td>
+<td align="right">3.774</td>
+<td align="right">2.517</td>
+<td align="right">7661</td>
+<td align="right">0.0118</td>
+<td align="right">2.102</td>
+<td align="right">16.90</td>
+</tr>
+<tr class="even">
+<td align="left">Treatment1:Year_level5</td>
+<td align="right">19.798</td>
+<td align="right">3.774</td>
+<td align="right">5.245</td>
+<td align="right">7661</td>
+<td align="right">0.0000</td>
+<td align="right">12.399</td>
+<td align="right">27.20</td>
+</tr>
+<tr class="odd">
+<td align="left">Treatment1:Year_level6</td>
+<td align="right">24.840</td>
+<td align="right">3.774</td>
+<td align="right">6.581</td>
+<td align="right">7661</td>
+<td align="right">0.0000</td>
+<td align="right">17.441</td>
+<td align="right">32.24</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><br></p>
 <p><br></p>
 </div>
@@ -1550,7 +1887,7 @@ relevant to the change in measurement, then gain scores without
 covariate adjustment for pre score differences usually produce a more
 relevant estimand</a>.</p>
 <pre><code># From Dorothy Bishop https://doi.org/10.1177/25152459241267904
-Analyses of intervention effects conducted in schools can be affected by clustering if randomization is conducted at the level of the schools or classrooms because children within a school/classroom are likely to be more similar to each otherthan to children from different schools/classrooms. Standard errors and p-values from a typical regression model depend on the assumption tha tthe residuals in the model across cases are independent from each other. If children within classrooms are more similar to each other, the assumption of independence of residuals is violated, and this will usually reduce the precision of confidence intervals (and hence reduce the statistical significance of effects).  
+Analyses of intervention effects conducted in schools can be affected by clustering if randomization is conducted at the level of the schools or classrooms because children within a school/classroom are likely to be more similar to each otherthan to children from different schools/classrooms. Standard errors and p-values from a typical regression model depend on the assumption that the residuals in the model across cases are independent from each other. If children within classrooms are more similar to each other, the assumption of independence of residuals is violated, and this will usually reduce the precision of confidence intervals (and hence reduce the statistical significance of effects).  
 
 The key statistic for any analysis that seeks to control for the effects of clusters is the intracluster correlation coefficient (ICC). The ICC is the proportion of total variance in a dependent variable explained by the cluster variable. So an ICC of 0.15 means the 15% of the variance in scores can be explained by the cluster variable. Typically ICCs greater than 0.10 are considered likely to have significant effects on standard errors. 
 
@@ -1562,11 +1899,12 @@ If so then we could include school as a fixed effect with an HC1 or HC2 adjustme
 <h1>Takeaways</h1>
 <p>In general gain score analyses answer a distinctly different question
 from ANCOVA, namely “Do subjects in the treatment group gain more than
-subjects in the control group?”, which is more appropriate when
-randomization is not present.</p>
-<p>Use ANCOVA (with or without change scores) when estimating <span
-class="math inline">\(\tau\)</span> with random allocation to treatment
-groups (RCT).</p>
+subjects in the control group?”, which is more appropriate when trying
+to understand the compensatory effects of a treatment or randomization
+is not present.</p>
+<p>Use ANCOVA (with or without change scores) with random allocation to
+treatment groups (RCT) when estimating <span
+class="math inline">\(\tau\)</span>.</p>
 <p>Without random allocation, use change scores to estimate gain (and
 ANCOVA may be vulnerable to RTM).</p>
 <p>Equating pre-existing differences is not always a good idea and can
@@ -1579,6 +1917,18 @@ reason for the pre-existing difference in Y)</p>
 </div>
 <div id="not-run" class="section level1">
 <h1>Not run</h1>
+<pre class="r"><code>fit.1 &lt;- lmer(Post ~ 1 + Treatment + Pre + (1|School_ID),
+              data = as.data.frame(wdf)) 
+
+tidy(fit.1, effects = &quot;fixed&quot;) %&gt;%
+  filter(term == &quot;Treatment1&quot;) # 3.29 (4.88) vs 4.126 (3.070)
+
+# The estimated impact of the program on Year 4 numeracy scores from the ANCOVA
+# was **3.29 (±4.88)** points after equating for Year 3 numeracy level. This
+# estimate is similar to that provided in Table 1 above (**4.126 ±3.07**).  
+# 
+# Adding additional covariates such as gender etc improves the precision of the
+# estimate but not enough to change the null result.  </code></pre>
 <pre class="r"><code># Adding covariates to equate for pre-existing differences does not change the
 # location of the estimate, but does slightly improve the precision
 mutate(df, Year_level = factor(Year_level)) %&gt;%
