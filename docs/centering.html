@@ -11,7 +11,7 @@
 
 
 
-<title>Centering</title>
+<title>Chapter 4 Analyses: Modeling the Time Course of Continuous Outcomes</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -266,16 +266,12 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Centering</h1>
+<h1 class="title toc-ignore">Chapter 4 Analyses: Modeling the Time
+Course of Continuous Outcomes</h1>
 
 </div>
 
 
-<div
-id="chapter-4-analyses-modeling-the-time-course-of-continuous-outcomes"
-class="section level1">
-<h1>Chapter 4 Analyses: Modeling the Time Course of Continuous
-Outcomes</h1>
 <pre class="r"><code>library(tidyverse)
 library(nlme)</code></pre>
 <pre class="r"><code>time &lt;- read_csv(&#39;time.csv&#39;) |&gt; 
@@ -357,15 +353,13 @@ time |&gt;
   ggplot(aes(x = time01)) +
     geom_line(aes(y = intimacy, linetype = treatment)) +
     # compare to BLUE
-    geom_smooth(aes(y = intimacy), method = &quot;lm&quot;, se = F) +
+    geom_smooth(aes(y = intimacy), method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F) +
     geom_line(aes(y = predicted)) + # BLUP?
     facet_wrap(~id) +
     labs(x = &quot;&quot;, y = &quot;&quot;, subtitle = &quot;intimacy&quot;) +
     theme(legend.position = &quot;top&quot;)</code></pre>
-<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="centering_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="centering_files/figure-html/plot_predicted_id-1.png" width="864" /></p>
 <p><br></p>
-</div>
 </div>
 <div id="compare-estimates-for-treated-and-control"
 class="section level1">
@@ -375,12 +369,12 @@ class="section level1">
   ggplot(aes(x = time01, y = predicted)) +
     geom_line(aes(group = id)) + # BLUP?
     geom_smooth(aes(group = treatment), 
-                method = &quot;lm&quot;, se = F, color = &quot;black&quot;, linewidth = 2) +
+                method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F,
+                linewidth = 2, color = &quot;red&quot;) +
     facet_wrap(~treatment) +
     labs(x = &quot;&quot;, y = &quot;&quot;, subtitle = &quot;intimacy&quot;) +
     theme(legend.position = &quot;top&quot;)</code></pre>
-<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="centering_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="centering_files/figure-html/plot_predicted_treatment-1.png" width="864" /></p>
 <p><br></p>
 <div id="eb-estimates" class="section level2">
 <h2>EB estimates</h2>
@@ -394,15 +388,16 @@ slopes &lt;- coef(lgmodel) |&gt;
   # add treatment indicator:
   left_join(
     distinct(select(time, id, treatment)) |&gt; 
-      mutate(treatment = as.numeric(treatment == 1)) 
+      mutate(treatment = as.numeric(treatment == 1)),
+    by = join_by(id)
   ) |&gt; 
   # group-specific slopes:
-  mutate(slope = slope + treatment*interaction) </code></pre>
-<pre><code>## Joining with `by = join_by(id)`</code></pre>
-<pre class="r"><code>coefs.1 &lt;- full_join(slopes, rfx) |&gt; 
-  select(id, treatment, ebintercept, ebslope, slope)</code></pre>
-<pre><code>## Joining with `by = join_by(id)`</code></pre>
-<pre class="r"><code># Find percentiles for slope distribution for each group
+  mutate(slope = slope + treatment*interaction) 
+
+coefs.1 &lt;- full_join(slopes, rfx, by = join_by(id)) |&gt; 
+  select(id, treatment, ebintercept, ebslope, slope)
+
+# Find percentiles for slope distribution for each group
 coefs.1 |&gt; 
   group_by(treatment) |&gt; 
   reframe(
