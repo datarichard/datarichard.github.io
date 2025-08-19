@@ -272,24 +272,8 @@ Course of Continuous Outcomes</h1>
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ───────────────────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
-## ── Conflicts ─────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>library(nlme)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;nlme&#39;
-## 
-## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     collapse</code></pre>
+<pre class="r"><code>library(tidyverse)
+library(nlme)</code></pre>
 <pre class="r"><code>time &lt;- read_csv(&#39;time.csv&#39;) |&gt; 
   mutate(treatment = as.factor(treatment),
          id = as.factor(id))</code></pre>
@@ -323,28 +307,28 @@ time |&gt;
 summary(lgmodel)</code></pre>
 <pre><code>## Linear mixed-effects model fit by REML
 ##   Data: time 
-##        AIC      BIC    logLik
-##   2852.392 2894.508 -1417.196
+##    AIC  BIC logLik
+##   2852 2895  -1417
 ## 
 ## Random effects:
 ##  Formula: ~time01 | id
 ##  Structure: General positive-definite, Log-Cholesky parametrization
-##             StdDev    Corr  
-## (Intercept) 0.8281217 (Intr)
-## time01      1.3761445 -0.453
-## Residual    1.3009531       
+##             StdDev Corr  
+## (Intercept) 0.8281 (Intr)
+## time01      1.3761 -0.453
+## Residual    1.3010       
 ## 
 ## Correlation Structure: AR(1)
 ##  Formula: ~1 | id 
 ##  Parameter estimate(s):
-##           Phi 
-## -3.661969e-05 
+##         Phi 
+## -0.00003662 
 ## Fixed effects:  intimacy ~ time01 * treatment 
-##                        Value Std.Error  DF   t-value p-value
-## (Intercept)        2.8989745 0.2070311 748 14.002601  0.0000
-## time01             0.7352012 0.3472019 748  2.117503  0.0345
-## treatment1        -0.0564426 0.2927862  48 -0.192777  0.8479
-## time01:treatment1  0.9214366 0.4910177 748  1.876585  0.0610
+##                     Value Std.Error  DF t-value p-value
+## (Intercept)        2.8990    0.2070 748  14.003  0.0000
+## time01             0.7352    0.3472 748   2.118  0.0345
+## treatment1        -0.0564    0.2928  48  -0.193  0.8479
+## time01:treatment1  0.9214    0.4910 748   1.877  0.0610
 ##  Correlation: 
 ##                   (Intr) time01 trtmn1
 ## time01            -0.599              
@@ -352,8 +336,8 @@ summary(lgmodel)</code></pre>
 ## time01:treatment1  0.423 -0.707 -0.599
 ## 
 ## Standardized Within-Group Residuals:
-##         Min          Q1         Med          Q3         Max 
-## -2.62425731 -0.67979207 -0.01899184  0.64336222  2.44625287 
+##      Min       Q1      Med       Q3      Max 
+## -2.62426 -0.67979 -0.01899  0.64336  2.44625 
 ## 
 ## Number of Observations: 800
 ## Number of Groups: 50</code></pre>
@@ -422,17 +406,7 @@ coefs.1 |&gt;
   ) |&gt; 
   spread(p, qnt)</code></pre>
 <div class="kable-table">
-<table style="width:100%;">
-<colgroup>
-<col width="12%" />
-<col width="13%" />
-<col width="13%" />
-<col width="13%" />
-<col width="12%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-</colgroup>
+<table>
 <thead>
 <tr class="header">
 <th align="right">treatment</th>
@@ -448,23 +422,23 @@ coefs.1 |&gt;
 <tbody>
 <tr class="odd">
 <td align="right">0</td>
-<td align="right">-0.9918586</td>
-<td align="right">-0.5573320</td>
-<td align="right">-0.0291769</td>
-<td align="right">0.6208204</td>
-<td align="right">1.314164</td>
-<td align="right">2.293812</td>
-<td align="right">2.738911</td>
+<td align="right">-0.9919</td>
+<td align="right">-0.5573</td>
+<td align="right">-0.0292</td>
+<td align="right">0.6208</td>
+<td align="right">1.314</td>
+<td align="right">2.294</td>
+<td align="right">2.739</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-0.5076443</td>
-<td align="right">-0.4071146</td>
-<td align="right">0.9973304</td>
-<td align="right">1.5424788</td>
-<td align="right">2.778086</td>
-<td align="right">3.338567</td>
-<td align="right">3.844033</td>
+<td align="right">-0.5076</td>
+<td align="right">-0.4071</td>
+<td align="right">0.9973</td>
+<td align="right">1.5425</td>
+<td align="right">2.778</td>
+<td align="right">3.339</td>
+<td align="right">3.844</td>
 </tr>
 </tbody>
 </table>
