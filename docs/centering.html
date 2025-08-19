@@ -272,8 +272,26 @@ Course of Continuous Outcomes</h1>
 </div>
 
 
+<p>The most basic feature of a longitudinal study is the time course or
+trajectory of the outcome measure (dependent variable or y). What is the
+trajectory of the typical subject? And how much do subjects differ from
+each other in their trajectory?</p>
+<p>For this example we will need <code>nlme</code> (nonlinear
+mixed-effect models) for it’s ability to explicitly model the
+within-subject covariance structure.</p>
 <pre class="r"><code>library(tidyverse)
 library(nlme)</code></pre>
+<p><br></p>
+<p>The time course dataset contains simulated data on an outcome where,
+as the result of an intervention, there is reason to expect group
+differences in the time course and, over and above these, subject-level
+differences within each group. The dataset is intended to represent a
+study of wives from 50 heterosexual married couples, randomly assigned
+to a 16-week marital therapy treatment condition ( n = 25) or a 16-week
+wait-list condition ( n = 25). In the treatment group each wife
+completed a web diary each week on the evening prior to the day of the
+therapy session, and in the control group each wife completed a web
+diary on a fixed day each week.</p>
 <pre class="r"><code>time &lt;- read_csv(&#39;time.csv&#39;) |&gt; 
   mutate(treatment = as.factor(treatment),
          id = as.factor(id))</code></pre>
@@ -289,12 +307,39 @@ time |&gt;
   ggplot(aes(x = time01, y = intimacy)) +
     geom_line(aes(linetype = treatment)) +
     facet_wrap(~id) +
-    labs(x = &quot;&quot;, y = &quot;&quot;, subtitle = &quot;intimacy&quot;) +
+    labs(x = &quot;&quot;, y = &quot;&quot;, 
+         subtitle = &quot;Panel plots of the 16-week trajectory of intimacy for each subject in the control and treatment groups&quot;) +
     theme(legend.position = &quot;top&quot;)</code></pre>
 <p><img src="centering_files/figure-html/Import-1.png" width="864" /></p>
 <p><br></p>
 <div id="model" class="section level2">
 <h2>Model</h2>
+<p>A random effects model with fixed terms for time and treatment group,
+and their interaction, along with random intercepts and slopes per
+subject. The within-subject covariance matrix with AR(1) errors.</p>
+<p>A central concern in modeling intensive longitudinal data is to
+estimate the population variances and covariances of the fixed effects.
+These allow us to know how much subjects differ from one another within
+the treatment and control groups, and, in case of the intercept–slope
+covariance, whether there is any tendency for subjects with larger or
+smaller intercepts (i.e., starting levels) to have larger or smaller
+slopes.</p>
+<p>The random effects for the intercept and slope are termed upper-level
+or <strong>between-subjects random effects</strong>; there are also
+lower-level or <strong>within-subjects random effects</strong>. These
+are the <span class="math inline">\(\epsilon_{ij}\)</span>’s, and they
+capture the extent to which a wife’s intimacy on a given week deviates
+above or below the value predicted by her specific regression line. We
+assume the <span class="math inline">\(\epsilon_{ij}\)</span>’s are
+strictly ordered in time with serial correlations. The simplest serial
+correlation is where the current error is a linear function of the
+previous error, plus a truly random <span
+class="math inline">\(v_{ij}\)</span>: <span
+class="math inline">\(\epsilon_{ij} = \rho \epsilon_{i-1, j} +
+v_{ij}\)</span>.</p>
+<p>Ignoring autocorrelation in errors typically leads to estimates of
+fixed effects that have standard errors that are too small, leading to
+Type I errors.</p>
 <p><br></p>
 <div id="linear-growth-model-with-ar1-errors" class="section level3">
 <h3>linear growth model with AR(1) errors</h3>
@@ -307,28 +352,28 @@ time |&gt;
 summary(lgmodel)</code></pre>
 <pre><code>## Linear mixed-effects model fit by REML
 ##   Data: time 
-##    AIC  BIC logLik
-##   2852 2895  -1417
+##        AIC      BIC    logLik
+##   2852.392 2894.508 -1417.196
 ## 
 ## Random effects:
 ##  Formula: ~time01 | id
 ##  Structure: General positive-definite, Log-Cholesky parametrization
-##             StdDev Corr  
-## (Intercept) 0.8281 (Intr)
-## time01      1.3761 -0.453
-## Residual    1.3010       
+##             StdDev    Corr  
+## (Intercept) 0.8281217 (Intr)
+## time01      1.3761445 -0.453
+## Residual    1.3009531       
 ## 
 ## Correlation Structure: AR(1)
 ##  Formula: ~1 | id 
 ##  Parameter estimate(s):
-##         Phi 
-## -0.00003662 
+##           Phi 
+## -3.661969e-05 
 ## Fixed effects:  intimacy ~ time01 * treatment 
-##                     Value Std.Error  DF t-value p-value
-## (Intercept)        2.8990    0.2070 748  14.003  0.0000
-## time01             0.7352    0.3472 748   2.118  0.0345
-## treatment1        -0.0564    0.2928  48  -0.193  0.8479
-## time01:treatment1  0.9214    0.4910 748   1.877  0.0610
+##                        Value Std.Error  DF   t-value p-value
+## (Intercept)        2.8989745 0.2070311 748 14.002601  0.0000
+## time01             0.7352012 0.3472019 748  2.117503  0.0345
+## treatment1        -0.0564426 0.2927862  48 -0.192777  0.8479
+## time01:treatment1  0.9214366 0.4910177 748  1.876585  0.0610
 ##  Correlation: 
 ##                   (Intr) time01 trtmn1
 ## time01            -0.599              
@@ -336,8 +381,8 @@ summary(lgmodel)</code></pre>
 ## time01:treatment1  0.423 -0.707 -0.599
 ## 
 ## Standardized Within-Group Residuals:
-##      Min       Q1      Med       Q3      Max 
-## -2.62426 -0.67979 -0.01899  0.64336  2.44625 
+##         Min          Q1         Med          Q3         Max 
+## -2.62425731 -0.67979207 -0.01899184  0.64336222  2.44625287 
 ## 
 ## Number of Observations: 800
 ## Number of Groups: 50</code></pre>
@@ -353,10 +398,12 @@ time |&gt;
   ggplot(aes(x = time01)) +
     geom_line(aes(y = intimacy, linetype = treatment)) +
     # compare to BLUE
-    geom_smooth(aes(y = intimacy), method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F) +
-    geom_line(aes(y = predicted)) + # BLUP?
+    geom_smooth(aes(y = intimacy), method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F,
+                color = &quot;black&quot;, linewidth = .5) +
+    geom_line(aes(y = predicted), color = &quot;blue&quot;) + # BLUP?
     facet_wrap(~id) +
-    labs(x = &quot;&quot;, y = &quot;&quot;, subtitle = &quot;intimacy&quot;) +
+    labs(x = &quot;&quot;, y = &quot;&quot;, 
+         subtitle = &quot;Panel plots of the actual and predicted trajectory of intimacy for each subject&quot;) +
     theme(legend.position = &quot;top&quot;)</code></pre>
 <p><img src="centering_files/figure-html/plot_predicted_id-1.png" width="864" /></p>
 <p><br></p>
@@ -372,12 +419,26 @@ class="section level1">
                 method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F,
                 linewidth = 2, color = &quot;red&quot;) +
     facet_wrap(~treatment) +
-    labs(x = &quot;&quot;, y = &quot;&quot;, subtitle = &quot;intimacy&quot;) +
+    labs(x = &quot;&quot;, y = &quot;&quot;, 
+         subtitle = &quot;Subject-specific regression lines for the control (left) and treatment (right) groups. 
+Average slope is shown in red&quot;) +
     theme(legend.position = &quot;top&quot;)</code></pre>
 <p><img src="centering_files/figure-html/plot_predicted_treatment-1.png" width="672" /></p>
+<p>The ﬁxed effects, can be thought of as the results for typical
+persons in the control and treatment groups, respectively. These ﬁxed
+effects are represented by the red lines in this figure. The
+between-subject random effects are represented by the variability in
+individual regression lines from the group averages. The lower-level
+(within-subject) random effects are represented by the difference
+between the raw data and predicted slopes in the earlier figure
+above.</p>
 <p><br></p>
 <div id="eb-estimates" class="section level2">
 <h2>EB estimates</h2>
+<p>Percentiles of slope distributions of the control and treatment
+groups are shown below. There is substantial overlap between both
+distributions (this would be better shown by the relative advantage of
+the treatment group distribution over the control group: TBD)</p>
 <pre class="r"><code>rfx &lt;- ranef(lgmodel) |&gt; 
   as_tibble(rownames = &quot;id&quot;) |&gt; 
   rename(ebintercept = 2, ebslope = 3)
@@ -406,7 +467,17 @@ coefs.1 |&gt;
   ) |&gt; 
   spread(p, qnt)</code></pre>
 <div class="kable-table">
-<table>
+<table style="width:100%;">
+<colgroup>
+<col width="12%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="12%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="right">treatment</th>
@@ -422,23 +493,23 @@ coefs.1 |&gt;
 <tbody>
 <tr class="odd">
 <td align="right">0</td>
-<td align="right">-0.9919</td>
-<td align="right">-0.5573</td>
-<td align="right">-0.0292</td>
-<td align="right">0.6208</td>
-<td align="right">1.314</td>
-<td align="right">2.294</td>
-<td align="right">2.739</td>
+<td align="right">-0.9918586</td>
+<td align="right">-0.5573320</td>
+<td align="right">-0.0291769</td>
+<td align="right">0.6208204</td>
+<td align="right">1.314164</td>
+<td align="right">2.293812</td>
+<td align="right">2.738911</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-0.5076</td>
-<td align="right">-0.4071</td>
-<td align="right">0.9973</td>
-<td align="right">1.5425</td>
-<td align="right">2.778</td>
-<td align="right">3.339</td>
-<td align="right">3.844</td>
+<td align="right">-0.5076443</td>
+<td align="right">-0.4071146</td>
+<td align="right">0.9973304</td>
+<td align="right">1.5424788</td>
+<td align="right">2.778086</td>
+<td align="right">3.338567</td>
+<td align="right">3.844033</td>
 </tr>
 </tbody>
 </table>
