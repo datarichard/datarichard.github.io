@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Rasch models</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Richard W Morris</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="rcode.html">R examples</a>
+</li>
+<li>
+  <a href="CV.pdf">CV</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Rasch models</h1>
+
+</div>
+
+
+<p><font size="3"></p>
+<p><br></p>
+<p>To begin, I will use the abortion data that comes with the
+<code>ltm</code> package. I provide this non-test example so that one
+will be clear that IRT is not just for test data. This data regards 379
+individuals who were asked if the law should allow abortion under the
+circumstances presented for each item:</p>
+<p>Item 1: The woman decides on her own that she does not.<br />
+Item 2: The couple agree that they do not wish to have a child.<br />
+Item 3: The woman is not married and does not wish to marry the
+man.<br />
+Item 4: The couple cannot afford any more children.</p>
+<p><br></p>
+<pre class="r"><code>load(&quot;Abortion.rda&quot;)
+
+head(Abortion)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">Item 1</th>
+<th align="right">Item 2</th>
+<th align="right">Item 3</th>
+<th align="right">Item 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+The probability of endorsement of each item among the <span
+class="math inline">\(n = 379\)</span> respondents:<br />
+
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Item</th>
+<th align="right">probability of endorsement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Item.1</td>
+<td align="right">0.438</td>
+</tr>
+<tr class="even">
+<td align="left">Item.2</td>
+<td align="right">0.594</td>
+</tr>
+<tr class="odd">
+<td align="left">Item.3</td>
+<td align="right">0.636</td>
+</tr>
+<tr class="even">
+<td align="left">Item.4</td>
+<td align="right">0.617</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+<p><br></p>
+<div id="rasch-models-1-parameter-item-response-theory-irt-models"
+class="section level3">
+<h3>Rasch models: 1-parameter Item Response Theory (IRT) models</h3>
+<p>The one-parameter IRT model, a.k.a. <em>Rasch</em> model can be
+expressed as follows:</p>
+<p><span class="math display">\[
+P(y = 1 | \theta, \delta) = logis(\theta_i - \delta_j)
+\]</span></p>
+<p><br></p>
+<p>In this setting, the probability of endorsement (<em>nee</em> getting
+an item correct), <span class="math inline">\(\pi_{ij}\)</span> is a
+function of the difficulty of item <span class="math inline">\(j,
+\delta_j\)</span> above, and the latent trait (ability) of person <span
+class="math inline">\(i, \theta_i\)</span>. In other words, it’s a
+specific type of logistic regression model. In the testing context, a
+person with more ‘ability’ relative to the item difficulty will answer
+correctly. In terms of the logit:</p>
+<p><span class="math display">\[
+logit_{ij} = log(\frac{\pi_{ij}}{1 - \pi_{ij}}) = \theta_i - \delta_j
+\]</span></p>
+<p><br></p>
+<p>There is an additional parameter, <span
+class="math inline">\(\alpha\)</span>, <em>discrimination</em>, which
+refers to an item’s ability to distinguish people (by ability). In the
+Rasch model it is held constant and in it’s original formulation it was
+fixed at 1.</p>
+<p><br></p>
+<div id="pm-as-a-mixed-model" class="section level4">
+<h4>1PM as a mixed model</h4>
+<p>The Rasch model can be estimated as a mixed model predicting the
+binary response with a fixed effect for item and a random effect for
+person. The only difference between the IRT model assumes the latent
+ability of person is distributed as standard normal, and estimates the
+discrimination parameter as a multiplier of that ability, <span
+class="math inline">\(\alpha N(0, 1)\)</span>. The mixed model on the
+other hand assumes that the random effects are distributed as normal
+with mean zero and standard deviation equal to the discrimination
+parameter, <span class="math inline">\(N(0, \alpha)\)</span>.</p>
+<pre class="r"><code>lme_rasch = glmer(Response ~ 0 + Item + (1|Subject), Abortion_long, 
+                  family=binomial(link=&#39;logit&#39;))
+
+summary(lme_rasch, cor=F)</code></pre>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) [
+## glmerMod]
+##  Family: binomial  ( logit )
+## Formula: Response ~ 0 + Item + (1 | Subject)
+##    Data: Abortion_long
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##     1472     1498     -731     1462     1511 
+## 
+## Scaled residuals: 
+##    Min     1Q Median     3Q    Max 
+## -2.621 -0.303  0.128  0.379  3.563 
+## 
+## Random effects:
+##  Groups  Name        Variance Std.Dev.
+##  Subject (Intercept) 13.9     3.73    
+## Number of obs: 1516, groups:  Subject, 379
+## 
+## Fixed effects:
+##            Estimate Std. Error z value Pr(&gt;|z|)    
+## ItemItem.1   -0.667      0.277   -2.41  0.01598 *  
+## ItemItem.2    1.017      0.283    3.59  0.00033 ***
+## ItemItem.3    1.500      0.292    5.14  2.8e-07 ***
+## ItemItem.4    1.285      0.287    4.47  7.8e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The fixed effects for item represent <strong>item
+difficulty</strong>, while the <strong>latent trait for the
+person</strong> (<em>nee</em> ability) is the random effect for that
+person in the mixed model.</p>
+<p><br></p>
+<p>The probability of item endorsement (difficulty) is the unconditional
+estimated probabilities (i.e., those that ignore the individual-specific
+effects):</p>
+<pre class="r"><code>plogis(fixef(lme_rasch))</code></pre>
+<pre><code>## ItemItem.1 ItemItem.2 ItemItem.3 ItemItem.4 
+##      0.339      0.734      0.818      0.783</code></pre>
+<p><br></p>
+<pre class="r"><code>ranef(lme_rasch)$Subject |&gt; 
+  as_tibble(rownames = &quot;Subject&quot;) |&gt; 
+  rename(latent_score_unc = 2) |&gt; 
+  mutate(latent_score = latent_score_unc / lme_rasch@theta) |&gt; 
+  ggplot(aes(x = latent_score)) +
+    geom_density(adjust = 2) +
+    xlim(-2, 2) +
+    labs(
+      title = &quot;Density plot of latent scores&quot;,
+      y = &quot;&quot;, x = &quot;latent score&quot;)</code></pre>
+<p><img src="rasch_files/figure-html/latent_score-1.png" width="672" /></p>
+<p>In a test taking context the latent score represents
+<em>ability</em>. In this context it represents some kind of
+individual-specific likelihood of endorsement.</p>
+<p><br></p>
+<p><br></p>
+</div>
+<div id="item-characteristic-curves-icc" class="section level4">
+<h4>Item Characteristic Curves (ICC)</h4>
+<p>The ICC plots the probability of endorsement as a function of the
+latent person trait, and takes on the familiar sigmoid shape due to the
+underlying logistic function.</p>
+<pre class="r"><code>left_join(
+  Abortion_long,
+  ranef(lme_rasch)$Subject |&gt; 
+    as_tibble(rownames = &quot;Subject&quot;) |&gt; 
+    rename(latent_score = 2) |&gt; 
+    mutate(latent_score = latent_score / lme_rasch@theta),
+  by = join_by(Subject)
+) |&gt; 
+  mutate(
+    fitted = fitted(lme_rasch)) |&gt; 
+  ggplot(aes(x = latent_score, y = fitted, color = Item)) +
+    stat_smooth(formula = &quot;y ~ x&quot;, method = &quot;glm&quot;, 
+              method.args = list(family=&quot;quasibinomial&quot;), 
+              se = F, fullrange = T) +
+    xlim(-2, 2) +
+    labs(
+      title = &quot;Person-specific probability of endorsement&quot;,
+      # subtitle = &quot;(Estimated probabilities conditional on the individual)&quot;,
+      y = &quot;Probability of endorsement\n&quot;, 
+      x = &quot;latent score (pro choice stance)&quot;)</code></pre>
+<p><img src="rasch_files/figure-html/icc-1.png" width="672" /></p>
+<p>In this case we can see that three of the items essentially behave
+identically, and in general distinguish (slightly less than average)
+individuals. The first item would however would take more ‘ability’
+before endorsement, i.e. it is more ‘difficult’ in test taking terms,
+but even then it is not too different from the others. We can now start
+to think of the latent trait as representing a pro-choice stance, where
+at the average score the person would likely be endorsing all but the
+first item.</p>
+<p><br></p>
+<p><br></p>
+<pre class="r"><code># A Bayesian version of the 2PM using `brms`
+# https://m-clark.github.io/models-by-example/bayesian-irt.html
+ 
+library(brms)
+
+# half normal for variance parameter, full for coefficients
+prior_2pm &lt;-
+  prior(&quot;normal(0, 5)&quot;, class = &quot;b&quot;,                  nlpar = &quot;Z&quot;) +
+  prior(&quot;normal(0, 5)&quot;, class = &quot;b&quot;,                  nlpar = &quot;logdiscr&quot;) +
+  prior(&quot;constant(1)&quot;,  class = &quot;sd&quot;, group = &quot;Subject&quot;,   nlpar = &quot;Z&quot;) +
+  prior(&quot;normal(0, 3)&quot;, class = &quot;sd&quot;, group = &quot;Item&quot;, nlpar = &quot;Z&quot;) +
+  prior(&quot;normal(0, 3)&quot;, class = &quot;sd&quot;, group = &quot;Item&quot;, nlpar = &quot;logdiscr&quot;)
+
+formula_2pm = bf(
+  Response ~ exp(logdiscr) * Z,
+  Z  ~ 1 + (1 |i| Item)  + (1 | Subject),
+  logdiscr ~ 1 + (1 |i| Item),
+  nl = TRUE
+)
+
+brms_2pm = brm(
+  formula_2pm,
+  data    = Abortion_long,
+  family  = bernoulli,
+  prior   = prior_2pm,
+  thin    = 4,
+  iter    = 4000,
+  warmup  = 3000,
+  cores   = 4,
+  control = list(adapt_delta = .99, max_treedepth = 15)
+)
+
+summary(brms_2pm)
+
+#  Family: bernoulli 
+#   Links: mu = logit 
+# Formula: Response ~ exp(logdiscr) * Z 
+#          Z ~ 1 + (1 | i | Item) + (1 | Subject)
+#          logdiscr ~ 1 + (1 | i | Item)
+#    Data: Abortion_long (Number of observations: 1516) 
+#   Draws: 4 chains, each with iter = 4000; warmup = 3000; thin = 4;
+#          total post-warmup draws = 1000
+# 
+# Multilevel Hyperparameters:
+# ~Item (Number of levels: 4) 
+#                                     Estimate Est.Error l-95% CI u-95% CI Rhat
+# sd(Z_Intercept)                         0.53      0.40     0.18     1.66 1.00
+# sd(logdiscr_Intercept)                  0.41      0.45     0.02     1.59 1.00
+# cor(Z_Intercept,logdiscr_Intercept)     0.06      0.55    -0.93     0.94 1.00
+# 
+# ~Subject (Number of levels: 379) 
+#                 Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+# sd(Z_Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+# 
+# Regression Coefficients:
+#                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+# Z_Intercept            0.19      0.33    -0.40     0.85 1.00      711      762
+# logdiscr_Intercept     1.48      0.32     0.91     2.10 1.00      720      699
+# 
+# Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+# and Tail_ESS are effective sample size measures, and Rhat is the potential
+# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p><br></p>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Doran, Harold, Douglas Bates, Paul Bliese, Maritza Dowling, 2007.
+“Estimating the Multilevel Rasch Model: With the lme4 Package.” Journal
+of Statistical Software 20(2): 1–18.</p>
+<p><a
+href="https://stat.ethz.ch/pipermail/r-sig-mixed-models/2010q4/004668.html"
+class="uri">https://stat.ethz.ch/pipermail/r-sig-mixed-models/2010q4/004668.html</a></p>
+<p><a
+href="https://m-clark.github.io/sem/item-response-theory.html#one-parameter-model"
+class="uri">https://m-clark.github.io/sem/item-response-theory.html#one-parameter-model</a></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
