@@ -11,7 +11,7 @@
 
 
 
-<title>Chapter 4 Analyses: Modeling the Time Course of Continuous Outcomes</title>
+<title>Centering</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -266,247 +266,294 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Chapter 4 Analyses: Modeling the Time
-Course of Continuous Outcomes</h1>
+<h1 class="title toc-ignore">Centering</h1>
 
 </div>
 
 
 <p><font size="3"></p>
-<p>The most basic feature of a longitudinal study is the time course or
-trajectory of the outcome measure (dependent variable or y). What is the
-trajectory of the typical subject? And how much do subjects differ from
-each other in their trajectory?</p>
-<p>For this example we will need <code>nlme</code> (nonlinear
-mixed-effect models) for it’s ability to explicitly model the
-within-subject covariance structure.</p>
-<pre class="r"><code>library(tidyverse)
-library(nlme)</code></pre>
 <p><br></p>
-<p>The time course dataset contains simulated data on an outcome where,
-as the result of an intervention, there is reason to expect group
-differences in the time course and, over and above these, subject-level
-differences within each group. The dataset is intended to represent a
-study of wives from 50 heterosexual married couples, randomly assigned
-to a 16-week marital therapy treatment condition ( n = 25) or a 16-week
-wait-list condition ( n = 25). In the treatment group each wife
-completed a web diary each week on the evening prior to the day of the
-therapy session, and in the control group each wife completed a web
-diary on a fixed day each week.</p>
-<pre class="r"><code>time &lt;- read_csv(&#39;time.csv&#39;) |&gt; 
-  mutate(treatment = as.factor(treatment),
-         id = as.factor(id))</code></pre>
-<pre><code>## Rows: 800 Columns: 5
-## ── Column specification ─────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (5): id, time, time01, intimacy, treatment
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code># peak at the data
-time |&gt; 
-  ggplot(aes(x = time01, y = intimacy)) +
-    geom_line(aes(linetype = treatment)) +
-    facet_wrap(~id) +
-    labs(x = &quot;&quot;, y = &quot;&quot;, 
-         subtitle = &quot;Panel plots of the 16-week trajectory of intimacy for each subject in the control and treatment groups&quot;) +
-    theme(legend.position = &quot;top&quot;)</code></pre>
-<p><img src="centering_files/figure-html/Import-1.png" width="864" /></p>
-<p><br></p>
-<div id="model" class="section level2">
-<h2>Model</h2>
-<p>A random effects model with fixed terms for time and treatment group,
-and their interaction, along with random intercepts and slopes per
-subject. The within-subject covariance matrix with AR(1) errors.</p>
-<p>A central concern in modeling intensive longitudinal data is to
-estimate the population variances and covariances of the fixed effects.
-These allow us to know how much subjects differ from one another within
-the treatment and control groups, and, in case of the intercept–slope
-covariance, whether there is any tendency for subjects with larger or
-smaller intercepts (i.e., starting levels) to have larger or smaller
-slopes.</p>
-<p>The random effects for the intercept and slope are termed upper-level
-or <strong>between-subjects random effects</strong>; there are also
-lower-level or <strong>within-subjects random effects</strong>. These
-are the <span class="math inline">\(\epsilon_{ij}\)</span>’s, and they
-capture the extent to which a wife’s intimacy on a given week deviates
-above or below the value predicted by her specific regression line. We
-assume the <span class="math inline">\(\epsilon_{ij}\)</span>’s are
-strictly ordered in time with serial correlations. The simplest serial
-correlation is where the current error is a linear function of the
-previous error, plus a truly random <span
-class="math inline">\(v_{ij}\)</span>: <span
-class="math inline">\(\epsilon_{ij} = \rho \epsilon_{i-1, j} +
-v_{ij}\)</span>.</p>
-<p>Ignoring autocorrelation in errors typically leads to estimates of
-fixed effects that have standard errors that are too small, leading to
-Type I errors.</p>
-<p><br></p>
-<div id="linear-growth-model-with-ar1-errors" class="section level3">
-<h3>linear growth model with AR(1) errors</h3>
-<pre class="r"><code>lgmodel &lt;- lme(
-  fixed = intimacy ~ time01*treatment, 
-  data = time, 
-  random = ~time01 | id, 
-  correlation = corAR1())
+<div id="between--and-within-group-centering" class="section level2">
+<h2>Between- and within-group centering</h2>
+<p>In a multilevel model (where data is clustered within groups), the
+total effect of a (lower level) predictor can be separated into the
+<strong>within-group</strong> component and the
+<strong>between-group</strong> component. Entering raw predictor values
+or grand-mean centered values into the model will produce a weighted*
+composite of both components (and interpretation will be
+confounded).</p>
+<p>However, if the <em>group mean</em> values of the predictor are
+<em>also</em> entered in the model then the raw predictor coefficient
+represents the within-group effect (and the mean predictor coefficient
+would represent the difference between the between- and within-group
+effect - the <strong>contextual effect</strong>).</p>
+<p>If the <em>group mean centered</em> values are entered as the
+predictor (with or without a group mean predictor), the regression
+coefficient represents the <strong>within-group</strong> effect.</p>
+<p>Adding the group mean values as a predictor will then estimate the
+<strong>between-group</strong> effect.</p>
+<p>This post is based on this <a
+href="https://stats.stackexchange.com/questions/403693/are-covariates-in-a-mixed-model-estimated-between-group-within-group-or-somewh/404493#404493">stackexchange
+post</a></p>
+<pre class="r"><code>set.seed(4) # 3 works
 
-summary(lgmodel)</code></pre>
-<pre><code>## Linear mixed-effects model fit by REML
-##   Data: time 
-##    AIC  BIC logLik
-##   2852 2895  -1417
+beta = -1
+sigma = 5
+
+ngp = 5
+rpt = 10
+
+generatedata = function(gp, n){
+  x = rnorm(n) + gp
+  y = beta*x + 3*gp + rnorm(n, sd=sigma)
+  tibble(x=x, y=y, p=gp)
+}
+
+data &lt;- map(1:5, generatedata, rpt) |&gt; 
+  bind_rows() |&gt; 
+  mutate(p = factor(p))
+
+# data = as.data.frame(do.call(rbind, lapply(1:ngp, generatedata, rpt)))
+# data$p = factor(data$p)
+
+ggplot(data, aes(x = x, y = y, color = p)) +
+  geom_point() +
+  geom_smooth(aes(group = p), method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se=F) </code></pre>
+<p><img src="centering_files/figure-html/generatedata-1.png" width="672" /></p>
+<p><br></p>
+<p><br></p>
+<p>The amount of between-group variance in the predictor is shown
+below:</p>
+<pre class="r"><code>x.model = lmer(x ~ 1 + (1|p), data=data)
+
+icc &lt;- function(lmerfit) {
+  
+  n &lt;- as.data.frame(VarCorr(lmerfit))[, &quot;vcov&quot;][1]
+  d &lt;- sum(as.data.frame(VarCorr(lmerfit))[, &quot;vcov&quot;])
+  n / d
+  
+}
+
+icc(x.model)</code></pre>
+<pre><code>## [1] 0.577</code></pre>
+<p>Fully 57.731 percent of the variance in x sits between the levels of
+<span class="math inline">\(p\)</span> (i.e.,
+<em>between-group</em>).</p>
+<p><br></p>
+<p>A linear mixed model (LMM) with the uncentered <span
+class="math inline">\(x\)</span> as the predictor provides the following
+result:</p>
+<pre class="r"><code>mixed.model = lmer(y ~ 1 + x + (1|p), data=data)
+
+summary(mixed.model)</code></pre>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: y ~ 1 + x + (1 | p)
+##    Data: data
+## 
+## REML criterion at convergence: 283
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.7244 -0.6487 -0.0648  0.5227  2.8702 
 ## 
 ## Random effects:
-##  Formula: ~time01 | id
-##  Structure: General positive-definite, Log-Cholesky parametrization
-##             StdDev Corr  
-## (Intercept) 0.8281 (Intr)
-## time01      1.3761 -0.453
-## Residual    1.3010       
+##  Groups   Name        Variance Std.Dev.
+##  p        (Intercept) 34.9     5.91    
+##  Residual             13.9     3.73    
+## Number of obs: 50, groups:  p, 5
 ## 
-## Correlation Structure: AR(1)
-##  Formula: ~1 | id 
-##  Parameter estimate(s):
-##         Phi 
-## -0.00003662 
-## Fixed effects:  intimacy ~ time01 * treatment 
-##                     Value Std.Error  DF t-value p-value
-## (Intercept)        2.8990    0.2070 748  14.003  0.0000
-## time01             0.7352    0.3472 748   2.118  0.0345
-## treatment1        -0.0564    0.2928  48  -0.193  0.8479
-## time01:treatment1  0.9214    0.4910 748   1.877  0.0610
-##  Correlation: 
-##                   (Intr) time01 trtmn1
-## time01            -0.599              
-## treatment1        -0.707  0.423       
-## time01:treatment1  0.423 -0.707 -0.599
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)   12.808      3.209    3.99
+## x             -2.134      0.555   -3.85
 ## 
-## Standardized Within-Group Residuals:
-##      Min       Q1      Med       Q3      Max 
-## -2.62426 -0.67979 -0.01899  0.64336  2.44625 
+## Correlation of Fixed Effects:
+##   (Intr)
+## x -0.543</code></pre>
+<p>A one unit change in <span class="math inline">\(x\)</span> is
+associated with a -2.134 unit change in <span
+class="math inline">\(y\)</span>. But it is unclear whether this change
+is happening within <span class="math inline">\(x\)</span> or between
+<span class="math inline">\(p\)</span>.</p>
+<p><br></p>
+<p>One way to focus on the within-group effect is to estimate a fixed
+effects model (also called a <em>varying intercept model</em>!). This
+tells you the <strong>within-group effect</strong> of a 1-unit change in
+<span class="math inline">\(x\)</span>:</p>
+<pre class="r"><code>fixed.model = lm(y ~ 0 + p + x, data=data)  
+
+summary(fixed.model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ 0 + p + x, data = data)
 ## 
-## Number of Observations: 800
-## Number of Groups: 50</code></pre>
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -6.13  -2.34  -0.17   1.74  10.31 
+## 
+## Coefficients:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## p1    6.081      1.475    4.12  0.00016 ***
+## p2    9.234      1.936    4.77  2.1e-05 ***
+## p3   13.747      1.982    6.94  1.4e-08 ***
+## p4   16.682      2.633    6.34  1.1e-07 ***
+## p5   22.054      2.806    7.86  6.4e-10 ***
+## x    -2.373      0.568   -4.18  0.00014 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.72 on 44 degrees of freedom
+## Multiple R-squared:  0.813,  Adjusted R-squared:  0.787 
+## F-statistic: 31.8 on 6 and 44 DF,  p-value: 1.86e-14</code></pre>
+<p>So within levels of <span class="math inline">\(p\)</span>, a 1-unit
+difference in <span class="math inline">\(x\)</span> is associated with
+a -2.373 unit change in <span class="math inline">\(y\)</span>.</p>
+<p>But what about the effect of the <strong>between-group</strong>
+variance in <span class="math inline">\(x\)</span>?</p>
+<p>The purest way to do this is to estimate a model with the group mean
+values and the group mean centered predictor in a <strong>between-within
+model</strong>:</p>
+<pre class="r"><code>data |&gt; 
+  group_by(p) |&gt; 
+  mutate(x.m = mean(x),
+         x.mc = x - x.m) |&gt; 
+  ungroup() -&gt; data
+
+bw.model &lt;- lmer(y ~ 1 + x.m + x.mc + (1|p), data = data)
+
+summary(bw.model, correlation = F)</code></pre>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: y ~ 1 + x.m + x.mc + (1 | p)
+##    Data: data
+## 
+## REML criterion at convergence: 272
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.8054 -0.6677 -0.0869  0.4676  2.8990 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  p        (Intercept)  3.62    1.90    
+##  Residual             13.86    3.72    
+## Number of obs: 50, groups:  p, 5
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)   -2.240      3.134   -0.71
+## x.m            2.651      0.945    2.81
+## x.mc          -2.373      0.568   -4.18</code></pre>
+<p>This gives the pure <strong>between-group effect</strong> of 2.651
+<span class="math inline">\(y\)</span> change between levels of <span
+class="math inline">\(p\)</span>, and the (orthogonal)
+<strong>within-group effect</strong> of -2.373 <span
+class="math inline">\(y\)</span> change with every 1-unit change in
+<span class="math inline">\(x\)</span>, in a single between-within
+model.</p>
 <p><br></p>
-</div>
-</div>
-<div id="plot-results" class="section level2">
-<h2>Plot results</h2>
-<pre class="r"><code>time$predicted &lt;- fitted(lgmodel)
+<p>A logical next question is whether the between-group effect of <span
+class="math inline">\(x\)</span> is different from the within-group
+effect of <span class="math inline">\(x\)</span>. This is called the
+<strong>contextual effect</strong> in psychology.</p>
+<pre class="r"><code>context.model &lt;- lmer(y ~ 1 + x + x.m + (1|p), data = data)
 
-time |&gt; 
-  mutate(treatment = as.factor(treatment)) |&gt; 
-  ggplot(aes(x = time01)) +
-    geom_line(aes(y = intimacy, linetype = treatment)) +
-    # compare to BLUE
-    geom_smooth(aes(y = intimacy), method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F,
-                color = &quot;black&quot;, linewidth = .5) +
-    geom_line(aes(y = predicted), color = &quot;blue&quot;) + # BLUP?
-    facet_wrap(~id) +
-    labs(x = &quot;&quot;, y = &quot;&quot;, 
-         subtitle = &quot;Panel plots of the actual and predicted trajectory of intimacy for each subject&quot;) +
-    theme(legend.position = &quot;top&quot;)</code></pre>
-<p><img src="centering_files/figure-html/plot_predicted_id-1.png" width="864" /></p>
+summary(context.model, correlation = F)</code></pre>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: y ~ 1 + x + x.m + (1 | p)
+##    Data: data
+## 
+## REML criterion at convergence: 272
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.8054 -0.6677 -0.0869  0.4676  2.8990 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  p        (Intercept)  3.62    1.90    
+##  Residual             13.86    3.72    
+## Number of obs: 50, groups:  p, 5
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)   -2.240      3.134   -0.71
+## x             -2.373      0.568   -4.18
+## x.m            5.024      1.102    4.56</code></pre>
+<p>The <strong>contextual effect</strong> is 5.024 units difference
+between the orthogonal between- and within-effects (between —
+within).</p>
 <p><br></p>
-</div>
-<div id="compare-estimates-for-treated-and-control"
-class="section level1">
-<h1>Compare estimates for treated and control</h1>
-<pre class="r"><code>time |&gt; 
-  mutate(treatment = as.factor(treatment)) |&gt; 
-  ggplot(aes(x = time01, y = predicted)) +
-    geom_line(aes(group = id)) + # BLUP?
-    geom_smooth(aes(group = treatment), 
-                method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F,
-                linewidth = 2, color = &quot;red&quot;) +
-    facet_wrap(~treatment) +
-    labs(x = &quot;&quot;, y = &quot;&quot;, 
-         subtitle = &quot;Subject-specific regression lines for the control (left) and treatment (right) groups. 
-Average slope is shown in red&quot;) +
-    theme(legend.position = &quot;top&quot;)</code></pre>
-<p><img src="centering_files/figure-html/plot_predicted_treatment-1.png" width="672" /></p>
-<p>The ﬁxed effects, can be thought of as the results for typical
-persons in the control and treatment groups, respectively. These ﬁxed
-effects are represented by the red lines in this figure. The
-between-subject random effects are represented by the variability in
-individual regression lines from the group averages. The lower-level
-(within-subject) random effects are represented by the difference
-between the raw data and predicted slopes in the earlier figure
-above.</p>
-<p><br></p>
-<div id="eb-estimates" class="section level2">
-<h2>EB estimates</h2>
-<p>Percentiles of slope distributions of the control and treatment
-groups are shown below. There is substantial overlap between both
-distributions (this would be better shown by the relative advantage of
-the treatment group distribution over the control group: TBD)</p>
-<pre class="r"><code>rfx &lt;- ranef(lgmodel) |&gt; 
-  as_tibble(rownames = &quot;id&quot;) |&gt; 
-  rename(ebintercept = 2, ebslope = 3)
-
-slopes &lt;- coef(lgmodel) |&gt; 
-  as_tibble(rownames = &quot;id&quot;) |&gt; 
-  select(id, slope = time01, interaction = 5) |&gt; 
-  # add treatment indicator:
-  left_join(
-    distinct(select(time, id, treatment)) |&gt; 
-      mutate(treatment = as.numeric(treatment == 1)),
-    by = join_by(id)
-  ) |&gt; 
-  # group-specific slopes:
-  mutate(slope = slope + treatment*interaction) 
-
-coefs.1 &lt;- full_join(slopes, rfx, by = join_by(id)) |&gt; 
-  select(id, treatment, ebintercept, ebslope, slope)
-
-# Find percentiles for slope distribution for each group
-coefs.1 |&gt; 
-  group_by(treatment) |&gt; 
-  reframe(
-    p = fct_inorder(paste0(c(0.0, .05, .25, .50, .75, .95, 1.0)*100, &quot;%&quot;)),
-    qnt = quantile(slope, c(0.0, .05, .25, .50, .75, .95, 1.0))
-  ) |&gt; 
-  spread(p, qnt)</code></pre>
+<p>To determine whether this difference is non-zero, we can test it
+against a model without the group mean predictor:</p>
+<pre class="r"><code>anova(context.model, mixed.model)</code></pre>
+<pre><code>## refitting model(s) with ML (instead of REML)</code></pre>
 <div class="kable-table">
 <table>
+<colgroup>
+<col width="22%" />
+<col width="7%" />
+<col width="6%" />
+<col width="6%" />
+<col width="11%" />
+<col width="14%" />
+<col width="9%" />
+<col width="4%" />
+<col width="17%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="right">treatment</th>
-<th align="right">0%</th>
-<th align="right">5%</th>
-<th align="right">25%</th>
-<th align="right">50%</th>
-<th align="right">75%</th>
-<th align="right">95%</th>
-<th align="right">100%</th>
+<th align="left"></th>
+<th align="right">npar</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">logLik</th>
+<th align="right">deviance</th>
+<th align="right">Chisq</th>
+<th align="right">Df</th>
+<th align="right">Pr(&gt;Chisq)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">0</td>
-<td align="right">-0.9919</td>
-<td align="right">-0.5573</td>
-<td align="right">-0.0292</td>
-<td align="right">0.6208</td>
-<td align="right">1.314</td>
-<td align="right">2.294</td>
-<td align="right">2.739</td>
+<td align="left">mixed.model</td>
+<td align="right">4</td>
+<td align="right">296</td>
+<td align="right">303</td>
+<td align="right">-144</td>
+<td align="right">288</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="left">context.model</td>
+<td align="right">5</td>
+<td align="right">286</td>
+<td align="right">296</td>
+<td align="right">-138</td>
+<td align="right">276</td>
+<td align="right">11.5</td>
 <td align="right">1</td>
-<td align="right">-0.5076</td>
-<td align="right">-0.4071</td>
-<td align="right">0.9973</td>
-<td align="right">1.5425</td>
-<td align="right">2.778</td>
-<td align="right">3.339</td>
-<td align="right">3.844</td>
+<td align="right">0.001</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p></font></p>
-</div>
+<p>If the AIC and BIC of the contextual model are <em>smaller</em>, or
+the Chisq is significant, then the contextual model is favoured.
+Economists would argue the presence of contextual effects is a reason to
+abandon a mixed model and go with a fixed effects model because it
+implies endogenous effects are present, but that is really up to the
+user. Personally, I like how the mixed modeling framework allows you to
+investigate these types of differences.</p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p>* The weight of the uncentered coefficient is based on the ratio of
+the standard error of the between- and within- estimate. As the standard
+error of the between estimate increases relative to the within estimator
+(i.e., it is less precise), the uncentered coefficient will be closer to
+the within estimator (and vice-versa if within SE is larger).</p>
 </div>
 
 

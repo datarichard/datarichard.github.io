@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Chapter 4 Analyses: Modeling the Time Course of Continuous Outcomes</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Richard W Morris</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="rcode.html">R examples</a>
+</li>
+<li>
+  <a href="CV.pdf">CV</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Chapter 4 Analyses: Modeling the Time
+Course of Continuous Outcomes</h1>
+
+</div>
+
+
+<p><font size="3"></p>
+<p>The most basic feature of a longitudinal study is the time course or
+trajectory of the outcome measure (dependent variable or y). What is the
+trajectory of the typical subject? And how much do subjects differ from
+each other in their trajectory?</p>
+<p>For this example we will need <code>nlme</code> (nonlinear
+mixed-effect models) for it’s ability to explicitly model the
+within-subject covariance structure.</p>
+<pre class="r"><code>library(tidyverse)
+library(nlme)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;nlme&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:lme4&#39;:
+## 
+##     lmList</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     collapse</code></pre>
+<p><br></p>
+<p>The time course dataset contains simulated data on an outcome where,
+as the result of an intervention, there is reason to expect group
+differences in the time course and, over and above these, subject-level
+differences within each group. The dataset is intended to represent a
+study of wives from 50 heterosexual married couples, randomly assigned
+to a 16-week marital therapy treatment condition ( n = 25) or a 16-week
+wait-list condition ( n = 25). In the treatment group each wife
+completed a web diary each week on the evening prior to the day of the
+therapy session, and in the control group each wife completed a web
+diary on a fixed day each week.</p>
+<pre class="r"><code>time &lt;- read_csv(&#39;time.csv&#39;) |&gt; 
+  mutate(treatment = as.factor(treatment),
+         id = as.factor(id))</code></pre>
+<pre><code>## Rows: 800 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (5): id, time, time01, intimacy, treatment
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code># peak at the data
+time |&gt; 
+  ggplot(aes(x = time01, y = intimacy)) +
+    geom_line(aes(linetype = treatment)) +
+    facet_wrap(~id) +
+    labs(x = &quot;&quot;, y = &quot;&quot;, 
+         subtitle = &quot;Panel plots of the 16-week trajectory of intimacy for each subject in the control and treatment groups&quot;) +
+    theme(legend.position = &quot;top&quot;)</code></pre>
+<p><img src="llmm_files/figure-html/Import-1.png" width="864" /></p>
+<p><br></p>
+<div id="model" class="section level2">
+<h2>Model</h2>
+<p>A random effects model with fixed terms for time and treatment group,
+and their interaction, along with random intercepts and slopes per
+subject. The within-subject covariance matrix with AR(1) errors.</p>
+<p>A central concern in modeling intensive longitudinal data is to
+estimate the population variances and covariances of the fixed effects.
+These allow us to know how much subjects differ from one another within
+the treatment and control groups, and, in case of the intercept–slope
+covariance, whether there is any tendency for subjects with larger or
+smaller intercepts (i.e., starting levels) to have larger or smaller
+slopes.</p>
+<p>The random effects for the intercept and slope are termed upper-level
+or <strong>between-subjects random effects</strong>; there are also
+lower-level or <strong>within-subjects random effects</strong>. These
+are the <span class="math inline">\(\epsilon_{ij}\)</span>’s, and they
+capture the extent to which a wife’s intimacy on a given week deviates
+above or below the value predicted by her specific regression line. We
+assume the <span class="math inline">\(\epsilon_{ij}\)</span>’s are
+strictly ordered in time with serial correlations. The simplest serial
+correlation is where the current error is a linear function of the
+previous error, plus a truly random <span
+class="math inline">\(v_{ij}\)</span>: <span
+class="math inline">\(\epsilon_{ij} = \rho \epsilon_{i-1, j} +
+v_{ij}\)</span>.</p>
+<p>Ignoring autocorrelation in errors typically leads to estimates of
+fixed effects that have standard errors that are too small, leading to
+Type I errors.</p>
+<p><br></p>
+<div id="linear-growth-model-with-ar1-errors" class="section level3">
+<h3>linear growth model with AR(1) errors</h3>
+<pre class="r"><code>lgmodel &lt;- lme(
+  fixed = intimacy ~ time01*treatment, 
+  data = time, 
+  random = ~time01 | id, 
+  correlation = corAR1())
+
+summary(lgmodel)</code></pre>
+<pre><code>## Linear mixed-effects model fit by REML
+##   Data: time 
+##    AIC  BIC logLik
+##   2852 2895  -1417
+## 
+## Random effects:
+##  Formula: ~time01 | id
+##  Structure: General positive-definite, Log-Cholesky parametrization
+##             StdDev Corr  
+## (Intercept) 0.828  (Intr)
+## time01      1.376  -0.453
+## Residual    1.301        
+## 
+## Correlation Structure: AR(1)
+##  Formula: ~1 | id 
+##  Parameter estimate(s):
+##       Phi 
+## -3.66e-05 
+## Fixed effects:  intimacy ~ time01 * treatment 
+##                    Value Std.Error  DF t-value p-value
+## (Intercept)        2.899     0.207 748   14.00  0.0000
+## time01             0.735     0.347 748    2.12  0.0345
+## treatment1        -0.056     0.293  48   -0.19  0.8479
+## time01:treatment1  0.921     0.491 748    1.88  0.0610
+##  Correlation: 
+##                   (Intr) time01 trtmn1
+## time01            -0.599              
+## treatment1        -0.707  0.423       
+## time01:treatment1  0.423 -0.707 -0.599
+## 
+## Standardized Within-Group Residuals:
+##    Min     Q1    Med     Q3    Max 
+## -2.624 -0.680 -0.019  0.643  2.446 
+## 
+## Number of Observations: 800
+## Number of Groups: 50</code></pre>
+<p><br></p>
+</div>
+</div>
+<div id="plot-results" class="section level2">
+<h2>Plot results</h2>
+<pre class="r"><code>time$predicted &lt;- fitted(lgmodel)
+
+time |&gt; 
+  mutate(treatment = as.factor(treatment)) |&gt; 
+  ggplot(aes(x = time01)) +
+    geom_line(aes(y = intimacy, linetype = treatment)) +
+    # compare to BLUE
+    geom_smooth(aes(y = intimacy), method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F,
+                color = &quot;black&quot;, linewidth = .5) +
+    geom_line(aes(y = predicted), color = &quot;blue&quot;) + # BLUP?
+    facet_wrap(~id) +
+    labs(x = &quot;&quot;, y = &quot;&quot;, 
+         subtitle = &quot;Panel plots of the actual and predicted trajectory of intimacy for each subject&quot;) +
+    theme(legend.position = &quot;top&quot;)</code></pre>
+<p><img src="llmm_files/figure-html/plot_predicted_id-1.png" width="864" /></p>
+<p><br></p>
+</div>
+<div id="compare-estimates-for-treated-and-control"
+class="section level1">
+<h1>Compare estimates for treated and control</h1>
+<pre class="r"><code>time |&gt; 
+  mutate(treatment = as.factor(treatment)) |&gt; 
+  ggplot(aes(x = time01, y = predicted)) +
+    geom_line(aes(group = id)) + # BLUP?
+    geom_smooth(aes(group = treatment), 
+                method = &quot;lm&quot;, formula = &#39;y ~ x&#39;, se = F,
+                linewidth = 2, color = &quot;red&quot;) +
+    facet_wrap(~treatment) +
+    labs(x = &quot;&quot;, y = &quot;&quot;, 
+         subtitle = &quot;Subject-specific regression lines for the control (left) and treatment (right) groups. 
+Average slope is shown in red&quot;) +
+    theme(legend.position = &quot;top&quot;)</code></pre>
+<p><img src="llmm_files/figure-html/plot_predicted_treatment-1.png" width="672" /></p>
+<p>The ﬁxed effects, can be thought of as the results for typical
+persons in the control and treatment groups, respectively. These ﬁxed
+effects are represented by the red lines in this figure. The
+between-subject random effects are represented by the variability in
+individual regression lines from the group averages. The lower-level
+(within-subject) random effects are represented by the difference
+between the raw data and predicted slopes in the earlier figure
+above.</p>
+<p><br></p>
+<div id="eb-estimates" class="section level2">
+<h2>EB estimates</h2>
+<p>Percentiles of slope distributions of the control and treatment
+groups are shown below. There is substantial overlap between both
+distributions (this would be better shown by the relative advantage of
+the treatment group distribution over the control group: TBD)</p>
+<pre class="r"><code>rfx &lt;- ranef(lgmodel) |&gt; 
+  as_tibble(rownames = &quot;id&quot;) |&gt; 
+  rename(ebintercept = 2, ebslope = 3)
+
+slopes &lt;- coef(lgmodel) |&gt; 
+  as_tibble(rownames = &quot;id&quot;) |&gt; 
+  select(id, slope = time01, interaction = 5) |&gt; 
+  # add treatment indicator:
+  left_join(
+    distinct(select(time, id, treatment)) |&gt; 
+      mutate(treatment = as.numeric(treatment == 1)),
+    by = join_by(id)
+  ) |&gt; 
+  # group-specific slopes:
+  mutate(slope = slope + treatment*interaction) 
+
+coefs.1 &lt;- full_join(slopes, rfx, by = join_by(id)) |&gt; 
+  select(id, treatment, ebintercept, ebslope, slope)
+
+# Find percentiles for slope distribution for each group
+coefs.1 |&gt; 
+  group_by(treatment) |&gt; 
+  reframe(
+    p = fct_inorder(paste0(c(0.0, .05, .25, .50, .75, .95, 1.0)*100, &quot;%&quot;)),
+    qnt = quantile(slope, c(0.0, .05, .25, .50, .75, .95, 1.0))
+  ) |&gt; 
+  spread(p, qnt)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">treatment</th>
+<th align="right">0%</th>
+<th align="right">5%</th>
+<th align="right">25%</th>
+<th align="right">50%</th>
+<th align="right">75%</th>
+<th align="right">95%</th>
+<th align="right">100%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">-0.992</td>
+<td align="right">-0.557</td>
+<td align="right">-0.029</td>
+<td align="right">0.621</td>
+<td align="right">1.31</td>
+<td align="right">2.29</td>
+<td align="right">2.74</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">-0.508</td>
+<td align="right">-0.407</td>
+<td align="right">0.997</td>
+<td align="right">1.542</td>
+<td align="right">2.78</td>
+<td align="right">3.34</td>
+<td align="right">3.84</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></font></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
