@@ -398,7 +398,11 @@
 </section>
 <section id="good-and-bad-controls" class="slide level2">
 <h2>Good and bad controls</h2>
-<p>Introduction: I am Richard Morris.</p>
+<p>Researchers have long understood that adding variables (“controls”) to a regression model is necessary to eliminate “omitted variable bias”. Scientists exposed only to this view may get the impression that adding “more controls” to a regression model is always better. However some variables when added to the regression equation can produce unintended discrepancies between the regression coefficient and the effect that the coefficient is expected to represent. Such variables have become known as “bad controls”. This tutorial describes graphical tools for understanding, visualizing, and resolving the problem of selecting variables for inclusion in a regression model through a series of illustrative simulations in R. An applied example will be provided on the role of intergenerational transfer to determine whether grandparents directly affect the wealth, education, status of their grandchildren.</p>
+</section>
+<section id="intro" class="slide level2">
+<h2>Intro</h2>
+<p>I am Richard Morris.</p>
 <p><a href="https://www.sydney.edu.au/medicine-health/about/our-people/academic-staff/richard-morris.html" data-preview-link="true">www.sydney.edu.au/medicine-health/about/our-people/academic-staff/richard-morris.html</a></p>
 <p>&nbsp;</p>
 
@@ -508,19 +512,19 @@ Call:
 lm(formula = Y ~ X)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--2.5429 -0.7981  0.1096  0.8041  2.3693 
+     Min       1Q   Median       3Q      Max 
+-3.13531 -0.69890  0.04767  0.79746  2.60493 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  1.02270    0.07252   14.10   &lt;2e-16 ***
-X           -0.91355    0.07012  -13.03   &lt;2e-16 ***
+(Intercept)  1.02094    0.07783   13.12   &lt;2e-16 ***
+X           -1.02273    0.08585  -11.91   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.025 on 198 degrees of freedom
-Multiple R-squared:  0.4616,    Adjusted R-squared:  0.4589 
-F-statistic: 169.8 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.096 on 198 degrees of freedom
+Multiple R-squared:  0.4175,    Adjusted R-squared:  0.4146 
+F-statistic: 141.9 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div></div>
@@ -654,19 +658,19 @@ Call:
 lm(formula = Y ~ X)
 
 Residuals:
-   Min     1Q Median     3Q    Max 
--5.113 -1.161  0.279  1.160  4.383 
+    Min      1Q  Median      3Q     Max 
+-4.5338 -1.2142  0.0158  1.0933  4.9759 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.05123    0.15336  -0.334    0.739    
-X            1.03667    0.09117  11.370   &lt;2e-16 ***
+(Intercept)  0.21536    0.14329   1.503    0.134    
+X            0.93106    0.07732  12.042   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.724 on 198 degrees of freedom
-Multiple R-squared:  0.395, Adjusted R-squared:  0.392 
-F-statistic: 129.3 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.706 on 198 degrees of freedom
+Multiple R-squared:  0.4228,    Adjusted R-squared:  0.4199 
+F-statistic:   145 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div></div>
@@ -735,19 +739,19 @@ lm(formula = Y ~ X + Z)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--2.59922 -0.66262  0.04186  0.69678  2.74092 
+-2.80473 -0.74596 -0.05239  0.61966  3.14634 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  1.08369    0.10610  10.214   &lt;2e-16 ***
-X           -0.07293    0.07729  -0.944    0.347    
-Z            2.11671    0.10732  19.724   &lt;2e-16 ***
+(Intercept)  1.01743    0.09957  10.218   &lt;2e-16 ***
+X           -0.01368    0.07144  -0.191    0.848    
+Z            1.97670    0.11083  17.836   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.002 on 197 degrees of freedom
-Multiple R-squared:  0.7966,    Adjusted R-squared:  0.7946 
-F-statistic: 385.8 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.058 on 197 degrees of freedom
+Multiple R-squared:  0.7792,    Adjusted R-squared:  0.777 
+F-statistic: 347.7 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div></div>
@@ -821,18 +825,18 @@ lm(formula = Y ~ X)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--5.6595 -1.2429  0.2007  1.2253  4.9628 
+-4.0746 -1.1291  0.0224  1.0458  4.1671 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.12041    0.13613  -0.885    0.377    
-X            2.04896    0.08787  23.317   &lt;2e-16 ***
+(Intercept)  0.02666    0.11641   0.229    0.819    
+X            1.99283    0.07961  25.032   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.904 on 198 degrees of freedom
-Multiple R-squared:  0.733, Adjusted R-squared:  0.7317 
-F-statistic: 543.7 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.646 on 198 degrees of freedom
+Multiple R-squared:  0.7599,    Adjusted R-squared:  0.7587 
+F-statistic: 626.6 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div></div>
@@ -900,19 +904,19 @@ lm(formula = Y ~ X + Z)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--2.31981 -0.47002  0.04435  0.40787  2.33274 
+-2.40243 -0.48992  0.03466  0.48896  1.71705 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.03401    0.05387  -0.631    0.529    
-X           -0.96675    0.09105 -10.618   &lt;2e-16 ***
-Z            0.52023    0.03722  13.976   &lt;2e-16 ***
+(Intercept)  0.13134    0.04958   2.649  0.00872 ** 
+X           -0.96945    0.09064 -10.695  &lt; 2e-16 ***
+Z            0.52022    0.03491  14.900  &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.7508 on 197 degrees of freedom
-Multiple R-squared:  0.4993,    Adjusted R-squared:  0.4942 
-F-statistic: 98.21 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.6992 on 197 degrees of freedom
+Multiple R-squared:  0.5416,    Adjusted R-squared:  0.5369 
+F-statistic: 116.4 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div></div>
@@ -985,8 +989,8 @@ F-statistic: 98.21 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coefficients:
          Estimate Std. Error  t value Pr(&gt;|t|)    
-X (+ Z) -0.944480   0.090438 -10.4434   &lt;2e-16 ***
-X        0.098366   0.066841   1.4716   0.1427    
+X (+ Z) -0.939226   0.085835 -10.9423   &lt;2e-16 ***
+X       -0.072280   0.070034  -1.0321   0.3033    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -1061,9 +1065,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb13-8"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coefficients:
-         Estimate Std. Error t value Pr(&gt;|t|)    
-X (+ Z) -0.046479   0.102691 -0.4526   0.6513    
-X        1.084151   0.103823 10.4423   &lt;2e-16 ***
+        Estimate Std. Error t value Pr(&gt;|t|)    
+X (+ Z)  0.15589    0.10729  1.4529   0.1478    
+X        1.13520    0.10203 11.1265   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>

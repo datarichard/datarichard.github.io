@@ -23,15 +23,20 @@ compare <- function(.fit1, .fit2) {
 }
 ```
 
-## Good and bad controls
+## Good and bad controls  
 
-Introduction: I am Richard Morris.  
+
+Researchers have long understood that adding variables ("controls") to a regression model is necessary to eliminate "omitted variable bias". Scientists exposed only to this view may get the impression that adding “more controls” to a regression model is always better. However some variables when added to the regression equation can produce unintended discrepancies between the regression coefficient and the effect that the coefficient is expected to represent. Such variables have become known as “bad controls”. This tutorial describes graphical tools for understanding, visualizing, and resolving the problem of selecting variables for inclusion in a regression model through a series of illustrative simulations in R. An applied example will be provided on the role of intergenerational transfer to determine whether grandparents directly affect the wealth, education, status of their grandchildren.  
+
+## Intro  
+
+I am Richard Morris.  
 
 [www.sydney.edu.au/medicine-health/about/our-people/academic-staff/richard-morris.html](https://www.sydney.edu.au/medicine-health/about/our-people/academic-staff/richard-morris.html){preview-link="true"}
 
 \ 
  
-![...](tweet.png)
+![...](tweet.png)  
 
 
 ## Background
