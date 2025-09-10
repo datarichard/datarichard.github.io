@@ -282,14 +282,6 @@ mixed-effect models) for it’s ability to explicitly model the
 within-subject covariance structure.</p>
 <pre class="r"><code>library(tidyverse)
 library(nlme)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;nlme&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:lme4&#39;:
-## 
-##     lmList</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     collapse</code></pre>
 <p><br></p>
 <p>The time course dataset contains simulated data on an outcome where,
 as the result of an intervention, there is reason to expect group
@@ -305,7 +297,7 @@ diary on a fixed day each week.</p>
   mutate(treatment = as.factor(treatment),
          id = as.factor(id))</code></pre>
 <pre><code>## Rows: 800 Columns: 5
-## ── Column specification ────────────────────────────────────────────────────────────
+## ── Column specification ───────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (5): id, time, time01, intimacy, treatment
 ## 
@@ -375,8 +367,8 @@ summary(lgmodel)</code></pre>
 ## Correlation Structure: AR(1)
 ##  Formula: ~1 | id 
 ##  Parameter estimate(s):
-##       Phi 
-## -3.66e-05 
+##        Phi 
+## -0.0000366 
 ## Fixed effects:  intimacy ~ time01 * treatment 
 ##                    Value Std.Error  DF t-value p-value
 ## (Intercept)        2.899     0.207 748   14.00  0.0000

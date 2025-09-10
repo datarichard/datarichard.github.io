@@ -413,8 +413,7 @@ parameter, <span class="math inline">\(N(0, \alpha)\)</span>.</p>
                   family=binomial(link=&#39;logit&#39;))
 
 summary(lme_rasch, cor=F)</code></pre>
-<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) [
-## glmerMod]
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) [&#39;glmerMod&#39;]
 ##  Family: binomial  ( logit )
 ## Formula: Response ~ 0 + Item + (1 | Subject)
 ##    Data: Abortion_long
@@ -432,11 +431,11 @@ summary(lme_rasch, cor=F)</code></pre>
 ## Number of obs: 1516, groups:  Subject, 379
 ## 
 ## Fixed effects:
-##            Estimate Std. Error z value Pr(&gt;|z|)    
-## ItemItem.1   -0.667      0.277   -2.41  0.01598 *  
-## ItemItem.2    1.017      0.283    3.59  0.00033 ***
-## ItemItem.3    1.500      0.292    5.14  2.8e-07 ***
-## ItemItem.4    1.285      0.287    4.47  7.8e-06 ***
+##            Estimate Std. Error z value   Pr(&gt;|z|)    
+## ItemItem.1   -0.667      0.277   -2.41    0.01598 *  
+## ItemItem.2    1.017      0.283    3.59    0.00033 ***
+## ItemItem.3    1.500      0.292    5.14 0.00000028 ***
+## ItemItem.4    1.285      0.287    4.47 0.00000781 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The fixed effects for item represent <strong>item

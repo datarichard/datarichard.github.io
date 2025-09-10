@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="Intro_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Intro_files/libs/quarto-html/tabby.min.js"></script>
-<script src="Intro_files/libs/quarto-html/popper.min.js"></script>
-<script src="Intro_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="Intro_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Intro_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="Intro_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="Intro_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.555">
+<script src="causal_intro_files/libs/clipboard/clipboard.min.js"></script>
+<script src="causal_intro_files/libs/quarto-html/tabby.min.js"></script>
+<script src="causal_intro_files/libs/quarto-html/popper.min.js"></script>
+<script src="causal_intro_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="causal_intro_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="causal_intro_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="causal_intro_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="causal_intro_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
 
   <title>Intro to causal inference</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="Intro_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="Intro_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="causal_intro_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="causal_intro_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -41,7 +41,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -83,7 +83,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -94,11 +94,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="Intro_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="Intro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="Intro_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="Intro_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="Intro_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="causal_intro_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="causal_intro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="causal_intro_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="causal_intro_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="causal_intro_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -455,8 +455,7 @@ b =&amp; \ cov(x, y) / cov(x, x) \\
 cov(x, e) = 0 \\
 \end{align}
 \]</span></p>
-</div>
-</div>
+</div></div>
 </section>
 <section id="background-1" class="slide level2">
 <h2>Background</h2>
@@ -510,22 +509,21 @@ lm(formula = Y ~ X)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--2.5315 -0.7805 -0.1348  0.7850  2.5977 
+-2.5429 -0.7981  0.1096  0.8041  2.3693 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  1.01168    0.07796   12.98   &lt;2e-16 ***
-X           -1.08215    0.08190  -13.21   &lt;2e-16 ***
+(Intercept)  1.02270    0.07252   14.10   &lt;2e-16 ***
+X           -0.91355    0.07012  -13.03   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.101 on 198 degrees of freedom
-Multiple R-squared:  0.4686,    Adjusted R-squared:  0.4659 
-F-statistic: 174.6 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.025 on 198 degrees of freedom
+Multiple R-squared:  0.4616,    Adjusted R-squared:  0.4589 
+F-statistic: 169.8 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="forks-confounds" class="slide level2">
 <h2>Forks (confounds)</h2>
@@ -591,8 +589,7 @@ y =&amp; \ b_1x \ + \ b_2z \ + \ e \\
 b_1 =&amp; \ cov(x, y | z) / var(x | z)
 \end{align}
 \]</span></p>
-</div>
-</div>
+</div></div>
 </section>
 <section id="forks-confounds-1" class="slide level2">
 <h2>Forks (confounds)</h2>
@@ -657,23 +654,22 @@ Call:
 lm(formula = Y ~ X)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--3.8791 -1.0706  0.0468  0.9606  4.7099 
+   Min     1Q Median     3Q    Max 
+-5.113 -1.161  0.279  1.160  4.383 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.11829    0.13179  -0.898     0.37    
-X            0.99480    0.07333  13.566   &lt;2e-16 ***
+(Intercept) -0.05123    0.15336  -0.334    0.739    
+X            1.03667    0.09117  11.370   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.597 on 198 degrees of freedom
-Multiple R-squared:  0.4817,    Adjusted R-squared:  0.4791 
-F-statistic:   184 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.724 on 198 degrees of freedom
+Multiple R-squared:  0.395, Adjusted R-squared:  0.392 
+F-statistic: 129.3 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="forks-confounds-2" class="slide level2">
 <h2>Forks (confounds)</h2>
@@ -739,23 +735,22 @@ lm(formula = Y ~ X + Z)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--2.51887 -0.70539 -0.01692  0.62237  3.09556 
+-2.59922 -0.66262  0.04186  0.69678  2.74092 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  0.93157    0.10714   8.695 1.36e-15 ***
-X            0.08255    0.07334   1.126    0.262    
-Z            1.81173    0.11047  16.400  &lt; 2e-16 ***
+(Intercept)  1.08369    0.10610  10.214   &lt;2e-16 ***
+X           -0.07293    0.07729  -0.944    0.347    
+Z            2.11671    0.10732  19.724   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.041 on 197 degrees of freedom
-Multiple R-squared:  0.7809,    Adjusted R-squared:  0.7787 
-F-statistic:   351 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.002 on 197 degrees of freedom
+Multiple R-squared:  0.7966,    Adjusted R-squared:  0.7946 
+F-statistic: 385.8 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="problem-unmeasured-confounds" class="slide level2">
 <h2>Problem: Unmeasured confounds</h2>
@@ -826,22 +821,21 @@ lm(formula = Y ~ X)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--4.4000 -1.1306 -0.1319  1.1474  4.9556 
+-5.6595 -1.2429  0.2007  1.2253  4.9628 
 
 Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.001033   0.124841  -0.008    0.993    
-X            2.096729   0.093689  22.380   &lt;2e-16 ***
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.12041    0.13613  -0.885    0.377    
+X            2.04896    0.08787  23.317   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.748 on 198 degrees of freedom
-Multiple R-squared:  0.7167,    Adjusted R-squared:  0.7152 
-F-statistic: 500.8 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.904 on 198 degrees of freedom
+Multiple R-squared:  0.733, Adjusted R-squared:  0.7317 
+F-statistic: 543.7 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="colliders" class="slide level2">
 <h2>Colliders</h2>
@@ -906,23 +900,22 @@ lm(formula = Y ~ X + Z)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--1.63713 -0.39154  0.00964  0.45802  1.49993 
+-2.31981 -0.47002  0.04435  0.40787  2.33274 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.04595    0.04522  -1.016    0.311    
-X           -0.96819    0.07548 -12.828   &lt;2e-16 ***
-Z            0.46324    0.02932  15.800   &lt;2e-16 ***
+(Intercept) -0.03401    0.05387  -0.631    0.529    
+X           -0.96675    0.09105 -10.618   &lt;2e-16 ***
+Z            0.52023    0.03722  13.976   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.6385 on 197 degrees of freedom
-Multiple R-squared:  0.5592,    Adjusted R-squared:  0.5547 
-F-statistic:   125 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.7508 on 197 degrees of freedom
+Multiple R-squared:  0.4993,    Adjusted R-squared:  0.4942 
+F-statistic: 98.21 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="problem-measured-confounds" class="slide level2">
 <h2>Problem: Measured confounds</h2>
@@ -992,14 +985,13 @@ F-statistic:   125 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coefficients:
          Estimate Std. Error  t value Pr(&gt;|t|)    
-X (+ Z) -1.159784   0.091112 -12.7293   &lt;2e-16 ***
-X        0.027984   0.069634   0.4019   0.6882    
+X (+ Z) -0.944480   0.090438 -10.4434   &lt;2e-16 ***
+X        0.098366   0.066841   1.4716   0.1427    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="prevailing-wisdom" class="slide level2">
 <h2>Prevailing wisdom</h2>
@@ -1070,14 +1062,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coefficients:
          Estimate Std. Error t value Pr(&gt;|t|)    
-X (+ Z) -0.055620   0.097171 -0.5724   0.5677    
-X        0.921870   0.096563  9.5468   &lt;2e-16 ***
+X (+ Z) -0.046479   0.102691 -0.4526   0.6513    
+X        1.084151   0.103823 10.4423   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="mediators-ii" class="slide level2">
 <h2>Mediators II</h2>
@@ -1162,8 +1153,7 @@ X        0.71220    0.47851  1.4884    0.1382
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="bias-amplification" class="slide level2">
 <h2>Bias Amplification</h2>
@@ -1252,8 +1242,7 @@ X       0.659921   0.040536  16.280 &lt; 2.2e-16 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="instruments" class="slide level2">
 <h2>Instruments</h2>
@@ -1346,8 +1335,7 @@ Multiple R-squared:  0.0004905, Adjusted R-squared:  -0.004557
 F-statistic: 0.09718 on 1 and 198 DF,  p-value: 0.7556</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="example-intergenerational-transfer" class="slide level2">
 <h2>Example: Intergenerational transfer</h2>
@@ -1524,8 +1512,7 @@ X        3.15471    0.29039 10.8638 &lt; 2.2e-16 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="conclusions" class="slide level2">
 <h2>Conclusions</h2>
@@ -1547,19 +1534,19 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="Intro_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="causal_intro_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="Intro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="Intro_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="Intro_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="Intro_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="Intro_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="Intro_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="Intro_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="Intro_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="Intro_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="causal_intro_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1823,18 +1810,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1866,7 +1842,29 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1874,7 +1872,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {
