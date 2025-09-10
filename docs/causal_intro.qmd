@@ -30,13 +30,14 @@ Researchers have long understood that adding variables ("controls") to a regress
 
 ## Intro  
 
-I am Richard Morris.  
+I am [Richard Morris](https://github.com/datarichard/){target="_blank"}.  
 
 [www.sydney.edu.au/medicine-health/about/our-people/academic-staff/richard-morris.html](https://www.sydney.edu.au/medicine-health/about/our-people/academic-staff/richard-morris.html){preview-link="true"}
 
 \ 
  
 ![...](tweet.png)  
+
 
 
 ## Background

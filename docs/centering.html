@@ -346,7 +346,7 @@ result:</p>
 <pre class="r"><code>mixed.model = lmer(y ~ 1 + x + (1|p), data=data)
 
 summary(mixed.model)</code></pre>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
 ## Formula: y ~ 1 + x + (1 | p)
 ##    Data: data
 ## 
@@ -363,11 +363,9 @@ summary(mixed.model)</code></pre>
 ## Number of obs: 50, groups:  p, 5
 ## 
 ## Fixed effects:
-##             Estimate Std. Error     df t value Pr(&gt;|t|)    
-## (Intercept)   12.808      3.209  7.031    3.99  0.00520 ** 
-## x             -2.134      0.555 47.178   -3.85  0.00036 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+##             Estimate Std. Error t value
+## (Intercept)   12.808      3.209    3.99
+## x             -2.134      0.555   -3.85
 ## 
 ## Correlation of Fixed Effects:
 ##   (Intr)
@@ -394,13 +392,13 @@ summary(fixed.model)</code></pre>
 ##  -6.13  -2.34  -0.17   1.74  10.31 
 ## 
 ## Coefficients:
-##    Estimate Std. Error t value      Pr(&gt;|t|)    
-## p1    6.081      1.475    4.12       0.00016 ***
-## p2    9.234      1.936    4.77 0.00002064446 ***
-## p3   13.747      1.982    6.94 0.00000001421 ***
-## p4   16.682      2.633    6.34 0.00000010810 ***
-## p5   22.054      2.806    7.86 0.00000000064 ***
-## x    -2.373      0.568   -4.18       0.00014 ***
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## p1    6.081      1.475    4.12  0.00016 ***
+## p2    9.234      1.936    4.77  2.1e-05 ***
+## p3   13.747      1.982    6.94  1.4e-08 ***
+## p4   16.682      2.633    6.34  1.1e-07 ***
+## p5   22.054      2.806    7.86  6.4e-10 ***
+## x    -2.373      0.568   -4.18  0.00014 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -424,7 +422,7 @@ model</strong>:</p>
 bw.model &lt;- lmer(y ~ 1 + x.m + x.mc + (1|p), data = data)
 
 summary(bw.model, correlation = F)</code></pre>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
 ## Formula: y ~ 1 + x.m + x.mc + (1 | p)
 ##    Data: data
 ## 
@@ -441,12 +439,10 @@ summary(bw.model, correlation = F)</code></pre>
 ## Number of obs: 50, groups:  p, 5
 ## 
 ## Fixed effects:
-##             Estimate Std. Error     df t value Pr(&gt;|t|)    
-## (Intercept)   -2.240      3.134  3.000   -0.71  0.52644    
-## x.m            2.651      0.945  3.000    2.81  0.06747 .  
-## x.mc          -2.373      0.568 44.000   -4.18  0.00014 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+##             Estimate Std. Error t value
+## (Intercept)   -2.240      3.134   -0.71
+## x.m            2.651      0.945    2.81
+## x.mc          -2.373      0.568   -4.18</code></pre>
 <p>This gives the pure <strong>between-group effect</strong> of 2.651
 <span class="math inline">\(y\)</span> change between levels of <span
 class="math inline">\(p\)</span>, and the (orthogonal)
@@ -462,7 +458,7 @@ effect of <span class="math inline">\(x\)</span>. This is called the
 <pre class="r"><code>context.model &lt;- lmer(y ~ 1 + x + x.m + (1|p), data = data)
 
 summary(context.model, correlation = F)</code></pre>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
 ## Formula: y ~ 1 + x + x.m + (1 | p)
 ##    Data: data
 ## 
@@ -479,12 +475,10 @@ summary(context.model, correlation = F)</code></pre>
 ## Number of obs: 50, groups:  p, 5
 ## 
 ## Fixed effects:
-##             Estimate Std. Error     df t value Pr(&gt;|t|)    
-## (Intercept)   -2.240      3.134  3.000   -0.71  0.52644    
-## x             -2.373      0.568 44.000   -4.18  0.00014 ***
-## x.m            5.024      1.102  5.508    4.56  0.00477 ** 
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+##             Estimate Std. Error t value
+## (Intercept)   -2.240      3.134   -0.71
+## x             -2.373      0.568   -4.18
+## x.m            5.024      1.102    4.56</code></pre>
 <p>The <strong>contextual effect</strong> is 5.024 units difference
 between the orthogonal between- and within-effects (between —
 within).</p>
