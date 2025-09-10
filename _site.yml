@@ -9,6 +9,8 @@ navbar:
       href: about.html
     - text: R examples
       href: rcode.html
+    - text: Presentations
+      href: present.html
     - text: CV
       href: CV.pdf
 
